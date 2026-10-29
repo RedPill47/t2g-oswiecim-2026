@@ -40,8 +40,12 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:2px dashed var(--red);outline-offset:3px}
 
 /* page language */
-.uilang{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;margin:14px 0 0}
-.uilang button{font-family:var(--type);font-size:14px;background:transparent;border:1px solid var(--rule);color:var(--pencil);padding:4px 9px;border-radius:2px;cursor:pointer}
+.uilang{display:flex;flex-wrap:nowrap;justify-content:flex-end;gap:6px;margin:14px 0 0}
+.uilang button{flex:none;white-space:nowrap;font-family:var(--type);font-size:14px;background:transparent;border:1px solid var(--rule);color:var(--pencil);padding:4px 9px;border-radius:2px;cursor:pointer}
+.uilang .s{display:none}
+.uilang.compact .l{display:none}
+.uilang.compact .s{display:inline}
+.uilang.compact button{padding:4px 12px}
 .uilang button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 
 /* hero */
@@ -208,7 +212,7 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
 <div class="wrap">
 
 <div class="uilang" id="uilang" role="group" aria-label="Page language">
-  <button data-ui="lb" lang="lb">Lëtzebuergesch</button><button data-ui="de" lang="de">Deutsch</button><button data-ui="fr" lang="fr">Français</button><button data-ui="en" lang="en">English</button>
+  <button data-ui="lb" lang="lb" aria-label="Lëtzebuergesch" title="Lëtzebuergesch"><span class="l">Lëtzebuergesch</span><span class="s">LB</span></button><button data-ui="de" lang="de" aria-label="Deutsch" title="Deutsch"><span class="l">Deutsch</span><span class="s">DE</span></button><button data-ui="fr" lang="fr" aria-label="Français" title="Français"><span class="l">Français</span><span class="s">FR</span></button><button data-ui="en" lang="en" aria-label="English" title="English"><span class="l">English</span><span class="s">EN</span></button>
 </div>
 
 <header class="hero">
@@ -790,6 +794,14 @@ function setLang(l){
   applyStatic();renderAll();
 }
 document.querySelectorAll("#uilang button").forEach(b=>b.onclick=()=>setLang(b.dataset.ui));
+// Keep the switcher on one line: full names when they fit, LB/DE/FR/EN when they don't
+function fitUilang(){
+  const g=document.getElementById("uilang"),bs=[...g.children];g.classList.remove("compact");
+  const need=bs.reduce((n,x)=>n+x.offsetWidth,0)+parseFloat(getComputedStyle(g).columnGap||0)*(bs.length-1);
+  if(need>g.clientWidth)g.classList.add("compact");
+}
+addEventListener("resize",fitUilang);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitUilang);
 
 function renderChips(){
   const c=document.getElementById("chips");
@@ -896,6 +908,7 @@ function initSpy(){
   update();
 }
 applyStatic();
+fitUilang();
 initPack();
 initSpy();
 renderAll();
