@@ -34,7 +34,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
   background-image:radial-gradient(rgba(120,100,60,.06) 1px,transparent 1px);background-size:5px 5px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
 .wrap{max-width:760px;margin:0 auto;padding:0 18px 60px;overflow-wrap:break-word}
-html[lang="de"] .wrap{hyphens:auto}
+@media (max-width:480px){html[lang="de"] .wrap{hyphens:auto}}
 a{color:var(--blue)}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px dashed var(--red);outline-offset:3px}
@@ -74,7 +74,7 @@ p.lede{margin:0 0 16px;color:var(--pencil);font-style:italic}
 
 /* how it works */
 .rhythm{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
-.rhythm li{display:grid;grid-template-columns:fit-content(132px) minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.rhythm li{display:grid;grid-template-columns:132px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--rule)}
 .rhythm b{font-family:var(--type);font-weight:400;color:var(--red)}
 .note{font-family:var(--type);font-size:14px;color:var(--pencil);border-left:3px solid var(--blue);padding:6px 0 6px 12px;margin:16px 0}
 .inferred{font-family:var(--type);font-size:12.5px;color:var(--blue);border:1px dashed var(--blue);padding:0 5px;margin-left:6px;white-space:nowrap;vertical-align:2px}
@@ -200,7 +200,7 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
   .ev{grid-template-columns:64px minmax(0,1fr);gap:10px}
   .ev .t{font-size:14px}
   .ev .b{padding-left:14px}
-  .rhythm li{grid-template-columns:fit-content(118px) minmax(0,1fr)}
+  .rhythm li{grid-template-columns:minmax(0,1fr);gap:2px}
   .plan div{grid-template-columns:92px minmax(0,1fr)}
 }
 @media (prefers-reduced-motion:no-preference){
