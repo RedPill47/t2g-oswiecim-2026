@@ -162,9 +162,6 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
 .bcol p{margin:0 0 8px}
 .bcol .bq{font-family:var(--type);font-size:13px;color:var(--pencil);margin:0 0 2px}
 .bcol mark{background:transparent;color:var(--red);border:1.5px solid var(--red);padding:0 4px;font-family:var(--type);font-size:14px}
-.rules{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
-.rules li{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:17px}
-.rules b{font-family:var(--type);font-weight:400;color:var(--red)}
 .packh{font-family:var(--type);font-weight:400;font-size:20px;margin:22px 0 8px}
 .pack{background:var(--sheet);border:1px solid var(--rule);padding:6px 14px}
 .pack label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dotted var(--rule);font-size:17px;cursor:pointer}
@@ -263,10 +260,6 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
 </section>
 
 <section id="thu" class="day"><h2 data-t="d_thu">Thursday 29 October<small>Departure</small></h2><div id="d-thu"></div>
-  <ul class="rules">
-    <li data-t="rl_seats"><b>Seats</b>Students go upstairs, grouped by school so teachers can count them after every stop. Teachers, private participants and committee members sit downstairs, as space allows.</li>
-    <li data-t="rl_lug"><b>Luggage</b>Goes in the bus that shows your name or your school’s name on its poster.</li>
-  </ul>
   <h3 class="packh" data-t="packh">Before you leave</h3>
   <div class="pack" id="pack">
     <label><input type="checkbox" data-k="id"> <span data-t="pk_id">Identity card or passport, checked before boarding</span></label>
@@ -392,12 +385,6 @@ const STR={
  d_sun:{de:"Sonntag, 1. November<small>Birkenau, Gedenkfeier, Workshops, Abschluss</small>",fr:"Dimanche 1er novembre<small>Birkenau, cérémonie, ateliers, clôture</small>",lb:"Sonndeg, 1. November<small>Birkenau, Gedenkfeier, Atelieren, Ofschloss</small>"},
  d_mon:{de:"Montag, 2. November<small>Krakau, dann im Bus zurück</small>",fr:"Lundi 2 novembre<small>Cracovie, puis le bus du retour</small>",lb:"Méindeg, 2. November<small>Krakau, duerno mam Bus heem</small>"},
  d_tue:{de:"Dienstag, 3. November<small>Zurück in Luxemburg</small>",fr:"Mardi 3 novembre<small>Retour au Luxembourg</small>",lb:"Dënschdeg, 3. November<small>Zréck zu Lëtzebuerg</small>"},
- rl_seats:{de:"<b>Plätze</b>Schülerinnen und Schüler sitzen oben, nach Schulen gruppiert, damit die Lehrkräfte sie nach jedem Halt zählen können. Lehrkräfte, Privatteilnehmende und Komiteemitglieder sitzen unten, soweit Platz ist.",
-  fr:"<b>Places</b>Les élèves montent à l’étage, regroupés par école pour que les enseignants puissent les compter après chaque arrêt. Les enseignants, participants privés et membres du comité s’installent en bas, dans la limite des places.",
-  lb:"<b>Plazen</b>D’Schüler sëtzen uewen, no Schoule gruppéiert, fir datt d’Enseignanten se no all Stopp ziele kënnen. Enseignanten, Privatpersounen a Comitésmembere sëtzen ënnen, souwäit et Plaz huet."},
- rl_lug:{de:"<b>Gepäck</b>Kommt in den Bus, auf dessen Aushang dein Name oder der Name deiner Schule steht.",
-  fr:"<b>Bagages</b>Ils vont dans le bus dont l’affiche porte votre nom ou celui de votre école.",
-  lb:"<b>Gepäck</b>Kënnt an de Bus, wou däin Numm oder deen vun denger Schoul op der Affiche steet."},
  packh:{de:"Vor der Abfahrt",fr:"Avant de partir",lb:"Ier s du fortfiers"},
  pk_id:{de:"Personalausweis oder Reisepass, wird vor dem Einsteigen kontrolliert",fr:"Carte d’identité ou passeport, contrôlé avant l’embarquement",lb:"Identitéitskaart oder Pass, gëtt virum Astige kontrolléiert"},
  pk_coat:{de:"Warme, wasserdichte Kleidung für viele Stunden draußen",fr:"Vêtements chauds et imperméables pour de longues heures dehors",lb:"Waarm, waasserdicht Kleeder fir laang Stonnen dobaussen"},
