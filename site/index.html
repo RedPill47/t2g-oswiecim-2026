@@ -38,9 +38,15 @@ a{color:var(--blue)}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px dashed var(--red);outline-offset:3px}
 
+/* page language */
+.uilang{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;margin:14px 0 0}
+.uilang button{font-family:var(--type);font-size:14px;background:transparent;border:1px solid var(--rule);color:var(--pencil);padding:4px 9px;border-radius:2px;cursor:pointer}
+.uilang button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
 /* hero */
 .hero{position:relative;margin:22px 0 28px;background:var(--sheet);padding:30px 24px 26px 46px;border:1px solid var(--rule);
   box-shadow:2px 3px 0 var(--rule)}
+.uilang+.hero{margin-top:12px}
 .hero::before{content:"";position:absolute;left:14px;top:24px;bottom:24px;width:12px;
   background:radial-gradient(circle,var(--paper) 4.5px,transparent 5px) 0 0/12px 44px repeat-y}
 .hero .file{font-family:var(--type);font-size:15px;color:var(--pencil);margin:0 0 14px}
@@ -106,6 +112,7 @@ p.lede{margin:0 0 16px;color:var(--pencil);font-style:italic}
 .opt h4{margin:0;font-size:18.5px;line-height:1.25;font-weight:600;padding-right:4px}
 .opt .orig{font-style:italic;color:var(--pencil);font-size:15.5px;margin:1px 0 6px}
 .opt .who{font-size:16px;margin:0 0 8px}
+.opt h4+.who{margin-top:4px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .room{font-family:var(--type);font-size:13px;color:var(--red);border:1.5px solid var(--red);padding:1px 6px;transform:rotate(-1.5deg);display:inline-block}
 .lg{font-family:var(--type);font-size:13px;color:var(--blue);border:1px solid var(--blue);padding:1px 5px}
@@ -178,6 +185,7 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
 @media (max-width:480px){.route{grid-template-columns:1fr 1fr}.route li:nth-child(2){border-right:none}.route li:nth-child(-n+2){border-bottom:1px dashed var(--rule)}}
 @media (max-width:480px){
   body{font-size:17px}
+  .uilang button{font-size:13px;padding:4px 7px}
   .hero{padding:26px 16px 22px 38px}
   .hero::before{left:10px}
   .stamp-big{position:static;display:inline-block;margin:0 0 14px;transform:rotate(-3deg)}
@@ -194,280 +202,646 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
 <body>
 <div class="wrap">
 
+<div class="uilang" id="uilang" role="group" aria-label="Page language">
+  <button data-ui="lb" lang="lb">Lëtzebuergesch</button><button data-ui="de" lang="de">Deutsch</button><button data-ui="fr" lang="fr">Français</button><button data-ui="en" lang="en">English</button>
+</div>
+
 <header class="hero">
-  <div class="stamp-big">PROVISIONAL<br>PROGRAMME</div>
-  <p class="file">File no. 29 – study trip</p>
+  <div class="stamp-big" data-t="h_stamp">PROVISIONAL<br>PROGRAMME</div>
+  <p class="file" data-t="h_file">File no. 29 – study trip</p>
   <h1>Oświęcim<br>29.X – 3.XI.2026</h1>
   <dl>
-    <dt>Dates</dt><dd>Thu 29 Oct – Tue 3 Nov 2026</dd>
-    <dt>Bus</dt><dd>Voyages Léonard, overnight both ways</dd>
-    <dt>Base</dt><dd>IJBS, International Youth Meeting Centre, Oświęcim</dd>
-    <dt>Organiser</dt><dd>Témoins de la 2e Génération (T2G), <a href="mailto:info@temoins.lu">info@temoins.lu</a></dd>
+    <dt data-t="h_dates">Dates</dt><dd data-t="h_dates_v">Thu 29 Oct – Tue 3 Nov 2026</dd>
+    <dt data-t="h_bus">Bus</dt><dd data-t="h_bus_v">Voyages Léonard, overnight both ways</dd>
+    <dt data-t="h_base">Base</dt><dd data-t="h_base_v">IJBS, International Youth Meeting Centre, Oświęcim</dd>
+    <dt data-t="h_org">Organiser</dt><dd>Témoins de la 2e Génération (T2G), <a href="mailto:info@temoins.lu">info@temoins.lu</a></dd>
   </dl>
 </header>
 
 <nav class="tabs" aria-label="Sections">
-  <a href="#how">Overview</a><a href="#thu" data-d="2026-10-29">Thu</a><a href="#fri" data-d="2026-10-30">Fri</a><a href="#sat" data-d="2026-10-31">Sat</a><a href="#sun" data-d="2026-11-01">Sun</a><a href="#mon" data-d="2026-11-02">Mon</a><a href="#tue" data-d="2026-11-03">Tue</a><a href="#prep">Prepare</a><a href="#people">Who</a><a href="#words">Words</a>
+  <a href="#how" data-t="n_how">Overview</a><a href="#thu" data-d="2026-10-29" data-t="n_thu">Thu</a><a href="#fri" data-d="2026-10-30" data-t="n_fri">Fri</a><a href="#sat" data-d="2026-10-31" data-t="n_sat">Sat</a><a href="#sun" data-d="2026-11-01" data-t="n_sun">Sun</a><a href="#mon" data-d="2026-11-02" data-t="n_mon">Mon</a><a href="#tue" data-d="2026-11-03" data-t="n_tue">Tue</a><a href="#prep" data-t="n_prep">Prepare</a><a href="#people" data-t="n_people">Who</a><a href="#words" data-t="n_words">Words</a>
 </nav>
 
 <section id="how">
-  <h2>The trip at a glance</h2>
-  <p class="lede">Six days: a night on the bus, three days in Oświęcim, a day in Kraków, a night on the bus home.</p>
+  <h2 data-t="how_h">The trip at a glance</h2>
+  <p class="lede" data-t="how_lede">Six days: a night on the bus, three days in Oświęcim, a day in Kraków, a night on the bus home.</p>
   <ol class="route">
-    <li><b>Thu night</b>Luxembourg, by bus</li>
-    <li><b>Fri – Sun</b>Oświęcim</li>
-    <li><b>Mon</b>Kraków</li>
-    <li><b>Tue</b>Home, early afternoon</li>
+    <li data-t="r1"><b>Thu night</b>Luxembourg, by bus</li>
+    <li data-t="r2"><b>Fri – Sun</b>Oświęcim</li>
+    <li data-t="r3"><b>Mon</b>Kraków</li>
+    <li data-t="r4"><b>Tue</b>Home, early afternoon</li>
   </ol>
-  <h2>How the Oświęcim days work</h2>
-  <p class="lede">Friday to Sunday in four lines.</p>
+  <h2 data-t="days_h">How the Oświęcim days work</h2>
+  <p class="lede" data-t="days_lede">Friday to Sunday in four lines.</p>
   <ul class="rhythm">
-    <li><b>Mornings</b><span>Saturday and Sunday mornings are the memorial sites, each followed by a commemoration ceremony: the main camp (Auschwitz I) and the Wall of Death on Saturday, Birkenau (Auschwitz II) and the International Monument on Sunday.</span></li>
-    <li><b>Afternoons</b><span>Two slots each day, <strong>15:00</strong> and <strong>16:30</strong>. You pick <strong>one</strong> option per slot. Workshops run in named rooms at the IJBS; visits leave from the Forum / Reception.</span></li>
-    <li><b>Evenings</b><span>Saturday 20:00: study groups. Chaperones, private participants, teachers, educators and university students have a meeting in the Library at 19:30 on Friday, Saturday and Sunday.</span></li>
-    <li><b>Any time</b><span>Cards and pens are laid out around the IJBS. Write or draw what moves you, in any language, and hang it on the line in the foyer. The Hannah Arendt exhibition is open to visit on your own.</span></li>
+    <li data-t="rh1"><b>Mornings</b><span>Saturday and Sunday mornings are the memorial sites, each followed by a commemoration ceremony: the main camp (Auschwitz I) and the Wall of Death on Saturday, Birkenau (Auschwitz II) and the International Monument on Sunday.</span></li>
+    <li data-t="rh2"><b>Afternoons</b><span>Two slots each day, <strong>15:00</strong> and <strong>16:30</strong>. You pick <strong>one</strong> option per slot. Workshops run in named rooms at the IJBS; visits leave from the Forum / Reception.</span></li>
+    <li data-t="rh3"><b>Evenings</b><span>Saturday 20:00: study groups. Chaperones, private participants, teachers, educators and university students have a meeting in the Library at 19:30 on Friday, Saturday and Sunday.</span></li>
+    <li data-t="rh4"><b>Any time</b><span>Cards and pens are laid out around the IJBS. Write or draw what moves you, in any language, and hang it on the line in the foyer. The Hannah Arendt exhibition is open to visit on your own.</span></li>
   </ul>
-  <p class="note">Still not in the documents: meal times and the exact start of the morning visits. Ask your group leader.</p>
+  <p class="note" data-t="how_note">Still not in the documents: meal times and the exact start of the morning visits. Ask your group leader.</p>
 
-  <h2>Your filters<small>Tap the languages you follow comfortably</small></h2>
+  <h2 data-t="filt_h">Your filters<small>Tap the languages you follow comfortably</small></h2>
   <div class="langbox">
-    <p>Options outside your languages fade out. A dashed stamp means the language is only partly used.</p>
+    <p data-t="filt_p">Options outside your languages fade out. A dashed stamp means the language is only partly used.</p>
     <div class="chips" id="chips"></div>
     <div id="langsum" style="margin-top:12px"></div>
   </div>
 
-  <h2>Your dossier<small>Pick one option in each slot below; it’s saved on this phone</small></h2>
+  <h2 data-t="doss_h">Your dossier<small>Pick one option in each slot below; it’s saved on this phone</small></h2>
   <div class="plan" id="plan"></div>
   <p class="warn" id="warn" hidden></p>
 </section>
 
-<section id="thu" class="day"><h2>Thursday 29 October<small>Departure</small></h2><div id="d-thu"></div>
+<section id="thu" class="day"><h2 data-t="d_thu">Thursday 29 October<small>Departure</small></h2><div id="d-thu"></div>
   <ul class="rules">
-    <li><b>Seats</b>Students go upstairs, grouped by school so teachers can count them after every stop. Teachers, private participants and committee members sit downstairs, as space allows.</li>
-    <li><b>Luggage</b>Goes in the bus that shows your name or your school’s name on its poster.</li>
+    <li data-t="rl_seats"><b>Seats</b>Students go upstairs, grouped by school so teachers can count them after every stop. Teachers, private participants and committee members sit downstairs, as space allows.</li>
+    <li data-t="rl_lug"><b>Luggage</b>Goes in the bus that shows your name or your school’s name on its poster.</li>
   </ul>
-  <h3 class="packh">Before you leave</h3>
+  <h3 class="packh" data-t="packh">Before you leave</h3>
   <div class="pack" id="pack">
-    <label><input type="checkbox" data-k="id"> Identity card or passport, checked before boarding</label>
-    <label><input type="checkbox" data-k="coat"> Warm, waterproof clothes for long hours outside</label>
-    <label><input type="checkbox" data-k="shoes"> Warm, waterproof shoes</label>
-    <label><input type="checkbox" data-k="meteo"> Checked the forecast for Oświęcim</label>
-    <label><input type="checkbox" data-k="dl"> Downloaded what you want to read or watch on the bus</label>
+    <label><input type="checkbox" data-k="id"> <span data-t="pk_id">Identity card or passport, checked before boarding</span></label>
+    <label><input type="checkbox" data-k="coat"> <span data-t="pk_coat">Warm, waterproof clothes for long hours outside</span></label>
+    <label><input type="checkbox" data-k="shoes"> <span data-t="pk_shoes">Warm, waterproof shoes</span></label>
+    <label><input type="checkbox" data-k="meteo"> <span data-t="pk_meteo">Checked the forecast for Oświęcim</span></label>
+    <label><input type="checkbox" data-k="dl"> <span data-t="pk_dl">Downloaded what you want to read or watch on the bus</span></label>
   </div>
 </section>
-<section id="fri" class="day"><h2>Friday 30 October<small>Arrival and first evening</small></h2><div id="d-fri"></div></section>
-<section id="sat" class="day"><h2>Saturday 31 October<small>Main camp, ceremony, workshops</small></h2><div id="d-sat"></div></section>
-<section id="sun" class="day"><h2>Sunday 1 November<small>Birkenau, ceremony, workshops, closing</small></h2><div id="d-sun"></div></section>
-<section id="mon" class="day"><h2>Monday 2 November<small>Kraków, then the bus home</small></h2><div id="d-mon"></div></section>
-<section id="tue" class="day"><h2>Tuesday 3 November<small>Back in Luxembourg</small></h2><div id="d-tue"></div></section>
+<section id="fri" class="day"><h2 data-t="d_fri">Friday 30 October<small>Arrival and first evening</small></h2><div id="d-fri"></div></section>
+<section id="sat" class="day"><h2 data-t="d_sat">Saturday 31 October<small>Main camp, ceremony, workshops</small></h2><div id="d-sat"></div></section>
+<section id="sun" class="day"><h2 data-t="d_sun">Sunday 1 November<small>Birkenau, ceremony, workshops, closing</small></h2><div id="d-sun"></div></section>
+<section id="mon" class="day"><h2 data-t="d_mon">Monday 2 November<small>Kraków, then the bus home</small></h2><div id="d-mon"></div></section>
+<section id="tue" class="day"><h2 data-t="d_tue">Tuesday 3 November<small>Back in Luxembourg</small></h2><div id="d-tue"></div></section>
 
 <section id="prep">
-  <h2>Prepare<small>What the association recommends before you go</small></h2>
+  <h2 data-t="prep_h">Prepare<small>What the association recommends before you go</small></h2>
   <ul class="res">
-    <li><a href="https://view.genial.ly/624abc4ff9804b00124dc01c" target="_blank" rel="noopener">Multibook in French</a>: the Auschwitz-Birkenau State Museum’s digital guide to the history of the camp. Also in <a href="https://view.genial.ly/61dd5ae894728d0df6eb1628" target="_blank" rel="noopener">English</a> and <a href="https://view.genial.ly/629856fbefe7970013657a85" target="_blank" rel="noopener">German</a>.</li>
-    <li><a href="https://www.zdf.de/dokumentation/dokumentation-sonstige/ein-tag-in-auschwitz-108.html" target="_blank" rel="noopener">Ein Tag in Auschwitz</a>: ZDF documentary (2020, German) about one day in May 1944, told from the victims’ point of view and some perpetrators’.</li>
-    <li><a href="https://www.50faces.lu/" target="_blank" rel="noopener">50Faces – 50 Stories</a>: 50 wartime biographies seen from Luxembourg – occupation, injustice, dictatorship, genocide. The same tool Yannick Frantz presents on Friday.</li>
-    <li><a href="https://temoins.lu/wp-content/uploads/2023/03/2022_Brochure_info.pdf" target="_blank" rel="noopener">Information brochure (PDF)</a>: the association’s general brochure, 2022 edition.</li>
+    <li data-t="p1"><a href="https://view.genial.ly/624abc4ff9804b00124dc01c" target="_blank" rel="noopener">Multibook in French</a>: the Auschwitz-Birkenau State Museum’s digital guide to the history of the camp. Also in <a href="https://view.genial.ly/61dd5ae894728d0df6eb1628" target="_blank" rel="noopener">English</a> and <a href="https://view.genial.ly/629856fbefe7970013657a85" target="_blank" rel="noopener">German</a>.</li>
+    <li data-t="p2"><a href="https://www.zdf.de/dokumentation/dokumentation-sonstige/ein-tag-in-auschwitz-108.html" target="_blank" rel="noopener">Ein Tag in Auschwitz</a>: ZDF documentary (2020, German) about one day in May 1944, told from the victims’ point of view and some perpetrators’.</li>
+    <li data-t="p3"><a href="https://www.50faces.lu/" target="_blank" rel="noopener">50Faces – 50 Stories</a>: 50 wartime biographies seen from Luxembourg – occupation, injustice, dictatorship, genocide. The same tool Yannick Frantz presents on Friday.</li>
+    <li data-t="p4"><a href="https://temoins.lu/wp-content/uploads/2023/03/2022_Brochure_info.pdf" target="_blank" rel="noopener">Information brochure (PDF)</a>: the association’s general brochure, 2022 edition.</li>
   </ul>
-  <p class="note">The bus leaves Thursday night and arrives Friday afternoon. Download anything you want to read or watch before you leave; this page needs a connection to open.</p>
+  <p class="note" data-t="prep_note">The bus leaves Thursday night and arrives Friday afternoon. Download anything you want to read or watch before you leave; this page needs a connection to open.</p>
 </section>
 
 <section id="people">
-  <h2>Who’s who</h2>
-  <p class="lede">The people leading sessions, and where to find them.</p>
+  <h2 data-t="people_h">Who’s who</h2>
+  <p class="lede" data-t="people_lede">The people leading sessions, and where to find them.</p>
   <div class="people" id="plist"></div>
 </section>
 
 <section id="words">
-  <h2>Words you’ll hear</h2>
+  <h2 data-t="words_h">Words you’ll hear</h2>
   <dl class="gloss">
-    <dt>Oświęcim / Auschwitz</dt><dd>Oświęcim is the Polish town (about 40,000 people today). Auschwitz is its German name, used by the Nazis for the camp complex built there.</dd>
-    <dt>Stammlager – Auschwitz I</dt><dd>The original main camp, with the brick blocks. Block 10 and Block 11 (the standing cells) are part of it.</dd>
-    <dt>Birkenau – Auschwitz II</dt><dd>The much larger camp a few kilometres away, where most victims were murdered. The programme calls it the “death factory”.</dd>
-    <dt>IJBS</dt><dd>Internationale Jugendbegegnungsstätte – the International Youth Meeting Centre in Oświęcim. Every room in the planning (House of Silence, Oppenheimer, Szymanski, Przybylski, Library, Café, Forum) is here.</dd>
-    <dt>Zeitzeuge, 2nd / 3rd generation</dt><dd>A witness. The 2nd generation are children of people persecuted during the Shoah; the 3rd generation are grandchildren.</dd>
-    <dt>Shoah</dt><dd>The Hebrew word for the Holocaust, the murder of six million European Jews.</dd>
-    <dt>Sonderkommando</dt><dd>Prisoners forced to work at the gas chambers and crematoria.</dd>
-    <dt>Death march (Todesmarsch)</dt><dd>The forced evacuation of prisoners on foot in January 1945, as the Soviet army approached.</dd>
-    <dt>Wall of Death (mur des fusillés)</dt><dd>The execution wall in the courtyard between Blocks 10 and 11 of the main camp, where thousands of prisoners were shot. Saturday’s ceremony takes place here.</dd>
-    <dt>International Monument</dt><dd>The memorial to the victims at the end of the railway ramp in Birkenau, between the ruins of crematoria II and III. Sunday’s ceremony takes place here.</dd>
-    <dt>Kazimierz</dt><dd>Kraków’s old Jewish quarter, which you visit on Monday.</dd>
-    <dt>Language codes</dt><dd>L = Luxembourgish, D = German, F = French, E = English. A letter in brackets means it’s used partly.</dd>
-    <dt>mod.</dt><dd>Moderated by – the person hosting a talk.</dd>
-    <dt>Jonker fir Jonker</dt><dd>Luxembourgish for “young people for young people”: sessions led by students who did the trip before.</dd>
+    <dt>Oświęcim / Auschwitz</dt><dd data-t="g1">Oświęcim is the Polish town (about 40,000 people today). Auschwitz is its German name, used by the Nazis for the camp complex built there.</dd>
+    <dt data-t="g2t">Stammlager – Auschwitz I</dt><dd data-t="g2">The original main camp, with the brick blocks. Block 10 and Block 11 (the standing cells) are part of it.</dd>
+    <dt>Birkenau – Auschwitz II</dt><dd data-t="g3">The much larger camp a few kilometres away, where most victims were murdered. The programme calls it the “death factory”.</dd>
+    <dt>IJBS</dt><dd data-t="g4">Internationale Jugendbegegnungsstätte – the International Youth Meeting Centre in Oświęcim. Every room in the planning (House of Silence, Oppenheimer, Szymanski, Przybylski, Library, Café, Forum) is here.</dd>
+    <dt data-t="g5t">Zeitzeuge, 2nd / 3rd generation</dt><dd data-t="g5">A witness. The 2nd generation are children of people persecuted during the Shoah; the 3rd generation are grandchildren.</dd>
+    <dt>Shoah</dt><dd data-t="g6">The Hebrew word for the Holocaust, the murder of six million European Jews.</dd>
+    <dt>Sonderkommando</dt><dd data-t="g7">Prisoners forced to work at the gas chambers and crematoria.</dd>
+    <dt data-t="g8t">Death march (Todesmarsch)</dt><dd data-t="g8">The forced evacuation of prisoners on foot in January 1945, as the Soviet army approached.</dd>
+    <dt data-t="g9t">Wall of Death (mur des fusillés)</dt><dd data-t="g9">The execution wall in the courtyard between Blocks 10 and 11 of the main camp, where thousands of prisoners were shot. Saturday’s ceremony takes place here.</dd>
+    <dt data-t="g10t">International Monument</dt><dd data-t="g10">The memorial to the victims at the end of the railway ramp in Birkenau, between the ruins of crematoria II and III. Sunday’s ceremony takes place here.</dd>
+    <dt>Kazimierz</dt><dd data-t="g11">Kraków’s old Jewish quarter, which you visit on Monday.</dd>
+    <dt data-t="g12t">Language codes</dt><dd data-t="g12">L = Luxembourgish, D = German, F = French, E = English. A letter in brackets means it’s used partly.</dd>
+    <dt>mod.</dt><dd data-t="g13">Moderated by – the person hosting a talk.</dd>
+    <dt>Jonker fir Jonker</dt><dd data-t="g14">Luxembourgish for “young people for young people”: sessions led by students who did the trip before.</dd>
   </dl>
 </section>
 
-<footer>Unofficial guide made by a participant. The official programme is the one from Témoins de la 2e Génération; if anything differs, theirs is right. Compiled from the T2G planning and workshop descriptions (26.10.26), the printed “Programme et informations pratiques 2026” and temoins.lu. The workshop programme is marked provisional: rooms and times can change on site.</footer>
+<footer data-t="foot">Unofficial guide made by a participant. The official programme is the one from Témoins de la 2e Génération; if anything differs, theirs is right. Compiled from the T2G planning and workshop descriptions (26.10.26), the printed “Programme et informations pratiques 2026” and temoins.lu. The workshop programme is marked provisional: rooms and times can change on site.</footer>
 </div>
 
 <script>
+/* Page languages. English lives in the HTML above; every [data-t] element gets
+   its other languages from STR. Content in the scripts below is written as
+   {en,de,fr,lb} objects; a plain string means "the same in every language". */
+const UIL=["lb","de","fr","en"];
+const A=(u,t)=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
+const MB_FR="https://view.genial.ly/624abc4ff9804b00124dc01c",MB_EN="https://view.genial.ly/61dd5ae894728d0df6eb1628",MB_DE="https://view.genial.ly/629856fbefe7970013657a85";
+const ZDF="https://www.zdf.de/dokumentation/dokumentation-sonstige/ein-tag-in-auschwitz-108.html",F50="https://www.50faces.lu/",BRO="https://temoins.lu/wp-content/uploads/2023/03/2022_Brochure_info.pdf";
+
+const STR={
+ title:{de:"Oświęcim 2026 – Reisedossier",fr:"Oświęcim 2026 – Dossier de voyage",lb:"Oświęcim 2026 – Reesdossier"},
+ h_stamp:{de:"VORLÄUFIGES<br>PROGRAMM",fr:"PROGRAMME<br>PROVISOIRE",lb:"PROVISORESCHE<br>PROGRAMM"},
+ h_file:{de:"Akte Nr. 29 – Studienreise",fr:"Dossier n° 29 – voyage d’études",lb:"Dossier Nr. 29 – Studiereis"},
+ h_dates:{de:"Datum",fr:"Dates",lb:"Datum"},
+ h_dates_v:{de:"Do. 29. Okt. – Di. 3. Nov. 2026",fr:"jeu. 29 oct. – mar. 3 nov. 2026",lb:"Do. 29. Okt. – Dë. 3. Nov. 2026"},
+ h_bus:{de:"Bus",fr:"Bus",lb:"Bus"},
+ h_bus_v:{de:"Voyages Léonard, hin und zurück über Nacht",fr:"Voyages Léonard, de nuit à l’aller et au retour",lb:"Voyages Léonard, hin an zréck iwwer Nuecht"},
+ h_base:{de:"Unterkunft",fr:"Hébergement",lb:"Ënnerkonft"},
+ h_base_v:{de:"IJBS, Internationale Jugendbegegnungsstätte, Oświęcim",fr:"IJBS, Centre international de rencontres de jeunes, Oświęcim",lb:"IJBS, Internationale Jugendbegegnungsstätte, Oświęcim"},
+ h_org:{de:"Veranstalter",fr:"Organisateur",lb:"Organisateur"},
+ n_how:{de:"Überblick",fr:"Aperçu",lb:"Iwwerbléck"},
+ n_thu:{de:"Do",fr:"Jeu",lb:"Do"},
+ n_fri:{de:"Fr",fr:"Ven",lb:"Fr"},
+ n_sat:{de:"Sa",fr:"Sam",lb:"Sa"},
+ n_sun:{de:"So",fr:"Dim",lb:"So"},
+ n_mon:{de:"Mo",fr:"Lun",lb:"Mé"},
+ n_tue:{de:"Di",fr:"Mar",lb:"Dë"},
+ n_prep:{de:"Vorbereiten",fr:"Préparer",lb:"Virbereeden"},
+ n_people:{de:"Wer",fr:"Qui",lb:"Wien"},
+ n_words:{de:"Begriffe",fr:"Lexique",lb:"Wierder"},
+ how_h:{de:"Die Reise auf einen Blick",fr:"Le voyage en un coup d’œil",lb:"D’Rees op ee Bléck"},
+ how_lede:{de:"Sechs Tage: eine Nacht im Bus, drei Tage in Oświęcim, ein Tag in Krakau, eine Nacht im Bus zurück.",
+  fr:"Six jours : une nuit dans le bus, trois jours à Oświęcim, une journée à Cracovie, une nuit dans le bus du retour.",
+  lb:"Sechs Deeg: eng Nuecht am Bus, dräi Deeg zu Oświęcim, een Dag zu Krakau, eng Nuecht am Bus heem."},
+ r1:{de:"<b>Do. Nacht</b>Luxemburg, mit dem Bus",fr:"<b>Nuit de jeudi</b>Luxembourg, en bus",lb:"<b>Do. Nuecht</b>Lëtzebuerg, mam Bus"},
+ r2:{de:"<b>Fr. – So.</b>Oświęcim",fr:"<b>Ven. – dim.</b>Oświęcim",lb:"<b>Fr. – So.</b>Oświęcim"},
+ r3:{de:"<b>Mo.</b>Krakau",fr:"<b>Lun.</b>Cracovie",lb:"<b>Mé.</b>Krakau"},
+ r4:{de:"<b>Di.</b>Zurück, früher Nachmittag",fr:"<b>Mar.</b>Retour, en début d’après-midi",lb:"<b>Dë.</b>Heem, fréi am Nomëtteg"},
+ days_h:{de:"So laufen die Tage in Oświęcim ab",fr:"Comment se déroulent les journées à Oświęcim",lb:"Esou lafen d’Deeg zu Oświęcim of"},
+ days_lede:{de:"Freitag bis Sonntag in vier Zeilen.",fr:"Du vendredi au dimanche en quatre lignes.",lb:"Freideg bis Sonndeg a véier Zeilen."},
+ rh1:{de:"<b>Vormittags</b><span>Samstag- und Sonntagvormittag stehen die Gedenkstätten auf dem Programm, jeweils gefolgt von einer Gedenkfeier: am Samstag das Stammlager (Auschwitz I) und die Todeswand, am Sonntag Birkenau (Auschwitz II) und das Internationale Mahnmal.</span>",
+  fr:"<b>Matins</b><span>Les matinées du samedi et du dimanche sont consacrées aux sites mémoriels, chacune suivie d’une cérémonie de commémoration : le camp principal (Auschwitz I) et le mur des fusillés le samedi, Birkenau (Auschwitz II) et le Monument international le dimanche.</span>",
+  lb:"<b>Moies</b><span>Samschdes a sonndes moies stinn d’Gedenkstätten um Programm, all Kéier gefollegt vun enger Gedenkfeier: samschdes de Stammlager (Auschwitz I) an d’Doudesmauer, sonndes Birkenau (Auschwitz II) an den Internationale Monument.</span>"},
+ rh2:{de:"<b>Nachmittags</b><span>Jeden Tag zwei Zeitfenster, <strong>15:00</strong> und <strong>16:30</strong>. Du wählst <strong>ein</strong> Angebot pro Zeitfenster. Die Workshops finden in den Räumen der IJBS statt; die Besichtigungen starten am Forum / an der Rezeption.</span>",
+  fr:"<b>Après-midi</b><span>Deux créneaux par jour, <strong>15:00</strong> et <strong>16:30</strong>. Vous choisissez <strong>une</strong> activité par créneau. Les ateliers ont lieu dans les salles de l’IJBS ; les visites partent du Forum / de l’accueil.</span>",
+  lb:"<b>Nomëttes</b><span>All Dag zwou Zäitfënsteren, <strong>15:00</strong> an <strong>16:30</strong>. Du wiels <strong>eng</strong> Optioun pro Zäitfënster. D’Atelieren fannen an de Säll vun der IJBS statt; d’Visitte fänken um Forum / bei der Receptioun un.</span>"},
+ rh3:{de:"<b>Abends</b><span>Samstag 20:00: Studiengruppen. Begleitpersonen, Privatteilnehmende, Lehrkräfte, Erziehende und Studierende treffen sich freitags, samstags und sonntags um 19:30 in der Bibliothek.</span>",
+  fr:"<b>Soirées</b><span>Samedi 20:00 : groupes d’étude. Les accompagnateurs, participants privés, enseignants, éducateurs et étudiants se réunissent à la Bibliothèque à 19:30 le vendredi, le samedi et le dimanche.</span>",
+  lb:"<b>Owes</b><span>Samschdeg 20:00: Studiegruppen. Begleetpersounen, Privatpersounen, Enseignanten, Educateuren a Studenten hunn freides, samschdes a sonndes um 19:30 eng Reunioun an der Bibliothéik.</span>"},
+ rh4:{de:"<b>Jederzeit</b><span>In der IJBS liegen überall Karten und Stifte aus. Schreib oder zeichne, was dich bewegt, in jeder Sprache, und häng es an die Leine im Foyer. Die Hannah-Arendt-Ausstellung kannst du auf eigene Faust besuchen.</span>",
+  fr:"<b>À tout moment</b><span>Des cartes et des stylos sont disposés un peu partout à l’IJBS. Écrivez ou dessinez ce qui vous touche, dans la langue de votre choix, et accrochez-le à la corde dans le foyer. L’exposition sur Hannah Arendt se visite librement.</span>",
+  lb:"<b>Zu all Moment</b><span>An der IJBS leien iwwerall Kaarten a Bicen. Schreif oder mol, wat dech beréiert, an all Sprooch, an hänk et un d’Schnouer am Foyer. D’Hannah-Arendt-Ausstellung kanns du op eegen Hand besichen.</span>"},
+ how_note:{de:"Steht noch nicht in den Unterlagen: Essenszeiten und der genaue Beginn der Besichtigungen am Vormittag. Frag deine Gruppenleitung.",
+  fr:"Pas encore dans les documents : les heures des repas et l’heure exacte du début des visites du matin. Demandez à votre responsable de groupe.",
+  lb:"Nach net an den Dokumenter: d’Iesszäiten an de genauen Ufank vun de Visitte moies. Fro deng Gruppeleedung."},
+ filt_h:{de:"Deine Filter<small>Tippe die Sprachen an, denen du gut folgen kannst</small>",
+  fr:"Vos filtres<small>Touchez les langues que vous suivez sans difficulté</small>",
+  lb:"Deng Filteren<small>Tipp d’Sproochen un, déi s du gutt verstees</small>"},
+ filt_p:{de:"Angebote außerhalb deiner Sprachen werden blass. Ein gestrichelter Stempel heißt: Die Sprache wird nur teilweise verwendet.",
+  fr:"Les activités hors de vos langues s’estompent. Un tampon en pointillés signifie que la langue n’est utilisée qu’en partie.",
+  lb:"Optiounen ausserhalb vun denge Sproochen gi blass. E Stempel mat Strécher heescht, datt d’Sprooch nëmmen deelweis benotzt gëtt."},
+ doss_h:{de:"Dein Dossier<small>Wähl unten in jedem Zeitfenster ein Angebot; es wird auf diesem Handy gespeichert</small>",
+  fr:"Votre dossier<small>Choisissez une activité par créneau ci-dessous ; votre choix est enregistré sur ce téléphone</small>",
+  lb:"Däin Dossier<small>Wiel ënnen an all Zäitfënster eng Optioun; dat gëtt op dësem Handy gespäichert</small>"},
+ d_thu:{de:"Donnerstag, 29. Oktober<small>Abfahrt</small>",fr:"Jeudi 29 octobre<small>Départ</small>",lb:"Donneschdeg, 29. Oktober<small>Ofrees</small>"},
+ d_fri:{de:"Freitag, 30. Oktober<small>Ankunft und erster Abend</small>",fr:"Vendredi 30 octobre<small>Arrivée et première soirée</small>",lb:"Freideg, 30. Oktober<small>Ukonft an éischten Owend</small>"},
+ d_sat:{de:"Samstag, 31. Oktober<small>Stammlager, Gedenkfeier, Workshops</small>",fr:"Samedi 31 octobre<small>Camp principal, cérémonie, ateliers</small>",lb:"Samschdeg, 31. Oktober<small>Stammlager, Gedenkfeier, Atelieren</small>"},
+ d_sun:{de:"Sonntag, 1. November<small>Birkenau, Gedenkfeier, Workshops, Abschluss</small>",fr:"Dimanche 1er novembre<small>Birkenau, cérémonie, ateliers, clôture</small>",lb:"Sonndeg, 1. November<small>Birkenau, Gedenkfeier, Atelieren, Ofschloss</small>"},
+ d_mon:{de:"Montag, 2. November<small>Krakau, dann im Bus zurück</small>",fr:"Lundi 2 novembre<small>Cracovie, puis le bus du retour</small>",lb:"Méindeg, 2. November<small>Krakau, duerno mam Bus heem</small>"},
+ d_tue:{de:"Dienstag, 3. November<small>Zurück in Luxemburg</small>",fr:"Mardi 3 novembre<small>Retour au Luxembourg</small>",lb:"Dënschdeg, 3. November<small>Zréck zu Lëtzebuerg</small>"},
+ rl_seats:{de:"<b>Plätze</b>Schülerinnen und Schüler sitzen oben, nach Schulen gruppiert, damit die Lehrkräfte sie nach jedem Halt zählen können. Lehrkräfte, Privatteilnehmende und Komiteemitglieder sitzen unten, soweit Platz ist.",
+  fr:"<b>Places</b>Les élèves montent à l’étage, regroupés par école pour que les enseignants puissent les compter après chaque arrêt. Les enseignants, participants privés et membres du comité s’installent en bas, dans la limite des places.",
+  lb:"<b>Plazen</b>D’Schüler sëtzen uewen, no Schoule gruppéiert, fir datt d’Enseignanten se no all Stopp ziele kënnen. Enseignanten, Privatpersounen a Comitésmembere sëtzen ënnen, souwäit et Plaz huet."},
+ rl_lug:{de:"<b>Gepäck</b>Kommt in den Bus, auf dessen Aushang dein Name oder der Name deiner Schule steht.",
+  fr:"<b>Bagages</b>Ils vont dans le bus dont l’affiche porte votre nom ou celui de votre école.",
+  lb:"<b>Gepäck</b>Kënnt an de Bus, wou däin Numm oder deen vun denger Schoul op der Affiche steet."},
+ packh:{de:"Vor der Abfahrt",fr:"Avant de partir",lb:"Ier s du fortfiers"},
+ pk_id:{de:"Personalausweis oder Reisepass, wird vor dem Einsteigen kontrolliert",fr:"Carte d’identité ou passeport, contrôlé avant l’embarquement",lb:"Identitéitskaart oder Pass, gëtt virum Astige kontrolléiert"},
+ pk_coat:{de:"Warme, wasserdichte Kleidung für viele Stunden draußen",fr:"Vêtements chauds et imperméables pour de longues heures dehors",lb:"Waarm, waasserdicht Kleeder fir laang Stonnen dobaussen"},
+ pk_shoes:{de:"Warme, wasserdichte Schuhe",fr:"Chaussures chaudes et imperméables",lb:"Waarm, waasserdicht Schong"},
+ pk_meteo:{de:"Wetterbericht für Oświęcim angeschaut",fr:"Météo d’Oświęcim consultée",lb:"Wiederbericht fir Oświęcim nogekuckt"},
+ pk_dl:{de:"Heruntergeladen, was du im Bus lesen oder schauen willst",fr:"Téléchargé ce que vous voulez lire ou regarder dans le bus",lb:"Erofgelueden, wat s du am Bus liese oder kucke wëlls"},
+ prep_h:{de:"Vorbereiten<small>Was der Verein vor der Reise empfiehlt</small>",fr:"Se préparer<small>Ce que l’association recommande avant le départ</small>",lb:"Virbereeden<small>Wat de Veräin virun der Rees recommandéiert</small>"},
+ p1:{de:`${A(MB_DE,"Multibook auf Deutsch")}: der digitale Leitfaden des Staatlichen Museums Auschwitz-Birkenau zur Geschichte des Lagers. Auch auf ${A(MB_FR,"Französisch")} und ${A(MB_EN,"Englisch")}.`,
+  fr:`${A(MB_FR,"Multibook en français")} : le guide numérique du Musée d’État d’Auschwitz-Birkenau sur l’histoire du camp. Aussi en ${A(MB_EN,"anglais")} et en ${A(MB_DE,"allemand")}.`,
+  lb:`${A(MB_FR,"Multibook op Franséisch")}: den digitale Guide vum Staatleche Musée Auschwitz-Birkenau iwwer d’Geschicht vum Lager. Och op ${A(MB_EN,"Englesch")} an op ${A(MB_DE,"Däitsch")}.`},
+ p2:{de:`${A(ZDF,"Ein Tag in Auschwitz")}: ZDF-Dokumentation (2020, Deutsch) über einen Tag im Mai 1944, erzählt aus der Sicht der Opfer und einiger Täter.`,
+  fr:`${A(ZDF,"Ein Tag in Auschwitz")} : documentaire de la ZDF (2020, en allemand) sur une journée de mai 1944, racontée du point de vue des victimes et de quelques bourreaux.`,
+  lb:`${A(ZDF,"Ein Tag in Auschwitz")}: ZDF-Dokumentatioun (2020, op Däitsch) iwwer een Dag am Mee 1944, erzielt aus der Siicht vun den Affer an e puer Täter.`},
+ p3:{de:`${A(F50,"50Faces – 50 Stories")}: 50 Biografien aus der Kriegszeit aus Luxemburger Sicht – Besatzung, Unrecht, Diktatur, Völkermord. Dasselbe Werkzeug, das Yannick Frantz am Freitag vorstellt.`,
+  fr:`${A(F50,"50Faces – 50 Stories")} : 50 biographies de la guerre vues du Luxembourg – occupation, injustice, dictature, génocide. L’outil que Yannick Frantz présente vendredi.`,
+  lb:`${A(F50,"50Faces – 50 Stories")}: 50 Biografien aus der Krichszäit aus Lëtzebuerger Siicht – Besatzung, Onrecht, Diktatur, Vëlkermord. Dat selwecht Tool, dat de Yannick Frantz e Freideg virstellt.`},
+ p4:{de:`${A(BRO,"Informationsbroschüre (PDF)")}: die allgemeine Broschüre des Vereins, Ausgabe 2022.`,
+  fr:`${A(BRO,"Brochure d’information (PDF)")} : la brochure générale de l’association, édition 2022.`,
+  lb:`${A(BRO,"Informatiounsbroschür (PDF)")}: déi allgemeng Broschür vum Veräin, Editioun 2022.`},
+ prep_note:{de:"Der Bus fährt Donnerstagnacht ab und kommt Freitagnachmittag an. Lade alles, was du lesen oder schauen willst, vor der Abfahrt herunter; diese Seite braucht zum Öffnen eine Verbindung.",
+  fr:"Le bus part jeudi soir et arrive vendredi après-midi. Téléchargez avant le départ tout ce que vous voulez lire ou regarder ; cette page a besoin d’une connexion pour s’ouvrir.",
+  lb:"De Bus fiert Donneschdeg an der Nuecht of a kënnt Freideg nomëttes un. Lued alles erof, wat s du liese oder kucke wëlls, ier s du fortfiers; dës Säit brauch eng Verbindung fir opzegoen."},
+ people_h:{de:"Wer ist wer",fr:"Qui est qui",lb:"Wien ass wien"},
+ people_lede:{de:"Die Personen, die die Programmpunkte leiten, und wo du sie findest.",fr:"Les personnes qui animent les activités, et où les trouver.",lb:"D’Leit, déi d’Programmpunkte leeden, a wou s du se fënns."},
+ words_h:{de:"Begriffe, die du hören wirst",fr:"Les mots que vous entendrez",lb:"Wierder, déi s du héiere wäerts"},
+ g1:{de:"Oświęcim ist die polnische Stadt (heute etwa 40.000 Einwohner). Auschwitz ist ihr deutscher Name, den die Nationalsozialisten für den dort errichteten Lagerkomplex verwendeten.",
+  fr:"Oświęcim est la ville polonaise (environ 40 000 habitants aujourd’hui). Auschwitz est son nom allemand, utilisé par les nazis pour le complexe de camps qu’ils y ont construit.",
+  lb:"Oświęcim ass déi polnesch Stad (haut ongeféier 40.000 Awunner). Auschwitz ass hiren däitschen Numm, deen d’Nazien fir de Lagerkomplex benotzt hunn, deen do gebaut gouf."},
+ g2t:{de:"Stammlager – Auschwitz I",fr:"Stammlager (camp principal) – Auschwitz I",lb:"Stammlager – Auschwitz I"},
+ g2:{de:"Das ursprüngliche Hauptlager mit den Backsteinblöcken. Block 10 und Block 11 (mit den Stehzellen) gehören dazu.",
+  fr:"Le camp principal d’origine, avec ses blocs en briques. Le bloc 10 et le bloc 11 (avec les « cellules debout ») en font partie.",
+  lb:"Den ursprénglechen Haaptlager mat de Blocken aus Zillen. De Block 10 an de Block 11 (mat de sougenannte „Stehzellen“) gehéieren derzou."},
+ g3:{de:"Das viel größere Lager wenige Kilometer entfernt, in dem die meisten Opfer ermordet wurden. Das Programm nennt es die „Todesfabrik“.",
+  fr:"Le camp bien plus grand, à quelques kilomètres, où la plupart des victimes ont été assassinées. Le programme l’appelle « l’usine de mort ».",
+  lb:"Dee vill méi grousse Lager e puer Kilometer méi wäit, wou déi meescht Affer ermuert goufen. De Programm nennt en d’„Doudesfabrik“."},
+ g4:{de:"Internationale Jugendbegegnungsstätte in Oświęcim. Alle Räume aus der Planung (Haus der Stille, Oppenheimer, Szymanski, Przybylski, Bibliothek, Café, Forum) befinden sich hier.",
+  fr:"Internationale Jugendbegegnungsstätte – le Centre international de rencontres de jeunes à Oświęcim. Toutes les salles du planning (Maison du silence, Oppenheimer, Szymanski, Przybylski, Bibliothèque, Café, Forum) s’y trouvent.",
+  lb:"Internationale Jugendbegegnungsstätte – dat internationaalt Begéinungszentrum fir Jonker zu Oświęcim. All d’Säll aus der Planung (Haus der Stille, Oppenheimer, Szymanski, Przybylski, Bibliothéik, Café, Forum) sinn hei."},
+ g5t:{de:"Zeitzeuge, 2. / 3. Generation",fr:"Témoin (Zeitzeuge), 2e / 3e génération",lb:"Zäitzeien, 2. / 3. Generatioun"},
+ g5:{de:"Ein Zeuge der Geschichte. Die 2. Generation sind die Kinder von Menschen, die während der Shoah verfolgt wurden; die 3. Generation die Enkelkinder.",
+  fr:"Une personne qui témoigne. La 2e génération, ce sont les enfants de personnes persécutées pendant la Shoah ; la 3e génération, les petits-enfants.",
+  lb:"En Zeien vun der Geschicht. Déi 2. Generatioun sinn d’Kanner vu Leit, déi während der Shoah verfollegt goufen; déi 3. Generatioun d’Enkelkanner."},
+ g6:{de:"Das hebräische Wort für den Holocaust, den Mord an sechs Millionen europäischen Jüdinnen und Juden.",
+  fr:"Le mot hébreu pour désigner l’Holocauste, l’assassinat de six millions de Juifs d’Europe.",
+  lb:"Dat hebräescht Wuert fir den Holocaust, de Mord u sechs Milliounen europäesche Judden."},
+ g7:{de:"Häftlinge, die gezwungen wurden, an den Gaskammern und Krematorien zu arbeiten.",
+  fr:"Détenus forcés de travailler aux chambres à gaz et aux crématoires.",
+  lb:"Prisonéier, déi gezwonge goufen, bei de Gaskummeren a Krematorien ze schaffen."},
+ g8t:{de:"Todesmarsch",fr:"Marche de la mort (Todesmarsch)",lb:"Doudesmarsch (Todesmarsch)"},
+ g8:{de:"Die erzwungene Evakuierung der Häftlinge zu Fuß im Januar 1945, als die sowjetische Armee näher rückte.",
+  fr:"L’évacuation forcée des détenus à pied en janvier 1945, à l’approche de l’armée soviétique.",
+  lb:"Déi erzwonge Evakuéierung vun de Prisonéier zu Fouss am Januar 1945, wéi déi sowjetesch Arméi méi no koum."},
+ g9t:{de:"Todeswand",fr:"Mur des fusillés (mur de la mort)",lb:"Doudesmauer (mur des fusillés)"},
+ g9:{de:"Die Hinrichtungsmauer im Hof zwischen Block 10 und 11 des Stammlagers, an der Tausende Häftlinge erschossen wurden. Hier findet die Gedenkfeier am Samstag statt.",
+  fr:"Le mur d’exécution dans la cour entre les blocs 10 et 11 du camp principal, où des milliers de détenus ont été fusillés. La cérémonie du samedi a lieu ici.",
+  lb:"D’Hiriichtungsmauer am Haff tëscht dem Block 10 an 11 vum Stammlager, wou Dausende vu Prisonéier erschoss goufen. Hei ass samschdes d’Gedenkfeier."},
+ g10t:{de:"Internationales Mahnmal",fr:"Monument international",lb:"Internationale Monument"},
+ g10:{de:"Das Denkmal für die Opfer am Ende der Rampe in Birkenau, zwischen den Ruinen der Krematorien II und III. Hier findet die Gedenkfeier am Sonntag statt.",
+  fr:"Le mémorial aux victimes au bout de la rampe ferroviaire de Birkenau, entre les ruines des crématoires II et III. La cérémonie du dimanche a lieu ici.",
+  lb:"De Monument fir d’Affer um Enn vun der Rampe zu Birkenau, tëscht de Ruine vun de Krematorien II an III. Hei ass sonndes d’Gedenkfeier."},
+ g11:{de:"Das alte jüdische Viertel von Krakau, das du am Montag besuchst.",fr:"L’ancien quartier juif de Cracovie, que vous visitez lundi.",lb:"Den ale jiddesche Quartier vu Krakau, deen s du e Méindeg besichs."},
+ g12t:{de:"Sprachkürzel",fr:"Codes de langue",lb:"Sproochecoden"},
+ g12:{de:"L = Luxemburgisch, D = Deutsch, F = Französisch, E = Englisch. Ein Buchstabe in Klammern heißt: Die Sprache wird teilweise verwendet.",
+  fr:"L = luxembourgeois, D = allemand, F = français, E = anglais. Une lettre entre parenthèses signifie que la langue n’est utilisée qu’en partie.",
+  lb:"L = Lëtzebuergesch, D = Däitsch, F = Franséisch, E = Englesch. E Buschtaf tëscht Klameren heescht, datt d’Sprooch nëmmen deelweis benotzt gëtt."},
+ g13:{de:"Moderiert von – die Person, die ein Gespräch leitet.",fr:"Modéré par – la personne qui anime une discussion.",lb:"Moderéiert vun – déi Persoun, déi e Gespréich leet."},
+ g14:{de:"Luxemburgisch für „Junge für Junge“: Angebote, die von Schülerinnen und Schülern geleitet werden, die die Reise schon einmal gemacht haben.",
+  fr:"« Des jeunes pour les jeunes » en luxembourgeois : des activités animées par des élèves qui ont déjà fait le voyage.",
+  lb:"Atelieren, déi vu Schüler geleet ginn, déi d’Rees schonn eng Kéier gemaach hunn."},
+ foot:{de:"Inoffizieller Leitfaden, erstellt von einer teilnehmenden Person. Maßgeblich ist das offizielle Programm von Témoins de la 2e Génération; bei Abweichungen gilt deren Angabe. Zusammengestellt aus der T2G-Planung und den Workshop-Beschreibungen (26.10.26), dem gedruckten „Programme et informations pratiques 2026“ und temoins.lu. Das Workshop-Programm ist als vorläufig gekennzeichnet: Räume und Zeiten können sich vor Ort ändern. Auch die Übersetzung ist inoffiziell.",
+  fr:"Guide non officiel, réalisé par une personne participant au voyage. Le programme officiel est celui de Témoins de la 2e Génération ; en cas de différence, c’est lui qui fait foi. Établi à partir du planning et des descriptions des ateliers de T2G (26.10.26), du « Programme et informations pratiques 2026 » imprimé et de temoins.lu. Le programme des ateliers est provisoire : salles et horaires peuvent changer sur place. La traduction n’est pas officielle non plus.",
+  lb:"Inoffizielle Guide, zesummegestallt vun enger Persoun aus der Grupp. Den offizielle Programm ass dee vun Témoins de la 2e Génération; wann eppes anescht ass, gëllt hiren. Zesummegestallt aus der T2G-Planung an de Beschreiwunge vun den Atelieren (26.10.26), dem gedréckte „Programme et informations pratiques 2026“ an temoins.lu. Den Ateliersprogramm ass als provisoresch markéiert: Säll an Zäite kënne sech op der Plaz änneren. D’Iwwersetzung ass och net offiziell."}
+};
+
+const UI={
+ uilang:{en:"Page language",de:"Sprache der Seite",fr:"Langue de la page",lb:"Sprooch vun der Säit"},
+ sections:{en:"Sections",de:"Abschnitte",fr:"Rubriques",lb:"Rubriken"},
+ flex:{en:"Language: flexible",de:"Sprache: flexibel",fr:"Langue : flexible",lb:"Sprooch: flexibel"},
+ unk:{en:"Language not stated",de:"Sprache nicht angegeben",fr:"Langue non précisée",lb:"Sprooch net uginn"},
+ yes:{en:"In your languages",de:"In deinen Sprachen",fr:"Dans vos langues",lb:"An denge Sproochen"},
+ part:{en:"Only partly in your languages",de:"Nur teilweise in deinen Sprachen",fr:"En partie seulement dans vos langues",lb:"Nëmmen deelweis an denge Sproochen"},
+ no:{en:"Not in your languages",de:"Nicht in deinen Sprachen",fr:"Pas dans vos langues",lb:"Net an denge Sproochen"},
+ nofilter:{en:"No filter yet: tap the languages you understand to see what you can follow.",de:"Noch kein Filter: Tippe die Sprachen an, die du verstehst, um zu sehen, was du verfolgen kannst.",fr:"Pas encore de filtre : touchez les langues que vous comprenez pour voir ce que vous pouvez suivre.",lb:"Nach kee Filter: tipp d’Sproochen un, déi s du verstees, fir ze gesinn, wat s du suivéiere kanns."},
+ lg_yes:{en:"in your languages",de:"in deinen Sprachen",fr:"dans vos langues",lb:"an denge Sproochen"},
+ lg_part:{en:"partly, or language open",de:"teilweise, oder Sprache offen",fr:"en partie, ou langue ouverte",lb:"deelweis, oder Sprooch nach op"},
+ lg_no:{en:"not for you",de:"nicht für dich",fr:"pas pour vous",lb:"net fir dech"},
+ jump:{en:"Tap a row to jump to that slot.",de:"Tippe auf eine Zeile, um zu diesem Zeitfenster zu springen.",fr:"Touchez une ligne pour aller à ce créneau.",lb:"Tipp op eng Zeil, fir dohinner ze sprangen."},
+ none:{en:"none",de:"keins",fr:"aucune",lb:"keng"},
+ notchosen:{en:"not chosen yet",de:"noch nicht gewählt",fr:"pas encore choisi",lb:"nach net gewielt"},
+ dup:{en:"You’ve picked the same session twice: {x}. Same content both times.",de:"Du hast denselben Programmpunkt zweimal gewählt: {x}. Beide Male derselbe Inhalt.",fr:"Vous avez choisi deux fois la même activité : {x}. Le contenu est identique.",lb:"Du hues zweemol dee selwechte Programmpunkt gewielt: {x}. Béid Kéiere deeselwechten Inhalt."},
+ stamp:{en:"CHOSEN",de:"GEWÄHLT",fr:"CHOISI",lb:"GEWIELT"},
+ any:{en:"any",de:"offen",fr:"libre",lb:"oppen"},
+ also:{en:"Also on:",de:"Auch:",fr:"Également :",lb:"Och:"},
+ once:{en:"Only this once.",de:"Nur dieses eine Mal.",fr:"Une seule fois.",lb:"Nëmmen dës Kéier."},
+ close:{en:"Close",de:"Schließen",fr:"Fermer",lb:"Zoumaachen"},
+ more:{en:"Read more",de:"Mehr lesen",fr:"Lire la suite",lb:"Méi liesen"},
+ chosen:{en:"Chosen",de:"Gewählt",fr:"Choisi",lb:"Gewielt"},
+ choose:{en:"Choose this",de:"Auswählen",fr:"Choisir",lb:"Auswielen"},
+ nopts:{en:"{n} options",de:"{n} Angebote",fr:"{n} activités",lb:"{n} Optiounen"},
+ today:{en:"TODAY",de:"HEUTE",fr:"AUJOURD’HUI",lb:"HAUT"}
+};
+
+const ROOMS={
+ "House of Silence":{de:"Haus der Stille",fr:"Maison du silence",lb:"Haus der Stille"},
+ "Library":{de:"Bibliothek",fr:"Bibliothèque",lb:"Bibliothéik"},
+ "Meet at Forum":{de:"Treffpunkt Forum",fr:"Rendez-vous au Forum",lb:"Treffpunkt Forum"},
+ "Forum / pavilion":{de:"Forum / Pavillon",fr:"Forum / pavillon",lb:"Forum / Pavillon"},
+ "Forum / Reception":{de:"Forum / Rezeption",fr:"Forum / accueil",lb:"Forum / Receptioun"}
+};
+const WITH=n=>({en:"with "+n,de:"mit "+n,fr:"avec "+n,lb:"mam "+n});
+const MOD=n=>({en:"moderated by "+n,de:"Moderation: "+n,fr:"modération : "+n,lb:"Moderatioun: "+n});
+const WIT2={en:"2nd-generation witness",de:"Zeitzeuge der 2. Generation",fr:"témoin de la 2e génération",lb:"Zäitzeie vun der 2. Generatioun"};
+const withRole=(n,r)=>({en:n+", "+r.en,de:n+", "+r.de,fr:n+", "+r.fr,lb:n+", "+r.lb});
+
 const W={
- wat:{t:"What does it mean to go to Auschwitz in 2026?",o:"Wat heescht et, 2026 op Auschwitz ze fueren?",who:"Kim Schortgen or Simone Kayser",kind:"Preparation, 1 hour",lang:["L"],part:["D"],
-  d:["A one-hour session before the visits. A short introduction to the museum and memorial, then space for questions: why am I coming, what do I expect, what do I already know, what awaits me on Saturday morning and on Sunday?"],
-  tip:"Two identical groups run in parallel – pick either room."},
- juda:{t:"My family’s story",o:"Geschichte meiner Familie",who:"Henri Juda, 2nd-generation witness",kind:"Testimony",lang:["L","D"],part:[],
-  d:["Henri Juda tells his family’s story from many documents never published before. His father was hidden by a farming family in Luxembourg during the war. His mother, Jeanne, was deported to Auschwitz and survived Block 10 of the main camp, three days in a standing cell, several parts of Birkenau and the death march.","A story of humiliation, exclusion, flight and deportation, and also of resistance, civil courage and rebuilding a life after the Shoah. It doesn’t set out to accuse, but it doesn’t avoid uncomfortable questions."],
-  tip:"Offered three times, each with a different moderator."},
- faces:{t:"50Faces and the Mémorial digital de la Shoah",o:"Mit Biografien arbeiten",who:"Yannick Frantz",kind:"For teachers and anyone interested",lang:["L"],part:["D"],
-  d:["How to teach the Shoah today, in history class and across subjects. Presents 50faces.lu – biographies of victims and perpetrators from Luxembourg – and the Mémorial digital de la Shoah, a digital memorial and education platform."],
-  tip:"Follows the 19:30 meeting for adults and university students in the same room."},
- jfj:{t:"Auschwitz through the eyes of young people",o:"Jonker fir Jonker – Auschwitz aus der Perspektiv vu jonke Mënschen",who:"Simon, Noah, Telma, Ines and Tun (LCD / Nordstad-Lycée)",kind:"Interactive workshop",lang:["L"],part:[],
-  d:["Led by five secondary-school students who made this trip last year. Through six biographies you follow children, teenagers and their families under Nazism: how their lives changed, what they lived through and lost, and why these stories still matter.","Interactive: participants work on the biographies together and exchange ideas. Supervised by Mario Glod and Françoise Flesch."]},
- hayum:{t:"More than what you see",o:"Méi wéi dat, wat ee gesäit",who:"Cindy Hayum, 3rd-generation witness",kind:"Personal workshop",lang:["D","L"],part:[],
-  d:["Cindy Hayum’s grandfather was in Auschwitz. She never met him, yet his story became part of hers. She talks about his survival, how it was passed down the generations, and what it means to grow up Jewish in the third generation.","Then: exclusion, prejudice and how we see other people – how fear turns into exclusion, and what you can do when you experience or witness discrimination."]},
- woltz:{t:"Traces of an encounter: your view of Auschwitz",o:"Spuren einer Begegnung",who:"Josephine Woltz",kind:"Creative – photography",lang:["D","L","F","E"],part:[],
-  d:["You work with your own photos of the memorial. By hand: print them and add collage, drawing, painting or embroidery. Digitally: edit them on an iPad with Procreate, then print.","It isn’t about perfect documentation but about your own expression. The session ends with a showing; you decide what you share."],
-  tip:"Take your own photos during the visits if you want to join this one. Respect the no-photo signs on site."},
- goerens:{t:"What is the EU doing against antisemitism in Europe?",o:"Was tut die EU gegen den Antisemitismus in Europa?",who:"Charles Goerens, Member of the European Parliament",kind:"Discussion",lang:["L"],part:[],
-  d:["A discussion starting from the 2018 survey by the EU Agency for Fundamental Rights, in which nine in ten European Jews said antisemitism had grown over the previous five years."]},
- hagenauer:{t:"What to do with the feeling that stays?",o:"Was tun mit dem Gefühl, das bleibt?",who:"Christoph-Lukas Hagenauer, actor",kind:"Quiet, creative",lang:[],part:[],flex:true,
-  d:["For anyone who wants to go back, calmly, over what they saw and felt during the day: closing your eyes and listening, or putting feelings on paper by drawing or writing.","Can the cruelty of Nazism be put into thoughts, words or pictures? What do we notice, and what stays with us?"],
-  tip:"Language, in his words: “we’ll find a way”."},
- wasbleibt:{t:"What remains? Thoughts and feelings after the visit",o:"Was bleibt? Gedanken und Gefühle",who:"Kim Schortgen",kind:"Talking circle",lang:["L","D"],part:[],
-  d:["Time to reflect after the main camp (Saturday) or Birkenau (Sunday). What touched me, troubled me, maybe surprised me? What do I think and feel now that I’ve been there?","A protected space where you can share – or simply listen. Open to everyone: students, chaperones, other participants."]},
- joseph:{t:"The Shoah didn’t happen only in Auschwitz",o:"D’Geschicht vu menger Famill – D’Shoah war net nëmmen zu Auschwitz",who:"Julien Joseph, 2nd-generation witness",kind:"Testimony and exchange",lang:["L","D"],part:[],
-  d:["Through his family’s story, Julien Joseph shows the many different ways the Shoah brought suffering to Jewish families. He follows the life paths of family members and opens a discussion on discrimination and persecution."]},
- bourg:{t:"Last words: the final letters of the Shoah",o:"„Dies sind meine letzten Worte“ – Letzte Worte",who:"Mireille Bourggraff",kind:"Reading and discussion",lang:["L","F","D"],part:[],
-  d:["Letters, diaries and artworks written by victims facing almost certain death – their last personal traces, full of anger, pleading, love and grief.","The workshop asks what these last messages meant for the people who wrote them, and what they mean for us today."]},
- freimann:{t:"And today?",o:"An haut? – Und heute?",who:"Liz Freimann",kind:"Discussion about the present",lang:["L","D"],part:["F","E"],
-  d:["Where do we meet antisemitism, racism and exclusion today? How is our democracy doing, and human rights?","A respectful, open exchange about what’s happening in the world and around us, with room for your own questions."]},
- befr:{t:"Liberation of Auschwitz. Is everything fine now?",o:"Vu Jonker fir Jonker: Befreiung vun Auschwitz",who:"Claude Marx, Mike Berndt, Francesco",kind:"Timeline and discussion",lang:["L"],part:[],
-  d:["Did everyone simply go back to normal after the liberation? With a timeline, they walk through what happened right after, and consequences still visible in society today. Discussion afterwards.","All three first came on this trip as students in 2021 and are now volunteers in the association."]},
- town:{t:"Guided walk through the town of Oświęcim",o:"Visite guidée de la ville",who:"Marc Schoentgen",kind:"Visit – walk",lang:["L","F"],part:["D"],
-  d:["A short walk from the IJBS to the old town and its historic market square, discovering the town’s history and the traces of Jewish and Christian life everywhere. If possible, also the old Jewish cemetery."]},
- jewish:{t:"Jewish Centre: an introduction to Judaism",o:"Visit Jewish Centre",who:"Françoise Flesch and Julien Joseph",kind:"Visit – synagogue and museum",lang:["L","D"],part:[],
-  d:["Julien Joseph explains the main principles of Judaism and answers your questions: holidays, dietary laws, objects such as the kippah and prayer shawl, and common ground with other monotheistic religions.","It takes place in the Chevra Lomdei Mishnayot synagogue, the only one in Oświęcim to survive the war – used as a carpet warehouse in the 1970s, restored and reopened in 2000. Includes the Jewish Museum next door, and parallels with the Ettelbruck synagogue in Luxembourg."]},
- richter:{t:"Gerhard Richter pavilion: “Birkenau”",o:"Visite Pavillon Gerhard Richter",who:"At the IJBS, guided or on your own",kind:"Visit – exhibition",lang:[],part:[],unk:true,
-  d:["Four abstract works printed on metal plates, an eight-metre grey mirror, and copies of four photographs taken secretly in 1944 by Sonderkommando prisoners near gas chamber and crematorium V – the only photographs of these events. They were the starting point for Richter’s work."],
-  tip:"The four photographs are very hard to look at."},
- frames:{t:"“Frames of Memory. Labyrinths” – Marian Kołodziej",o:"Frames of Memory",who:"Yannick Frantz and Juliette Rass",kind:"Visit – art exhibition",lang:["D"],part:[],
-  d:["Guided tour of the drawings of Marian Kołodziej, prisoner no. 432, held in Auschwitz from its very first day. He stayed silent about the camps for nearly fifty years, then, after a serious illness in the early 1990s, drew his memories of them.","Considered one of the few successful attempts to recreate camp reality through art."],
-  tip:"Tour in German, maximum 25 people – sign up early."}
+ wat:{t:{en:"What does it mean to go to Auschwitz in 2026?",de:"Was heißt es, 2026 nach Auschwitz zu fahren?",fr:"Que signifie aller à Auschwitz en 2026 ?",lb:"Wat heescht et, 2026 op Auschwitz ze fueren?"},
+  o:"Wat heescht et, 2026 op Auschwitz ze fueren?",
+  who:{en:"Kim Schortgen or Simone Kayser",de:"Kim Schortgen oder Simone Kayser",fr:"Kim Schortgen ou Simone Kayser",lb:"Kim Schortgen oder Simone Kayser"},
+  kind:{en:"Preparation, 1 hour",de:"Vorbereitung, 1 Stunde",fr:"Préparation, 1 heure",lb:"Virbereedung, 1 Stonn"},lang:["L"],part:["D"],
+  d:{en:["A one-hour session before the visits. A short introduction to the museum and memorial, then space for questions: why am I coming, what do I expect, what do I already know, what awaits me on Saturday morning and on Sunday?"],
+   de:["Eine einstündige Einheit vor den Besichtigungen. Eine kurze Einführung in Museum und Gedenkstätte, dann Raum für Fragen: Warum komme ich mit, was erwarte ich, was weiß ich schon, was erwartet mich am Samstagmorgen und am Sonntag?"],
+   fr:["Une séance d’une heure avant les visites. Une brève introduction au musée et au mémorial, puis place aux questions : pourquoi je viens, à quoi je m’attends, qu’est-ce que je sais déjà, qu’est-ce qui m’attend samedi matin et dimanche ?"],
+   lb:["Eng Stonn virun de Visitten. Eng kuerz Aféierung an de Musée an d’Gedenkstätt, duerno Plaz fir Froen: Firwat kommen ech mat, wat erwaarden ech, wat weess ech schonn, wat erwaart mech samschdes moies a sonndes?"]},
+  tip:{en:"Two identical groups run in parallel – pick either room.",de:"Zwei identische Gruppen laufen parallel – wähl einen der beiden Räume.",fr:"Deux groupes identiques en parallèle – choisissez l’une ou l’autre salle.",lb:"Zwou identesch Gruppe lafe parallel – wiel ee vun deenen zwee Säll."}},
+ juda:{t:{en:"My family’s story",de:"Geschichte meiner Familie",fr:"L’histoire de ma famille",lb:"D’Geschicht vu menger Famill"},
+  o:"Geschichte meiner Familie",
+  who:withRole("Henri Juda",WIT2),
+  kind:{en:"Testimony",de:"Zeitzeugengespräch",fr:"Témoignage",lb:"Zäitzeiegespréich"},lang:["L","D"],part:[],
+  d:{en:["Henri Juda tells his family’s story from many documents never published before. His father was hidden by a farming family in Luxembourg during the war. His mother, Jeanne, was deported to Auschwitz and survived Block 10 of the main camp, three days in a standing cell, several parts of Birkenau and the death march.","A story of humiliation, exclusion, flight and deportation, and also of resistance, civil courage and rebuilding a life after the Shoah. It doesn’t set out to accuse, but it doesn’t avoid uncomfortable questions."],
+   de:["Henri Juda erzählt die Geschichte seiner Familie anhand vieler bisher unveröffentlichter Dokumente. Sein Vater wurde während des Krieges von einer Bauernfamilie in Luxemburg versteckt. Seine Mutter Jeanne wurde nach Auschwitz deportiert und überlebte Block 10 des Stammlagers, drei Tage in einer Stehzelle, mehrere Teile von Birkenau und den Todesmarsch.","Eine Geschichte von Demütigung, Ausgrenzung, Flucht und Deportation, aber auch von Widerstand, Zivilcourage und dem Neuanfang nach der Shoah. Sie will nicht anklagen, weicht unbequemen Fragen aber nicht aus."],
+   fr:["Henri Juda raconte l’histoire de sa famille à partir de nombreux documents encore jamais publiés. Son père a été caché par une famille d’agriculteurs au Luxembourg pendant la guerre. Sa mère, Jeanne, a été déportée à Auschwitz et a survécu au bloc 10 du camp principal, à trois jours dans une « cellule debout », à plusieurs parties de Birkenau et à la marche de la mort.","Une histoire d’humiliation, d’exclusion, de fuite et de déportation, mais aussi de résistance, de courage civique et de reconstruction après la Shoah. Elle ne cherche pas à accuser, mais n’évite pas les questions qui dérangent."],
+   lb:["Den Henri Juda erzielt d’Geschicht vu senger Famill anhand vu ville Dokumenter, déi nach ni publizéiert goufen. Säi Papp gouf während dem Krich vun enger Bauerefamill zu Lëtzebuerg verstoppt. Seng Mamm, d’Jeanne, gouf op Auschwitz deportéiert an huet de Block 10 vum Stammlager, dräi Deeg an enger Stehzell, e puer Deeler vu Birkenau an den Doudesmarsch iwwerlieft.","Eng Geschicht vun Ernidderegung, Ausgrenzung, Flucht an Deportatioun, mee och vu Resistenz, Zivilcourage an engem neien Ufank no der Shoah. Si wëll net ukloen, geet awer onbequeme Froen net aus dem Wee."]},
+  tip:{en:"Offered three times, each with a different moderator.",de:"Wird dreimal angeboten, jeweils mit einer anderen Moderation.",fr:"Proposé trois fois, chaque fois avec une autre personne à la modération.",lb:"Gëtt dräimol ugebueden, all Kéier mat enger anerer Moderatioun."}},
+ faces:{t:{en:"50Faces and the Mémorial digital de la Shoah",de:"50Faces und das Mémorial digital de la Shoah",fr:"50Faces et le Mémorial digital de la Shoah",lb:"50Faces an de Mémorial digital de la Shoah"},
+  o:"Mit Biografien arbeiten",who:"Yannick Frantz",
+  kind:{en:"For teachers and anyone interested",de:"Für Lehrkräfte und alle Interessierten",fr:"Pour les enseignants et toute personne intéressée",lb:"Fir Enseignanten an all Interesséierten"},lang:["L"],part:["D"],
+  d:{en:["How to teach the Shoah today, in history class and across subjects. Presents 50faces.lu – biographies of victims and perpetrators from Luxembourg – and the Mémorial digital de la Shoah, a digital memorial and education platform."],
+   de:["Wie man die Shoah heute unterrichten kann, im Geschichtsunterricht und fächerübergreifend. Vorgestellt werden 50faces.lu – Biografien von Opfern und Tätern aus Luxemburg – und das Mémorial digital de la Shoah, eine digitale Gedenk- und Bildungsplattform."],
+   fr:["Comment enseigner la Shoah aujourd’hui, en cours d’histoire et dans les autres matières. Présentation de 50faces.lu – des biographies de victimes et de bourreaux du Luxembourg – et du Mémorial digital de la Shoah, une plateforme numérique de mémoire et d’éducation."],
+   lb:["Wéi een d’Shoah haut ënnerriichte kann, am Geschichtscours an iwwer d’Fächer eraus. Virgestallt ginn 50faces.lu – Biografië vun Affer an Täter aus Lëtzebuerg – an de Mémorial digital de la Shoah, eng digital Gedenk- a Bildungsplattform."]},
+  tip:{en:"Follows the 19:30 meeting for adults and university students in the same room.",de:"Schließt im selben Raum an das Treffen um 19:30 für Erwachsene und Studierende an.",fr:"Fait suite à la réunion de 19:30 pour les adultes et les étudiants, dans la même salle.",lb:"Schléisst am selwechte Sall un d’Reunioun vun 19:30 fir Erwuessener a Studenten un."}},
+ jfj:{t:{en:"Auschwitz through the eyes of young people",de:"Auschwitz aus der Sicht junger Menschen",fr:"Auschwitz à travers le regard des jeunes",lb:"Jonker fir Jonker – Auschwitz aus der Perspektiv vu jonke Mënschen"},
+  o:"Jonker fir Jonker – Auschwitz aus der Perspektiv vu jonke Mënschen",
+  who:{en:"Simon, Noah, Telma, Ines and Tun (LCD / Nordstad-Lycée)",de:"Simon, Noah, Telma, Ines und Tun (LCD / Nordstad-Lycée)",fr:"Simon, Noah, Telma, Ines et Tun (LCD / Nordstad-Lycée)",lb:"Simon, Noah, Telma, Ines an Tun (LCD / Nordstad-Lycée)"},
+  kind:{en:"Interactive workshop",de:"Interaktiver Workshop",fr:"Atelier interactif",lb:"Interaktiven Atelier"},lang:["L"],part:[],
+  d:{en:["Led by five secondary-school students who made this trip last year. Through six biographies you follow children, teenagers and their families under Nazism: how their lives changed, what they lived through and lost, and why these stories still matter.","Interactive: participants work on the biographies together and exchange ideas. Supervised by Mario Glod and Françoise Flesch."],
+   de:["Geleitet von fünf Schülerinnen und Schülern, die diese Reise letztes Jahr gemacht haben. Anhand von sechs Biografien begleitest du Kinder, Jugendliche und ihre Familien im Nationalsozialismus: wie sich ihr Leben veränderte, was sie erlebt und verloren haben und warum diese Geschichten bis heute wichtig sind.","Interaktiv: Die Teilnehmenden arbeiten gemeinsam an den Biografien und tauschen sich aus. Betreut von Mario Glod und Françoise Flesch."],
+   fr:["Animé par cinq élèves du secondaire qui ont fait ce voyage l’année dernière. À travers six biographies, vous suivez des enfants, des adolescents et leurs familles sous le nazisme : comment leur vie a changé, ce qu’ils ont vécu et perdu, et pourquoi ces histoires comptent encore.","Interactif : les participants travaillent ensemble sur les biographies et échangent leurs idées. Encadré par Mario Glod et Françoise Flesch."],
+   lb:["Geleet vu fënnef Lycéesschüler, déi d’Rees d’lescht Joer gemaach hunn. Anhand vu sechs Biografië begleets du Kanner, Jugendlecher an hir Famillen ënnert dem Nazismus: wéi hiert Liewe sech geännert huet, wat se erlieft a verluer hunn, a firwat dës Geschichten haut nach wichteg sinn.","Interaktiv: D’Participante schaffe gemeinsam un de Biografien an tauschen sech aus. Betreit vum Mario Glod a vun der Françoise Flesch."]}},
+ hayum:{t:{en:"More than what you see",de:"Mehr als das, was man sieht",fr:"Plus que ce que l’on voit",lb:"Méi wéi dat, wat ee gesäit"},
+  o:"Méi wéi dat, wat ee gesäit",
+  who:{en:"Cindy Hayum, 3rd-generation witness",de:"Cindy Hayum, Zeitzeugin der 3. Generation",fr:"Cindy Hayum, témoin de la 3e génération",lb:"Cindy Hayum, Zäitzeie vun der 3. Generatioun"},
+  kind:{en:"Personal workshop",de:"Persönlicher Workshop",fr:"Atelier personnel",lb:"Perséinlechen Atelier"},lang:["D","L"],part:[],
+  d:{en:["Cindy Hayum’s grandfather was in Auschwitz. She never met him, yet his story became part of hers. She talks about his survival, how it was passed down the generations, and what it means to grow up Jewish in the third generation.","Then: exclusion, prejudice and how we see other people – how fear turns into exclusion, and what you can do when you experience or witness discrimination."],
+   de:["Cindy Hayums Großvater war in Auschwitz. Sie hat ihn nie kennengelernt, und doch wurde seine Geschichte Teil ihrer eigenen. Sie erzählt von seinem Überleben, wie es über die Generationen weitergegeben wurde und was es heißt, in der dritten Generation jüdisch aufzuwachsen.","Danach: Ausgrenzung, Vorurteile und wie wir andere Menschen sehen – wie aus Angst Ausgrenzung wird und was du tun kannst, wenn du Diskriminierung erlebst oder beobachtest."],
+   fr:["Le grand-père de Cindy Hayum a été détenu à Auschwitz. Elle ne l’a jamais connu, et pourtant son histoire est devenue une part de la sienne. Elle parle de sa survie, de la façon dont elle s’est transmise de génération en génération, et de ce que signifie grandir juive dans la troisième génération.","Ensuite : l’exclusion, les préjugés et notre regard sur les autres – comment la peur se transforme en exclusion, et ce que vous pouvez faire lorsque vous subissez une discrimination ou en êtes témoin."],
+   lb:["Dem Cindy Hayum säi Grousspapp war zu Auschwitz. Si huet hien ni kennegeléiert, an awer gouf seng Geschicht en Deel vun hirer eegener. Si erzielt vu sengem Iwwerliewen, wéi et vun enger Generatioun un déi nächst weiderginn gouf, a wat et heescht, an der drëtter Generatioun jiddesch opzewuessen.","Duerno: Ausgrenzung, Viruerteeler a wéi mir aner Mënsche gesinn – wéi aus Angscht Ausgrenzung gëtt, a wat s du maache kanns, wann s du Diskriminatioun erliefs oder matkriss."]}},
+ woltz:{t:{en:"Traces of an encounter: your view of Auschwitz",de:"Spuren einer Begegnung: dein Blick auf Auschwitz",fr:"Traces d’une rencontre : votre regard sur Auschwitz",lb:"Spuere vun enger Begéinung: däi Bléck op Auschwitz"},
+  o:"Spuren einer Begegnung",who:"Josephine Woltz",
+  kind:{en:"Creative – photography",de:"Kreativ – Fotografie",fr:"Créatif – photographie",lb:"Kreativ – Fotografie"},lang:["D","L","F","E"],part:[],
+  d:{en:["You work with your own photos of the memorial. By hand: print them and add collage, drawing, painting or embroidery. Digitally: edit them on an iPad with Procreate, then print.","It isn’t about perfect documentation but about your own expression. The session ends with a showing; you decide what you share."],
+   de:["Du arbeitest mit deinen eigenen Fotos der Gedenkstätte. Von Hand: ausdrucken und mit Collage, Zeichnung, Malerei oder Stickerei weiterbearbeiten. Digital: auf einem iPad mit Procreate bearbeiten und dann ausdrucken.","Es geht nicht um perfekte Dokumentation, sondern um deinen eigenen Ausdruck. Zum Schluss gibt es eine kleine Präsentation; du entscheidest, was du teilst."],
+   fr:["Vous travaillez avec vos propres photos du mémorial. À la main : imprimez-les et ajoutez collage, dessin, peinture ou broderie. En numérique : retouchez-les sur iPad avec Procreate, puis imprimez-les.","Il ne s’agit pas d’une documentation parfaite, mais de votre propre expression. La séance se termine par une présentation ; vous décidez de ce que vous partagez."],
+   lb:["Du schaffs mat dengen eegene Fotoe vun der Gedenkstätt. Mat der Hand: dréck se aus a bearbecht se mat Collage, Zeechnen, Molen oder Brodéieren. Digital: bearbecht se op engem iPad mat Procreate an dréck se duerno aus.","Et geet net ëm eng perfekt Dokumentatioun, mee ëm däin eegenen Ausdrock. Um Enn gëtt et eng kleng Presentatioun; du decidéiers, wat s du deels."]},
+  tip:{en:"Take your own photos during the visits if you want to join this one. Respect the no-photo signs on site.",de:"Mach während der Besichtigungen eigene Fotos, wenn du hier mitmachen willst. Beachte vor Ort die Fotografierverbote.",fr:"Prenez vos propres photos pendant les visites si vous voulez participer. Respectez sur place les panneaux d’interdiction de photographier.",lb:"Maach während de Visitten deng eege Fotoen, wann s du hei matmaache wëlls. Respektéier op der Plaz d’Fotoverbueter."}},
+ goerens:{t:{en:"What is the EU doing against antisemitism in Europe?",de:"Was tut die EU gegen den Antisemitismus in Europa?",fr:"Que fait l’UE contre l’antisémitisme en Europe ?",lb:"Wat mécht d’EU géint den Antisemitismus an Europa?"},
+  o:"Was tut die EU gegen den Antisemitismus in Europa?",
+  who:{en:"Charles Goerens, Member of the European Parliament",de:"Charles Goerens, Mitglied des Europäischen Parlaments",fr:"Charles Goerens, député européen",lb:"Charles Goerens, Europadeputéierten"},
+  kind:{en:"Discussion",de:"Diskussion",fr:"Discussion",lb:"Diskussioun"},lang:["L"],part:[],
+  d:{en:["A discussion starting from the 2018 survey by the EU Agency for Fundamental Rights, in which nine in ten European Jews said antisemitism had grown over the previous five years."],
+   de:["Eine Diskussion ausgehend von der Umfrage der EU-Grundrechteagentur aus dem Jahr 2018, in der neun von zehn europäischen Jüdinnen und Juden angaben, dass der Antisemitismus in den fünf Jahren zuvor zugenommen habe."],
+   fr:["Une discussion à partir de l’enquête de 2018 de l’Agence des droits fondamentaux de l’UE, dans laquelle neuf Juifs européens sur dix déclaraient que l’antisémitisme avait augmenté au cours des cinq années précédentes."],
+   lb:["Eng Diskussioun ausgoend vun der Ëmfro vun der EU-Grondrechtagence vun 2018, an där néng vun zéng europäesche Judden gesot hunn, datt den Antisemitismus an de fënnef Joer virdru gewuess wier."]}},
+ hagenauer:{t:{en:"What to do with the feeling that stays?",de:"Was tun mit dem Gefühl, das bleibt?",fr:"Que faire du sentiment qui reste ?",lb:"Wat maache mam Gefill, dat bleift?"},
+  o:"Was tun mit dem Gefühl, das bleibt?",
+  who:{en:"Christoph-Lukas Hagenauer, actor",de:"Christoph-Lukas Hagenauer, Schauspieler",fr:"Christoph-Lukas Hagenauer, comédien",lb:"Christoph-Lukas Hagenauer, Schauspiller"},
+  kind:{en:"Quiet, creative",de:"Ruhig, kreativ",fr:"Calme, créatif",lb:"Roueg, kreativ"},lang:[],part:[],flex:true,
+  d:{en:["For anyone who wants to go back, calmly, over what they saw and felt during the day: closing your eyes and listening, or putting feelings on paper by drawing or writing.","Can the cruelty of Nazism be put into thoughts, words or pictures? What do we notice, and what stays with us?"],
+   de:["Für alle, die in Ruhe auf das zurückblicken möchten, was sie tagsüber gesehen und gefühlt haben: mit geschlossenen Augen zuhören oder Gefühle zeichnend oder schreibend zu Papier bringen.","Lässt sich die Grausamkeit des Nationalsozialismus in Gedanken, Worte oder Bilder fassen? Was nehmen wir wahr, und was bleibt?"],
+   fr:["Pour celles et ceux qui veulent revenir calmement sur ce qu’ils ont vu et ressenti pendant la journée : fermer les yeux et écouter, ou mettre ses émotions sur le papier en dessinant ou en écrivant.","Peut-on mettre la cruauté du nazisme en pensées, en mots ou en images ? Que remarquons-nous, et qu’est-ce qui reste en nous ?"],
+   lb:["Fir jiddereen, deen a Rou op dat zréckkucke wëll, wat e während dem Dag gesinn a gefillt huet: d’Aen zoumaachen a lauschteren, oder Gefiller op Pabeier bréngen, andeems een zeechent oder schreift.","Léisst sech d’Grausamkeet vum Nazismus a Gedanken, Wierder oder Biller faassen? Wat bemierke mir, a wat bleift bei eis?"]},
+  tip:{en:"Language, in his words: “we’ll find a way”.",de:"Zur Sprache sagt er: „Wir finden einen Weg.“",fr:"Pour la langue, selon ses mots : « on trouvera un moyen ».",lb:"Zur Sprooch seet hien: „Mir fannen e Wee.“"}},
+ wasbleibt:{t:{en:"What remains? Thoughts and feelings after the visit",de:"Was bleibt? Gedanken und Gefühle nach dem Besuch",fr:"Que reste-t-il ? Pensées et émotions après la visite",lb:"Wat bleift? Gedanken a Gefiller no der Visitt"},
+  o:"Was bleibt? Gedanken und Gefühle",who:"Kim Schortgen",
+  kind:{en:"Talking circle",de:"Gesprächskreis",fr:"Cercle de parole",lb:"Gespréichsronn"},lang:["L","D"],part:[],
+  d:{en:["Time to reflect after the main camp (Saturday) or Birkenau (Sunday). What touched me, troubled me, maybe surprised me? What do I think and feel now that I’ve been there?","A protected space where you can share – or simply listen. Open to everyone: students, chaperones, other participants."],
+   de:["Zeit zum Nachdenken nach dem Stammlager (Samstag) oder Birkenau (Sonntag). Was hat mich berührt, beunruhigt, vielleicht überrascht? Was denke und fühle ich jetzt, wo ich dort war?","Ein geschützter Raum, in dem du teilen – oder einfach zuhören – kannst. Offen für alle: Schülerinnen und Schüler, Begleitpersonen, andere Teilnehmende."],
+   fr:["Un temps de réflexion après le camp principal (samedi) ou Birkenau (dimanche). Qu’est-ce qui m’a touché, troublé, peut-être surpris ? Qu’est-ce que je pense et ressens maintenant que j’y suis allé ?","Un espace protégé où vous pouvez partager – ou simplement écouter. Ouvert à tous : élèves, accompagnateurs, autres participants."],
+   lb:["Zäit fir nozedenken nom Stammlager (samschdes) oder Birkenau (sonndes). Wat huet mech beréiert, beonrouegt, vläicht iwwerrascht? Wat denken a fillen ech elo, wou ech do war?","E geschützte Raum, wou s du deele – oder einfach nëmme lauschtere – kanns. Op fir jiddereen: Schüler, Begleetpersounen, aner Participanten."]}},
+ joseph:{t:{en:"The Shoah didn’t happen only in Auschwitz",de:"Die Shoah war nicht nur in Auschwitz",fr:"La Shoah ne s’est pas passée qu’à Auschwitz",lb:"D’Shoah war net nëmmen zu Auschwitz"},
+  o:"D’Geschicht vu menger Famill – D’Shoah war net nëmmen zu Auschwitz",
+  who:withRole("Julien Joseph",WIT2),
+  kind:{en:"Testimony and exchange",de:"Zeitzeugengespräch und Austausch",fr:"Témoignage et échange",lb:"Zäitzeiegespréich an Austausch"},lang:["L","D"],part:[],
+  d:{en:["Through his family’s story, Julien Joseph shows the many different ways the Shoah brought suffering to Jewish families. He follows the life paths of family members and opens a discussion on discrimination and persecution."],
+   de:["Anhand der Geschichte seiner Familie zeigt Julien Joseph, auf wie viele verschiedene Weisen die Shoah Leid über jüdische Familien brachte. Er verfolgt die Lebenswege von Familienmitgliedern und eröffnet eine Diskussion über Diskriminierung und Verfolgung."],
+   fr:["À travers l’histoire de sa famille, Julien Joseph montre les nombreuses façons dont la Shoah a fait souffrir les familles juives. Il retrace le parcours de membres de sa famille et ouvre une discussion sur la discrimination et la persécution."],
+   lb:["Anhand vun der Geschicht vu senger Famill weist de Julien Joseph, op wéi vill verschidde Manéiere d’Shoah Leed iwwer jiddesch Famillje bruecht huet. Hie verfollegt d’Liewensweeër vu Familljememberen a mécht eng Diskussioun iwwer Diskriminatioun a Verfolgung op."]}},
+ bourg:{t:{en:"Last words: the final letters of the Shoah",de:"Letzte Worte: die letzten Briefe der Shoah",fr:"Derniers mots : les dernières lettres de la Shoah",lb:"Lescht Wierder: déi lescht Bréiwer vun der Shoah"},
+  o:"„Dies sind meine letzten Worte“ – Letzte Worte",who:"Mireille Bourggraff",
+  kind:{en:"Reading and discussion",de:"Lesung und Gespräch",fr:"Lecture et discussion",lb:"Liesung a Gespréich"},lang:["L","F","D"],part:[],
+  d:{en:["Letters, diaries and artworks written by victims facing almost certain death – their last personal traces, full of anger, pleading, love and grief.","The workshop asks what these last messages meant for the people who wrote them, and what they mean for us today."],
+   de:["Briefe, Tagebücher und Kunstwerke von Opfern angesichts des fast sicheren Todes – ihre letzten persönlichen Spuren, voller Wut, Flehen, Liebe und Trauer.","Der Workshop fragt, was diese letzten Botschaften für die Menschen bedeuteten, die sie geschrieben haben, und was sie uns heute bedeuten."],
+   fr:["Lettres, journaux intimes et œuvres d’art de victimes face à une mort presque certaine – leurs dernières traces personnelles, pleines de colère, de supplications, d’amour et de chagrin.","L’atelier se demande ce que ces derniers messages ont signifié pour celles et ceux qui les ont écrits, et ce qu’ils signifient pour nous aujourd’hui."],
+   lb:["Bréiwer, Dagebicher a Konschtwierker vun Affer, déi bal sécher den Doud virun Aen haten – hir lescht perséinlech Spueren, voller Roserei, Bieden, Léift an Trauer.","Den Atelier freet, wat dës lescht Messagen fir d’Leit bedeit hunn, déi se geschriwwen hunn, a wat se eis haut bedeiten."]}},
+ freimann:{t:{en:"And today?",de:"Und heute?",fr:"Et aujourd’hui ?",lb:"An haut?"},
+  o:"An haut? – Und heute?",who:"Liz Freimann",
+  kind:{en:"Discussion about the present",de:"Gespräch über die Gegenwart",fr:"Discussion sur le présent",lb:"Gespréich iwwer d’Géigewaart"},lang:["L","D"],part:["F","E"],
+  d:{en:["Where do we meet antisemitism, racism and exclusion today? How is our democracy doing, and human rights?","A respectful, open exchange about what’s happening in the world and around us, with room for your own questions."],
+   de:["Wo begegnen uns heute Antisemitismus, Rassismus und Ausgrenzung? Wie steht es um unsere Demokratie und die Menschenrechte?","Ein respektvoller, offener Austausch darüber, was in der Welt und um uns herum geschieht, mit Raum für deine eigenen Fragen."],
+   fr:["Où rencontrons-nous aujourd’hui l’antisémitisme, le racisme et l’exclusion ? Comment se portent notre démocratie et les droits humains ?","Un échange respectueux et ouvert sur ce qui se passe dans le monde et autour de nous, avec de la place pour vos propres questions."],
+   lb:["Wou begéine mir haut Antisemitismus, Rassismus an Ausgrenzung? Wéi geet et eiser Demokratie an de Mënscherechter?","En respektvollen, oppenen Austausch iwwer dat, wat an der Welt a ronderëm eis geschitt, mat Plaz fir deng eege Froen."]}},
+ befr:{t:{en:"Liberation of Auschwitz. Is everything fine now?",de:"Befreiung von Auschwitz. Ist jetzt alles gut?",fr:"La libération d’Auschwitz. Et après, tout va bien ?",lb:"Befreiung vun Auschwitz. Ass elo alles gutt?"},
+  o:"Vu Jonker fir Jonker: Befreiung vun Auschwitz",who:"Claude Marx, Mike Berndt, Francesco",
+  kind:{en:"Timeline and discussion",de:"Zeitstrahl und Diskussion",fr:"Frise chronologique et discussion",lb:"Zäitstral an Diskussioun"},lang:["L"],part:[],
+  d:{en:["Did everyone simply go back to normal after the liberation? With a timeline, they walk through what happened right after, and consequences still visible in society today. Discussion afterwards.","All three first came on this trip as students in 2021 and are now volunteers in the association."],
+   de:["Sind nach der Befreiung alle einfach zur Normalität zurückgekehrt? Anhand eines Zeitstrahls zeigen sie, was direkt danach geschah und welche Folgen bis heute in der Gesellschaft sichtbar sind. Anschließend Diskussion.","Alle drei waren 2021 zum ersten Mal als Schüler auf dieser Reise und engagieren sich heute ehrenamtlich im Verein."],
+   fr:["Tout le monde est-il simplement revenu à la normale après la libération ? À l’aide d’une frise chronologique, ils retracent ce qui s’est passé juste après, et les conséquences encore visibles aujourd’hui dans la société. Discussion ensuite.","Tous les trois ont fait ce voyage pour la première fois comme élèves en 2021 et sont aujourd’hui bénévoles dans l’association."],
+   lb:["Sinn no der Befreiung all d’Leit einfach zréck an den Alldag? Mat enger Zäitstral weise si, wat direkt duerno geschitt ass, a wéi eng Konsequenzen haut nach an der Gesellschaft ze gesi sinn. Duerno Diskussioun.","All dräi waren 2021 fir d’éischt als Schüler op dëser Rees a sinn haut Benevolen am Veräin."]}},
+ town:{t:{en:"Guided walk through the town of Oświęcim",de:"Stadtführung durch Oświęcim",fr:"Visite guidée de la ville d’Oświęcim",lb:"Stadféierung duerch Oświęcim"},
+  o:"Visite guidée de la ville",who:"Marc Schoentgen",
+  kind:{en:"Visit – walk",de:"Besichtigung – Spaziergang",fr:"Visite – promenade",lb:"Visitt – Spadséiergang"},lang:["L","F"],part:["D"],
+  d:{en:["A short walk from the IJBS to the old town and its historic market square, discovering the town’s history and the traces of Jewish and Christian life everywhere. If possible, also the old Jewish cemetery."],
+   de:["Ein kurzer Spaziergang von der IJBS in die Altstadt mit ihrem historischen Marktplatz, auf den Spuren der Stadtgeschichte und des jüdischen und christlichen Lebens, die überall zu finden sind. Wenn möglich auch zum alten jüdischen Friedhof."],
+   fr:["Une courte promenade de l’IJBS jusqu’à la vieille ville et sa place du marché historique, à la découverte de l’histoire de la ville et des traces de la vie juive et chrétienne présentes partout. Si possible, aussi l’ancien cimetière juif."],
+   lb:["E kuerze Spadséiergang vun der IJBS an déi al Stad mat hirer historescher Maartplaz, fir d’Geschicht vun der Stad an d’Spuere vum jiddeschen a chrëschtleche Liewen ze entdecken, déi een iwwerall fënnt. Wa méiglech och bei den ale jiddesche Kierfecht."]}},
+ jewish:{t:{en:"Jewish Centre: an introduction to Judaism",de:"Jüdisches Zentrum: eine Einführung in das Judentum",fr:"Centre juif : une introduction au judaïsme",lb:"Jiddescht Zentrum: eng Aféierung an d’Judentum"},
+  o:"Visit Jewish Centre",
+  who:{en:"Françoise Flesch and Julien Joseph",de:"Françoise Flesch und Julien Joseph",fr:"Françoise Flesch et Julien Joseph",lb:"Françoise Flesch a Julien Joseph"},
+  kind:{en:"Visit – synagogue and museum",de:"Besichtigung – Synagoge und Museum",fr:"Visite – synagogue et musée",lb:"Visitt – Synagog a Musée"},lang:["L","D"],part:[],
+  d:{en:["Julien Joseph explains the main principles of Judaism and answers your questions: holidays, dietary laws, objects such as the kippah and prayer shawl, and common ground with other monotheistic religions.","It takes place in the Chevra Lomdei Mishnayot synagogue, the only one in Oświęcim to survive the war – used as a carpet warehouse in the 1970s, restored and reopened in 2000. Includes the Jewish Museum next door, and parallels with the Ettelbruck synagogue in Luxembourg."],
+   de:["Julien Joseph erklärt die wichtigsten Grundsätze des Judentums und beantwortet deine Fragen: Feiertage, Speisegesetze, Gegenstände wie Kippa und Gebetsschal und Gemeinsamkeiten mit anderen monotheistischen Religionen.","Das Ganze findet in der Synagoge Chevra Lomdei Mishnayot statt, der einzigen in Oświęcim, die den Krieg überstanden hat – in den 1970er-Jahren als Teppichlager genutzt, restauriert und im Jahr 2000 wiedereröffnet. Dazu gehören das Jüdische Museum nebenan und Parallelen zur Synagoge in Ettelbrück in Luxemburg."],
+   fr:["Julien Joseph explique les grands principes du judaïsme et répond à vos questions : fêtes, règles alimentaires, objets comme la kippa et le châle de prière, et points communs avec les autres religions monothéistes.","Cela se passe dans la synagogue Chevra Lomdei Mishnayot, la seule d’Oświęcim à avoir survécu à la guerre – utilisée comme entrepôt de tapis dans les années 1970, restaurée et rouverte en 2000. Avec le Musée juif voisin, et des parallèles avec la synagogue d’Ettelbruck au Luxembourg."],
+   lb:["De Julien Joseph erkläert d’Haaptprinzipie vum Judentum a beäntwert deng Froen: Feierdeeg, Iessregelen, Objete wéi d’Kippa an de Gebietsschal, a Gemeinsamkeete mat anere monotheistesche Reliounen.","Et fënnt an der Synagog Chevra Lomdei Mishnayot statt, där eenzeger zu Oświęcim, déi de Krich iwwerlieft huet – an de 1970er Joren als Teppechlager benotzt, restauréiert an 2000 nees opgemaach. Mat dobäi: de Jiddesche Musée niewendrun, a Parallele mat der Synagog vun Ettelbréck."]}},
+ richter:{t:{en:"Gerhard Richter pavilion: “Birkenau”",de:"Gerhard-Richter-Pavillon: „Birkenau“",fr:"Pavillon Gerhard Richter : « Birkenau »",lb:"Gerhard-Richter-Pavillon: „Birkenau“"},
+  o:"Visite Pavillon Gerhard Richter",
+  who:{en:"At the IJBS, guided or on your own",de:"In der IJBS, mit Führung oder auf eigene Faust",fr:"À l’IJBS, en visite guidée ou libre",lb:"An der IJBS, mat Féierung oder op eegen Hand"},
+  kind:{en:"Visit – exhibition",de:"Besichtigung – Ausstellung",fr:"Visite – exposition",lb:"Visitt – Ausstellung"},lang:[],part:[],unk:true,
+  d:{en:["Four abstract works printed on metal plates, an eight-metre grey mirror, and copies of four photographs taken secretly in 1944 by Sonderkommando prisoners near gas chamber and crematorium V – the only photographs of these events. They were the starting point for Richter’s work."],
+   de:["Vier abstrakte, auf Metallplatten gedruckte Werke, ein acht Meter langer grauer Spiegel und Kopien von vier Fotografien, die Häftlinge des Sonderkommandos 1944 heimlich nahe der Gaskammer und dem Krematorium V aufgenommen haben – die einzigen Fotos dieser Ereignisse. Sie waren der Ausgangspunkt für Richters Werk."],
+   fr:["Quatre œuvres abstraites imprimées sur des plaques de métal, un miroir gris de huit mètres et des copies de quatre photographies prises en secret en 1944 par des détenus du Sonderkommando près de la chambre à gaz et du crématoire V – les seules photos de ces événements. Elles ont été le point de départ de l’œuvre de Richter."],
+   lb:["Véier abstrakt Wierker, op Metallplacke gedréckt, en aacht Meter grousse groe Spigel, a Kopië vu véier Fotoen, déi Prisonéier vum Sonderkommando 1944 heemlech bei der Gaskummer an dem Krematorium V gemaach hunn – déi eenzeg Fotoe vun dësen Evenementer. Si waren den Ausgangspunkt fir dem Richter säi Wierk."]},
+  tip:{en:"The four photographs are very hard to look at.",de:"Die vier Fotografien sind sehr schwer anzusehen.",fr:"Les quatre photographies sont très difficiles à regarder.",lb:"Déi véier Fotoe si ganz schwéier unzekucken."}},
+ frames:{t:{en:"“Frames of Memory. Labyrinths” – Marian Kołodziej",de:"„Frames of Memory. Labyrinths“ – Marian Kołodziej",fr:"« Frames of Memory. Labyrinths » – Marian Kołodziej",lb:"„Frames of Memory. Labyrinths“ – Marian Kołodziej"},
+  o:"Frames of Memory",
+  who:{en:"Yannick Frantz and Juliette Rass",de:"Yannick Frantz und Juliette Rass",fr:"Yannick Frantz et Juliette Rass",lb:"Yannick Frantz a Juliette Rass"},
+  kind:{en:"Visit – art exhibition",de:"Besichtigung – Kunstausstellung",fr:"Visite – exposition d’art",lb:"Visitt – Konschtausstellung"},lang:["D"],part:[],
+  d:{en:["Guided tour of the drawings of Marian Kołodziej, prisoner no. 432, held in Auschwitz from its very first day. He stayed silent about the camps for nearly fifty years, then, after a serious illness in the early 1990s, drew his memories of them.","Considered one of the few successful attempts to recreate camp reality through art."],
+   de:["Führung durch die Zeichnungen von Marian Kołodziej, Häftling Nr. 432, vom allerersten Tag an in Auschwitz inhaftiert. Fast fünfzig Jahre lang schwieg er über die Lager; nach einer schweren Krankheit Anfang der 1990er-Jahre zeichnete er seine Erinnerungen daran.","Gilt als einer der wenigen gelungenen Versuche, die Realität der Lager mit den Mitteln der Kunst darzustellen."],
+   fr:["Visite guidée des dessins de Marian Kołodziej, détenu n° 432, enfermé à Auschwitz dès le tout premier jour. Il s’est tu sur les camps pendant près de cinquante ans, puis, après une grave maladie au début des années 1990, il a dessiné ses souvenirs.","Considéré comme l’une des rares tentatives réussies de restituer la réalité des camps par l’art."],
+   lb:["Féierung duerch d’Zeechnunge vum Marian Kołodziej, Prisonéier Nr. 432, deen zënter dem alleréischten Dag zu Auschwitz agespaart war. Bal fofzeg Joer laang huet hien iwwer d’Lagere geschwigen; no enger schwéierer Krankheet am Ufank vun den 1990er Joren huet hien seng Erënnerungen dorun gezeechent.","Gëllt als ee vun de wéinege gelongene Versich, d’Realitéit vun de Lageren duerch d’Konscht duerzestellen."]},
+  tip:{en:"Tour in German, maximum 25 people – sign up early.",de:"Führung auf Deutsch, maximal 25 Personen – früh anmelden.",fr:"Visite en allemand, 25 personnes maximum – inscrivez-vous tôt.",lb:"Féierung op Däitsch, maximal 25 Persounen – mell dech fréi un."}}
 };
 const SLOTS={
- fri:{label:"Fri 20:15",time:"20:15",opts:[["wat","House of Silence","with Kim Schortgen"],["wat","Oppenheimer","with Simone Kayser"],["juda","Szymanski","moderated by Marc Schoentgen"],["faces","Library",""]]},
+ fri:{label:"Fri 20:15",time:"20:15",opts:[["wat","House of Silence",WITH("Kim Schortgen")],["wat","Oppenheimer",WITH("Simone Kayser")],["juda","Szymanski",MOD("Marc Schoentgen")],["faces","Library",""]]},
  sat1:{label:"Sat 15:00",time:"15:00",opts:[["jfj","House of Silence"],["hayum","Oppenheimer"],["woltz","Szymanski"],["goerens","Przybylski"],["hagenauer","Library"],["town","Meet at Forum"],["jewish","Meet at Forum"]]},
- sat2:{label:"Sat 16:30",time:"16:30",opts:[["wasbleibt","House of Silence"],["woltz","Oppenheimer"],["juda","Szymanski","moderated by Yannick Frantz"],["joseph","Przybylski"],["bourg","Library"],["freimann","Café"],["richter","Forum / pavilion"]]},
+ sat2:{label:"Sat 16:30",time:"16:30",opts:[["wasbleibt","House of Silence"],["woltz","Oppenheimer"],["juda","Szymanski",MOD("Yannick Frantz")],["joseph","Przybylski"],["bourg","Library"],["freimann","Café"],["richter","Forum / pavilion"]]},
  sun1:{label:"Sun 15:00",time:"15:00",opts:[["jfj","House of Silence"],["hayum","Oppenheimer"],["joseph","Przybylski"],["hagenauer","Library"],["freimann","Café"],["town","Meet at Forum"],["frames","Meet at Forum"]]},
- sun2:{label:"Sun 16:30",time:"16:30",opts:[["wasbleibt","House of Silence"],["woltz","Oppenheimer"],["juda","Szymanski","moderated by Liz Freimann"],["befr","Przybylski"],["bourg","Library"],["jewish","Meet at Forum"]]}
+ sun2:{label:"Sun 16:30",time:"16:30",opts:[["wasbleibt","House of Silence"],["woltz","Oppenheimer"],["juda","Szymanski",MOD("Liz Freimann")],["befr","Przybylski"],["bourg","Library"],["jewish","Meet at Forum"]]}
 };
-const MEET={t:"19:30",h:"Evening meeting: chaperones, private participants, teachers, educators, university students",w:"Library"};
+const MEET={t:"19:30",h:{en:"Evening meeting: chaperones, private participants, teachers, educators, university students",de:"Abendtreffen: Begleitpersonen, Privatteilnehmende, Lehrkräfte, Erziehende, Studierende",fr:"Réunion du soir : accompagnateurs, participants privés, enseignants, éducateurs, étudiants",lb:"Owesreunioun: Begleetpersounen, Privatpersounen, Enseignanten, Educateuren, Studenten"},w:"Library"};
+const AM={en:"a.m.",de:"vorm.",fr:"matin",lb:"moies"},PM={en:"p.m.",de:"nachm.",fr:"après-midi",lb:"nomëttes"},THEN={en:"then",de:"danach",fr:"ensuite",lb:"duerno"};
 const DAYS={
  thu:[
-  {t:"before",h:"ID check",p:"Your identity papers are checked before you get on the bus."},
-  {t:"21:15",h:"Bus 1 leaves Ettelbruck",w:"Parking Däich",p:"It then drives to the P&R Bouillon to pick up the rest of its passengers."},
-  {t:"22:00",h:"Both buses leave together",w:"P&R Bouillon, Luxembourg",p:"Bus 2 boards here. If you got on at Ettelbruck and your name isn’t on that bus’s poster, you switch buses here."},
-  {t:"Night",h:"Overnight bus to Oświęcim",p:"Run by Voyages Léonard."}
+  {t:{en:"before",de:"vorher",fr:"avant",lb:"virdrun"},h:{en:"ID check",de:"Ausweiskontrolle",fr:"Contrôle d’identité",lb:"Ausweiskontroll"},
+   p:{en:"Your identity papers are checked before you get on the bus.",de:"Deine Ausweispapiere werden vor dem Einsteigen kontrolliert.",fr:"Vos papiers d’identité sont contrôlés avant de monter dans le bus.",lb:"Deng Pabeiere gi kontrolléiert, ier s du an de Bus klëmms."}},
+  {t:"21:15",h:{en:"Bus 1 leaves Ettelbruck",de:"Bus 1 fährt in Ettelbrück ab",fr:"Le bus 1 part d’Ettelbruck",lb:"Bus 1 fiert vun Ettelbréck of"},w:"Parking Däich",
+   p:{en:"It then drives to the P&R Bouillon to pick up the rest of its passengers.",de:"Danach fährt er zum P&R Bouillon, um die übrigen Fahrgäste aufzunehmen.",fr:"Il se rend ensuite au P&R Bouillon pour prendre le reste de ses passagers.",lb:"Duerno fiert en op de P&R Bouillon, fir de Rescht vu senge Passagéier opzehuelen."}},
+  {t:"22:00",h:{en:"Both buses leave together",de:"Beide Busse fahren gemeinsam ab",fr:"Les deux bus partent ensemble",lb:"Béid Bussen fueren zesummen of"},w:{en:"P&R Bouillon, Luxembourg",de:"P&R Bouillon, Luxemburg",fr:"P&R Bouillon, Luxembourg",lb:"P&R Bouillon, Lëtzebuerg"},
+   p:{en:"Bus 2 boards here. If you got on at Ettelbruck and your name isn’t on that bus’s poster, you switch buses here.",de:"Hier steigt man in Bus 2 ein. Wenn du in Ettelbrück eingestiegen bist und dein Name nicht auf dem Aushang dieses Busses steht, wechselst du hier den Bus.",fr:"Embarquement du bus 2. Si vous êtes monté à Ettelbruck et que votre nom ne figure pas sur l’affiche de ce bus, vous changez de bus ici.",lb:"Hei hëlt de Bus 2 seng Passagéier op. Wann s du vun Ettelbréck aus matgefuer bass an däin Numm net op der Affiche vun deem Bus steet, wiessels du hei de Bus."}},
+  {t:{en:"Night",de:"Nachts",fr:"Nuit",lb:"Nuets"},h:{en:"Overnight bus to Oświęcim",de:"Nachtfahrt nach Oświęcim",fr:"Trajet de nuit vers Oświęcim",lb:"Nuetsrees op Oświęcim"},p:{en:"Run by Voyages Léonard.",de:"Durchgeführt von Voyages Léonard.",fr:"Assuré par Voyages Léonard.",lb:"Mat Voyages Léonard."}}
  ],
  fri:[
-  {t:"p.m.",h:"Arrival in Oświęcim",w:"IJBS"},
-  {t:"17:30",h:"Welcome",w:"Forum / Reception",p:"Introduction to the IJBS, the project and the programme."},
+  {t:PM,h:{en:"Arrival in Oświęcim",de:"Ankunft in Oświęcim",fr:"Arrivée à Oświęcim",lb:"Ukonft zu Oświęcim"},w:"IJBS"},
+  {t:"17:30",h:{en:"Welcome",de:"Begrüßung",fr:"Accueil",lb:"Begréissung"},w:"Forum / Reception",
+   p:{en:"Introduction to the IJBS, the project and the programme.",de:"Vorstellung der IJBS, des Projekts und des Programms.",fr:"Présentation de l’IJBS, du projet et du programme.",lb:"Virstellung vun der IJBS, vum Projet a vum Programm."}},
   MEET,
-  {slot:"fri",title:"Choose one session"}
+  {slot:"fri",title:{en:"Choose one session",de:"Wähl einen Programmpunkt",fr:"Choisissez une activité",lb:"Wiel ee Programmpunkt"}}
  ],
  sat:[
-  {t:"a.m.",h:"Auschwitz I – the main camp",site:true,p:"Guided visit of the memorial site (Stammlager)."},
-  {t:"then",h:"Commemoration at the Wall of Death",site:true,p:"Ceremony at the execution wall in the courtyard between Block 10 and Block 11 – Block 10 is where Jeanne Juda, Henri Juda’s mother, was held."},
-  {slot:"sat1",title:"First afternoon slot – choose one"},
-  {slot:"sat2",title:"Second afternoon slot – choose one"},
+  {t:AM,h:{en:"Auschwitz I – the main camp",de:"Auschwitz I – das Stammlager",fr:"Auschwitz I – le camp principal",lb:"Auschwitz I – de Stammlager"},site:true,
+   p:{en:"Guided visit of the memorial site (Stammlager).",de:"Geführte Besichtigung der Gedenkstätte (Stammlager).",fr:"Visite guidée du site mémoriel (Stammlager).",lb:"Gefouert Visitt vun der Gedenkstätt (Stammlager)."}},
+  {t:THEN,h:{en:"Commemoration at the Wall of Death",de:"Gedenkfeier an der Todeswand",fr:"Commémoration au mur des fusillés",lb:"Gedenkfeier un der Doudesmauer"},site:true,
+   p:{en:"Ceremony at the execution wall in the courtyard between Block 10 and Block 11 – Block 10 is where Jeanne Juda, Henri Juda’s mother, was held.",de:"Feier an der Hinrichtungsmauer im Hof zwischen Block 10 und Block 11 – in Block 10 war Jeanne Juda, die Mutter von Henri Juda, inhaftiert.",fr:"Cérémonie devant le mur d’exécution, dans la cour entre le bloc 10 et le bloc 11 – c’est au bloc 10 que Jeanne Juda, la mère d’Henri Juda, a été détenue.",lb:"Zeremonie un der Hiriichtungsmauer am Haff tëscht dem Block 10 an dem Block 11 – am Block 10 war d’Jeanne Juda, dem Henri Juda seng Mamm, agespaart."}},
+  {slot:"sat1",title:{en:"First afternoon slot – choose one",de:"Erstes Zeitfenster am Nachmittag – wähl eins",fr:"Premier créneau de l’après-midi – choisissez-en un",lb:"Éischt Zäitfënster nomëttes – wiel eent"}},
+  {slot:"sat2",title:{en:"Second afternoon slot – choose one",de:"Zweites Zeitfenster am Nachmittag – wähl eins",fr:"Second créneau de l’après-midi – choisissez-en un",lb:"Zweet Zäitfënster nomëttes – wiel eent"}},
   MEET,
-  {t:"20:00",h:"Study groups",w:"All other rooms"}
+  {t:"20:00",h:{en:"Study groups",de:"Studiengruppen",fr:"Groupes d’étude",lb:"Studiegruppen"},w:{en:"All other rooms",de:"Alle anderen Räume",fr:"Toutes les autres salles",lb:"All déi aner Säll"}}
  ],
  sun:[
-  {t:"a.m.",h:"Auschwitz II – Birkenau",site:true,p:"Guided visit of the memorial site."},
-  {t:"then",h:"Commemoration at the International Monument",site:true,p:"Ceremony at the memorial at the far end of the Birkenau ramp, between the ruins of crematoria II and III."},
-  {slot:"sun1",title:"First afternoon slot – choose one"},
-  {slot:"sun2",title:"Second afternoon slot – choose one"},
+  {t:AM,h:"Auschwitz II – Birkenau",site:true,p:{en:"Guided visit of the memorial site.",de:"Geführte Besichtigung der Gedenkstätte.",fr:"Visite guidée du site mémoriel.",lb:"Gefouert Visitt vun der Gedenkstätt."}},
+  {t:THEN,h:{en:"Commemoration at the International Monument",de:"Gedenkfeier am Internationalen Mahnmal",fr:"Commémoration au Monument international",lb:"Gedenkfeier um Internationale Monument"},site:true,
+   p:{en:"Ceremony at the memorial at the far end of the Birkenau ramp, between the ruins of crematoria II and III.",de:"Feier am Mahnmal am Ende der Rampe in Birkenau, zwischen den Ruinen der Krematorien II und III.",fr:"Cérémonie au mémorial, tout au bout de la rampe de Birkenau, entre les ruines des crématoires II et III.",lb:"Zeremonie um Monument um Enn vun der Rampe zu Birkenau, tëscht de Ruine vun de Krematorien II an III."}},
+  {slot:"sun1",title:{en:"First afternoon slot – choose one",de:"Erstes Zeitfenster am Nachmittag – wähl eins",fr:"Premier créneau de l’après-midi – choisissez-en un",lb:"Éischt Zäitfënster nomëttes – wiel eent"}},
+  {slot:"sun2",title:{en:"Second afternoon slot – choose one",de:"Zweites Zeitfenster am Nachmittag – wähl eins",fr:"Second créneau de l’après-midi – choisissez-en un",lb:"Zweet Zäitfënster nomëttes – wiel eent"}},
   MEET,
-  {t:"20:30",h:"Closing, all together",w:"Forum / Reception",p:"Gemeinsamer Abschluss – the joint end of the programme in Oświęcim."}
+  {t:"20:30",h:{en:"Closing, all together",de:"Gemeinsamer Abschluss",fr:"Clôture, tous ensemble",lb:"Ofschloss, all zesummen"},w:"Forum / Reception",
+   p:{en:"Gemeinsamer Abschluss – the joint end of the programme in Oświęcim.",de:"Der gemeinsame Abschluss des Programms in Oświęcim.",fr:"« Gemeinsamer Abschluss » – la clôture commune du programme à Oświęcim.",lb:"De gemeinsamen Ofschloss vum Programm zu Oświęcim."}}
  ],
  mon:[
-  {t:"a.m.",h:"Leave Oświęcim",p:"Kraków is about 60 km away."},
-  {t:"day",h:"Visit of Kraków",w:"Old Jewish quarter, old town and more",p:"Kazimierz, the Jewish quarter founded in 1335, is today the best-preserved in Poland; its ghetto was liquidated in 1943. The historic centre has been a UNESCO World Heritage site since 1978."},
-  {t:"~19:00",h:"Bus leaves Kraków",p:"Second night on the bus."}
+  {t:AM,h:{en:"Leave Oświęcim",de:"Abfahrt aus Oświęcim",fr:"Départ d’Oświęcim",lb:"Ofrees vun Oświęcim"},p:{en:"Kraków is about 60 km away.",de:"Krakau liegt etwa 60 km entfernt.",fr:"Cracovie est à environ 60 km.",lb:"Krakau läit ongeféier 60 km ewech."}},
+  {t:{en:"day",de:"Tag",fr:"journée",lb:"Dag"},h:{en:"Visit of Kraków",de:"Besuch in Krakau",fr:"Visite de Cracovie",lb:"Besuch zu Krakau"},w:{en:"Old Jewish quarter, old town and more",de:"Altes jüdisches Viertel, Altstadt und mehr",fr:"Ancien quartier juif, vieille ville et plus encore",lb:"Ale jiddesche Quartier, al Stad a méi"},
+   p:{en:"Kazimierz, the Jewish quarter founded in 1335, is today the best-preserved in Poland; its ghetto was liquidated in 1943. The historic centre has been a UNESCO World Heritage site since 1978.",
+    de:"Kazimierz, das 1335 gegründete jüdische Viertel, ist heute das besterhaltene in Polen; das Ghetto wurde 1943 liquidiert. Die historische Altstadt gehört seit 1978 zum UNESCO-Welterbe.",
+    fr:"Kazimierz, le quartier juif fondé en 1335, est aujourd’hui le mieux conservé de Pologne ; son ghetto a été liquidé en 1943. Le centre historique est inscrit au patrimoine mondial de l’UNESCO depuis 1978.",
+    lb:"Kazimierz, de jiddesche Quartier, deen 1335 gegrënnt gouf, ass haut dee bescht erhalen a Polen; säi Ghetto gouf 1943 liquidéiert. Den historeschen Zentrum gehéiert zënter 1978 zum UNESCO-Weltierfgutt."}},
+  {t:"~19:00",h:{en:"Bus leaves Kraków",de:"Abfahrt in Krakau",fr:"Départ du bus de Cracovie",lb:"De Bus fiert vu Krakau of"},p:{en:"Second night on the bus.",de:"Zweite Nacht im Bus.",fr:"Deuxième nuit dans le bus.",lb:"Zweet Nuecht am Bus."}}
  ],
  tue:[
-  {t:"p.m.",h:"Arrival in Luxembourg",p:"Early afternoon."}
+  {t:PM,h:{en:"Arrival in Luxembourg",de:"Ankunft in Luxemburg",fr:"Arrivée au Luxembourg",lb:"Ukonft zu Lëtzebuerg"},p:{en:"Early afternoon.",de:"Am frühen Nachmittag.",fr:"En début d’après-midi.",lb:"Fréi am Nomëtteg."}}
  ]
 };
-const LANGS=[["L","Luxembourgish"],["D","German"],["F","French"],["E","English"]];
-const SLOTNAMES={fri:"Friday 20:15",sat1:"Saturday 15:00",sat2:"Saturday 16:30",sun1:"Sunday 15:00",sun2:"Sunday 16:30"};
+const LANGS=[["L",{en:"Luxembourgish",de:"Luxemburgisch",fr:"luxembourgeois",lb:"Lëtzebuergesch"}],["D",{en:"German",de:"Deutsch",fr:"allemand",lb:"Däitsch"}],["F",{en:"French",de:"Französisch",fr:"français",lb:"Franséisch"}],["E",{en:"English",de:"Englisch",fr:"anglais",lb:"Englesch"}]];
+const SLOTNAMES={
+ fri:{en:"Friday 20:15",de:"Freitag 20:15",fr:"Vendredi 20:15",lb:"Freideg 20:15"},
+ sat1:{en:"Saturday 15:00",de:"Samstag 15:00",fr:"Samedi 15:00",lb:"Samschdeg 15:00"},
+ sat2:{en:"Saturday 16:30",de:"Samstag 16:30",fr:"Samedi 16:30",lb:"Samschdeg 16:30"},
+ sun1:{en:"Sunday 15:00",de:"Sonntag 15:00",fr:"Dimanche 15:00",lb:"Sonndeg 15:00"},
+ sun2:{en:"Sunday 16:30",de:"Sonntag 16:30",fr:"Dimanche 16:30",lb:"Sonndeg 16:30"}
+};
+const PEOPLE=[
+ ["Henri Juda",{en:"2nd-generation witness; his mother Jeanne survived Auschwitz",de:"Zeitzeuge der 2. Generation; seine Mutter Jeanne überlebte Auschwitz",fr:"Témoin de la 2e génération ; sa mère Jeanne a survécu à Auschwitz",lb:"Zäitzeie vun der 2. Generatioun; seng Mamm Jeanne huet Auschwitz iwwerlieft"},["juda"]],
+ ["Julien Joseph",{en:"2nd-generation witness; guide at the Jewish Centre",de:"Zeitzeuge der 2. Generation; führt durch das Jüdische Zentrum",fr:"Témoin de la 2e génération ; guide au Centre juif",lb:"Zäitzeie vun der 2. Generatioun; Guide am Jiddeschen Zentrum"},["joseph","jewish"]],
+ ["Cindy Hayum",{en:"3rd-generation witness; her grandfather survived Auschwitz",de:"Zeitzeugin der 3. Generation; ihr Großvater überlebte Auschwitz",fr:"Témoin de la 3e génération ; son grand-père a survécu à Auschwitz",lb:"Zäitzeie vun der 3. Generatioun; hire Grousspapp huet Auschwitz iwwerlieft"},["hayum"]],
+ ["Kim Schortgen",{en:"Leads the preparation evening and the “What remains?” circle",de:"Leitet den Vorbereitungsabend und den Gesprächskreis „Was bleibt?“",fr:"Anime la soirée de préparation et le cercle « Que reste-t-il ? »",lb:"Leet de Virbereedungsowend an d’Gespréichsronn „Wat bleift?“"},["wat","wasbleibt"]],
+ ["Simone Kayser",{en:"Leads the preparation evening",de:"Leitet den Vorbereitungsabend",fr:"Anime la soirée de préparation",lb:"Leet de Virbereedungsowend"},["wat"]],
+ ["Simon, Noah, Telma, Ines, Tun",{en:"Students from LCD and Nordstad-Lycée who went last year",de:"Schülerinnen und Schüler vom LCD und vom Nordstad-Lycée, die letztes Jahr dabei waren",fr:"Élèves du LCD et du Nordstad-Lycée qui ont fait le voyage l’an dernier",lb:"Schüler vum LCD a vum Nordstad-Lycée, déi d’lescht Joer matgefuer sinn"},["jfj"]],
+ ["Claude Marx, Mike Berndt, Francesco",{en:"Former student participants (2021), now T2G volunteers",de:"Waren 2021 als Schüler dabei, heute Ehrenamtliche bei T2G",fr:"Anciens participants élèves (2021), aujourd’hui bénévoles chez T2G",lb:"Fréier als Schüler matgefuer (2021), haut Benevolen bei T2G"},["befr"]],
+ ["Josephine Woltz",{en:"Photography and art workshop",de:"Foto- und Kunstworkshop",fr:"Atelier photo et art",lb:"Foto- a Konschtatelier"},["woltz"]],
+ ["Christoph-Lukas Hagenauer",{en:"Actor; quiet creative workshop",de:"Schauspieler; ruhiger kreativer Workshop",fr:"Comédien ; atelier calme et créatif",lb:"Schauspiller; rouegen, kreativen Atelier"},["hagenauer"]],
+ ["Mireille Bourggraff",{en:"Last letters of the Shoah",de:"Letzte Briefe der Shoah",fr:"Dernières lettres de la Shoah",lb:"Lescht Bréiwer vun der Shoah"},["bourg"]],
+ ["Liz Freimann",{en:"Antisemitism and democracy today; also moderates Sunday’s Henri Juda talk",de:"Antisemitismus und Demokratie heute; moderiert auch das Gespräch mit Henri Juda am Sonntag",fr:"Antisémitisme et démocratie aujourd’hui ; anime aussi la rencontre avec Henri Juda dimanche",lb:"Antisemitismus an Demokratie haut; moderéiert och sonndes d’Gespréich mam Henri Juda"},["freimann"]],
+ ["Charles Goerens",{en:"Luxembourgish Member of the European Parliament",de:"Luxemburgischer Abgeordneter im Europäischen Parlament",fr:"Député européen luxembourgeois",lb:"Lëtzebuerger Europadeputéierten"},["goerens"]],
+ ["Yannick Frantz",{en:"Teacher-focused tools; moderates Saturday’s Henri Juda talk; guides “Frames of Memory” with Juliette Rass",de:"Werkzeuge für Lehrkräfte; moderiert das Gespräch mit Henri Juda am Samstag; führt mit Juliette Rass durch „Frames of Memory“",fr:"Outils pour les enseignants ; anime la rencontre avec Henri Juda samedi ; guide « Frames of Memory » avec Juliette Rass",lb:"Tools fir Enseignanten; moderéiert samschdes d’Gespréich mam Henri Juda; féiert zesumme mat Juliette Rass duerch „Frames of Memory“"},["faces","frames"]],
+ ["Marc Schoentgen",{en:"Guided walk through Oświęcim; moderates Friday’s Henri Juda talk",de:"Stadtführung durch Oświęcim; moderiert das Gespräch mit Henri Juda am Freitag",fr:"Visite guidée d’Oświęcim ; anime la rencontre avec Henri Juda vendredi",lb:"Stadféierung duerch Oświęcim; moderéiert freides d’Gespréich mam Henri Juda"},["town"]],
+ ["Françoise Flesch",{en:"Jewish Centre visit; co-supervises the student workshop with Mario Glod",de:"Besuch im Jüdischen Zentrum; betreut mit Mario Glod den Workshop der Schüler",fr:"Visite du Centre juif ; co-encadre l’atelier des élèves avec Mario Glod",lb:"Visitt am Jiddeschen Zentrum; betreit zesumme mam Mario Glod den Atelier vun de Schüler"},["jewish"]]
+];
 
 function load(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 let plan=load("t2g-plan",{}), langs=load("t2g-langs",[]);
 const open=new Set();
 
+function pickLang(){
+  let q=null;try{q=new URLSearchParams(location.search).get("lang")}catch(e){}
+  if(UIL.includes(q)) return q;
+  const s=load("t2g-ui",null);if(UIL.includes(s)) return s;
+  for(const l of (navigator.languages||[navigator.language||""])){const b=String(l).toLowerCase().slice(0,2);if(UIL.includes(b))return b;}
+  return "en";
+}
+let lang=pickLang();
+// French typography: no-break space before : ; ? ! » and after «
+const nb=s=>typeof s==="string"?s.replace(/ ([:;?!»])/g," $1").replace(/« /g,"« "):s;
+function L(x){
+  if(x==null) return x;
+  if(typeof x==="object"&&!Array.isArray(x)) x=(lang in x)?x[lang]:x.en;
+  if(lang!=="fr") return x;
+  return Array.isArray(x)?x.map(nb):nb(x);
+}
+function u(k){return L(UI[k])}
+function R(r){return (ROOMS[r]&&ROOMS[r][lang])||r}
+function slotName(s){return L(SLOTNAMES[s])}
+
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function status(w){
-  if(w.flex) return {ok:true,txt:"Language: flexible"};
-  if(w.unk) return {ok:true,txt:"Language not stated"};
-  if(!langs.length) return {ok:true,txt:""};
-  if(w.lang.some(l=>langs.includes(l))) return {ok:true,txt:"In your languages"};
-  if(w.part.some(l=>langs.includes(l))) return {ok:true,txt:"Only partly in your languages"};
-  return {ok:false,txt:"Not in your languages"};
+  if(w.flex) return {ok:true,c:"part",txt:u("flex")};
+  if(w.unk) return {ok:true,c:"part",txt:u("unk")};
+  if(!langs.length) return {ok:true,c:"",txt:""};
+  if(w.lang.some(l=>langs.includes(l))) return {ok:true,c:"yes",txt:u("yes")};
+  if(w.part.some(l=>langs.includes(l))) return {ok:true,c:"part",txt:u("part")};
+  return {ok:false,c:"no",txt:u("no")};
 }
 function alsoWhen(id,slot){
-  const out=[];for(const s in SLOTS){if(s===slot)continue;SLOTS[s].opts.forEach(o=>{if(o[0]===id)out.push(SLOTNAMES[s])})}
+  const out=[];for(const s in SLOTS){if(s===slot)continue;SLOTS[s].opts.forEach(o=>{if(o[0]===id)out.push(slotName(s))})}
   return [...new Set(out)];
 }
 function optKey(slot,i){return slot+":"+i}
 
+const EN={},EN_TITLE=document.title;
+document.querySelectorAll("[data-t]").forEach(el=>{EN[el.dataset.t]=el.innerHTML});
+function applyStatic(){
+  document.querySelectorAll("[data-t]").forEach(el=>{
+    const k=el.dataset.t,v=STR[k]&&STR[k][lang];
+    el.innerHTML=v?(lang==="fr"?nb(v):v):EN[k];
+  });
+  document.documentElement.lang=lang;
+  document.title=lang==="en"?EN_TITLE:STR.title[lang];
+  document.querySelector("nav.tabs").setAttribute("aria-label",u("sections"));
+  const g=document.getElementById("uilang");g.setAttribute("aria-label",u("uilang"));
+  g.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.ui===lang));
+}
+function setLang(l){
+  lang=l;save("t2g-ui",l);
+  try{const p=new URLSearchParams(location.search);p.set("lang",l);history.replaceState(null,"","?"+p+location.hash)}catch(e){}
+  applyStatic();renderAll();
+}
+document.querySelectorAll("#uilang button").forEach(b=>b.onclick=()=>setLang(b.dataset.ui));
+
 function renderChips(){
   const c=document.getElementById("chips");
-  c.innerHTML=LANGS.map(([k,n])=>`<button class="chip" data-l="${k}" aria-pressed="${langs.includes(k)}">${k} – ${n}</button>`).join("");
+  c.innerHTML=LANGS.map(([k,n])=>`<button class="chip" data-l="${k}" aria-pressed="${langs.includes(k)}">${k} – ${esc(L(n))}</button>`).join("");
   c.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{
     const l=b.dataset.l;langs=langs.includes(l)?langs.filter(x=>x!==l):[...langs,l];save("t2g-langs",langs);renderAll();
   });
   const s=document.getElementById("langsum");
-  if(!langs.length){s.innerHTML='<p class="match">No filter yet: tap the languages you understand to see what you can follow.</p>';return}
+  if(!langs.length){s.innerHTML=`<p class="match">${esc(u("nofilter"))}</p>`;return}
   const rank={yes:0,part:1,no:2};
   s.innerHTML='<div class="meter">'+Object.keys(SLOTS).map(k=>{
-    const cells=SLOTS[k].opts.map(o=>{const w=W[o[0]],st=status(w);return {c:!st.ok?"no":(st.txt==="In your languages"?"yes":"part"),t:w.t}})
+    const cells=SLOTS[k].opts.map(o=>{const w=W[o[0]],st=status(w);return {c:st.c,t:L(w.t)}})
       .sort((a,b)=>rank[a.c]-rank[b.c]).map(x=>`<i class="c ${x.c}" title="${esc(x.t)}"></i>`).join("");
     const n=SLOTS[k].opts.filter(o=>status(W[o[0]]).ok).length,tot=SLOTS[k].opts.length;
-    return `<a class="mrow${n?"":" zero"}" href="#slot-${k}"><span class="ml">${SLOTNAMES[k]}</span><span class="mc">${cells}</span><span class="mn">${n?n+"/"+tot:"none"}</span></a>`;
-  }).join("")+'</div><p class="legend"><span><i class="c yes"></i>in your languages</span><span><i class="c part"></i>partly, or language open</span><span><i class="c no"></i>not for you</span></p><p class="match">Tap a row to jump to that slot.</p>';
+    return `<a class="mrow${n?"":" zero"}" href="#slot-${k}"><span class="ml">${esc(slotName(k))}</span><span class="mc">${cells}</span><span class="mn">${n?n+"/"+tot:esc(u("none"))}</span></a>`;
+  }).join("")+`</div><p class="legend"><span><i class="c yes"></i>${esc(u("lg_yes"))}</span><span><i class="c part"></i>${esc(u("lg_part"))}</span><span><i class="c no"></i>${esc(u("lg_no"))}</span></p><p class="match">${esc(u("jump"))}</p>`;
 }
 function renderPlan(){
   const el=document.getElementById("plan");
   el.innerHTML=Object.keys(SLOTS).map(k=>{
     const i=plan[k];
-    if(i===undefined||!SLOTS[k].opts[i]) return `<div><span class="k">${SLOTNAMES[k]}</span><span class="v empty">not chosen yet</span></div>`;
+    if(i===undefined||!SLOTS[k].opts[i]) return `<div><span class="k">${esc(slotName(k))}</span><span class="v empty">${esc(u("notchosen"))}</span></div>`;
     const o=SLOTS[k].opts[i],w=W[o[0]];
-    return `<div><span class="k">${SLOTNAMES[k]}</span><span class="v"><a href="#o-${k}-${i}">${esc(w.t)}</a><br><span class="room">${esc(o[1])}</span></span></div>`;
+    return `<div><span class="k">${esc(slotName(k))}</span><span class="v"><a href="#o-${k}-${i}">${esc(L(w.t))}</a><br><span class="room">${esc(R(o[1]))}</span></span></div>`;
   }).join("");
   const ids=Object.keys(plan).map(k=>SLOTS[k]&&SLOTS[k].opts[plan[k]]?SLOTS[k].opts[plan[k]][0]:null).filter(Boolean);
   const dup=ids.filter((x,i)=>ids.indexOf(x)!==i);
   const wn=document.getElementById("warn");
-  if(dup.length){wn.hidden=false;wn.textContent="You’ve picked the same session twice: "+[...new Set(dup)].map(d=>W[d].t).join(", ")+". Same content both times.";}
+  if(dup.length){wn.hidden=false;wn.textContent=u("dup").replace("{x}",[...new Set(dup)].map(d=>L(W[d].t)).join(", "));}
   else wn.hidden=true;
 }
 function optHTML(slot,o,i){
   const w=W[o[0]],st=status(w),key=optKey(slot,i),chosen=plan[slot]===i,isOpen=open.has(key);
-  const lg=w.flex?`<span class="lg">any</span>`:w.unk?``:w.lang.map(l=>`<span class="lg">${l}</span>`).join("")+w.part.map(l=>`<span class="lg part">(${l})</span>`).join("");
+  const title=L(w.t),extra=L(o[2]),tip=L(w.tip);
+  const lg=w.flex?`<span class="lg">${esc(u("any"))}</span>`:w.unk?``:w.lang.map(l=>`<span class="lg">${l}</span>`).join("")+w.part.map(l=>`<span class="lg part">(${l})</span>`).join("");
   const also=alsoWhen(o[0],slot);
   return `<article class="opt${st.ok?"":" dim"}${chosen?" chosen":""}${isOpen?" open":""}" id="o-${slot}-${i}">
-   <span class="chosen-stamp">CHOSEN</span>
-   <h4>${esc(w.t)}</h4><div class="orig">${esc(w.o)}</div>
-   <div class="who">${esc(w.who)}${o[2]?`, ${esc(o[2])}`:""}</div>
-   <div class="tags"><span class="room">${esc(o[1])}</span>${lg}<span class="kind">${esc(w.kind)}</span></div>
-   ${st.txt?`<div class="match">${st.txt}</div>`:""}
-   <div class="more">${w.d.map(p=>`<p>${esc(p)}</p>`).join("")}
-    ${w.tip?`<p class="tip">${esc(w.tip)}</p>`:""}
-    ${also.length?`<p class="also">Also on: ${also.join(", ")}</p>`:`<p class="also">Only this once.</p>`}
+   <span class="chosen-stamp">${esc(u("stamp"))}</span>
+   <h4>${esc(title)}</h4>${w.o!==title?`<div class="orig">${esc(w.o)}</div>`:""}
+   <div class="who">${esc(L(w.who))}${extra?`, ${esc(extra)}`:""}</div>
+   <div class="tags"><span class="room">${esc(R(o[1]))}</span>${lg}<span class="kind">${esc(L(w.kind))}</span></div>
+   ${st.txt?`<div class="match">${esc(st.txt)}</div>`:""}
+   <div class="more">${L(w.d).map(p=>`<p>${esc(p)}</p>`).join("")}
+    ${tip?`<p class="tip">${esc(tip)}</p>`:""}
+    ${also.length?`<p class="also">${esc(u("also"))} ${esc(also.join(", "))}</p>`:`<p class="also">${esc(u("once"))}</p>`}
    </div>
-   <div class="row"><button class="btn tog" data-k="${key}" aria-expanded="${isOpen}">${isOpen?"Close":"Read more"}</button>
-   <button class="btn pick" data-s="${slot}" data-i="${i}" aria-pressed="${chosen}">${chosen?"Chosen":"Choose this"}</button></div>
+   <div class="row"><button class="btn tog" data-k="${key}" aria-expanded="${isOpen}">${esc(isOpen?u("close"):u("more"))}</button>
+   <button class="btn pick" data-s="${slot}" data-i="${i}" aria-pressed="${chosen}">${esc(chosen?u("chosen"):u("choose"))}</button></div>
   </article>`;
 }
 function renderDays(){
   for(const d in DAYS){
     document.getElementById("d-"+d).innerHTML=DAYS[d].map(e=>{
       if(e.slot){const s=SLOTS[e.slot];
-        return `<div class="ev" id="slot-${e.slot}"><div class="t">${s.time}</div><div class="b"><p class="slot-h">${e.title} <span>– ${s.opts.length} options</span></p><div class="opts">${s.opts.map((o,i)=>optHTML(e.slot,o,i)).join("")}</div></div></div>`}
-      return `<div class="ev fixed${e.site?" site":""}"><div class="t">${e.t}</div><div class="b"><h3>${esc(e.h)}${e.inf?'<span class="inferred">inferred</span>':""}</h3>${e.w?`<div class="where">${esc(e.w)}</div>`:""}${e.p?`<p>${esc(e.p)}</p>`:""}</div></div>`;
+        return `<div class="ev" id="slot-${e.slot}"><div class="t">${s.time}</div><div class="b"><p class="slot-h">${esc(L(e.title))} <span>– ${esc(u("nopts").replace("{n}",s.opts.length))}</span></p><div class="opts">${s.opts.map((o,i)=>optHTML(e.slot,o,i)).join("")}</div></div></div>`}
+      const wh=e.w&&R(L(e.w)),p=L(e.p);
+      return `<div class="ev fixed${e.site?" site":""}"><div class="t">${esc(L(e.t))}</div><div class="b"><h3>${esc(L(e.h))}${e.inf?'<span class="inferred">inferred</span>':""}</h3>${wh?`<div class="where">${esc(wh)}</div>`:""}${p?`<p>${esc(p)}</p>`:""}</div></div>`;
     }).join("");
   }
   document.querySelectorAll(".tog").forEach(b=>b.onclick=()=>{const k=b.dataset.k;open.has(k)?open.delete(k):open.add(k);renderDays();});
@@ -477,26 +851,9 @@ function renderDays(){
   });
 }
 function renderPeople(){
-  const P=[
-   ["Henri Juda","2nd-generation witness; his mother Jeanne survived Auschwitz",["juda"]],
-   ["Julien Joseph","2nd-generation witness; guide at the Jewish Centre",["joseph","jewish"]],
-   ["Cindy Hayum","3rd-generation witness; her grandfather survived Auschwitz",["hayum"]],
-   ["Kim Schortgen","Leads the preparation evening and the “What remains?” circle",["wat","wasbleibt"]],
-   ["Simone Kayser","Leads the preparation evening",["wat"]],
-   ["Simon, Noah, Telma, Ines, Tun","Students from LCD and Nordstad-Lycée who went last year",["jfj"]],
-   ["Claude Marx, Mike Berndt, Francesco","Former student participants (2021), now T2G volunteers",["befr"]],
-   ["Josephine Woltz","Photography and art workshop",["woltz"]],
-   ["Christoph-Lukas Hagenauer","Actor; quiet creative workshop",["hagenauer"]],
-   ["Mireille Bourggraff","Last letters of the Shoah",["bourg"]],
-   ["Liz Freimann","Antisemitism and democracy today; also moderates Sunday’s Henri Juda talk",["freimann"]],
-   ["Charles Goerens","Luxembourgish Member of the European Parliament",["goerens"]],
-   ["Yannick Frantz","Teacher-focused tools; moderates Saturday’s Henri Juda talk; guides “Frames of Memory” with Juliette Rass",["faces","frames"]],
-   ["Marc Schoentgen","Guided walk through Oświęcim; moderates Friday’s Henri Juda talk",["town"]],
-   ["Françoise Flesch","Jewish Centre visit; co-supervises the student workshop with Mario Glod",["jewish"]]
-  ];
-  document.getElementById("plist").innerHTML=P.map(([n,r,ids])=>{
-    const when=[];ids.forEach(id=>{for(const s in SLOTS)SLOTS[s].opts.forEach(o=>{if(o[0]===id)when.push(SLOTNAMES[s])})});
-    return `<div class="person"><b>${esc(n)}</b> <span class="r">– ${esc(r)}</span><div class="s">${[...new Set(when)].join(", ")}</div></div>`;
+  document.getElementById("plist").innerHTML=PEOPLE.map(([n,r,ids])=>{
+    const when=[];ids.forEach(id=>{for(const s in SLOTS)SLOTS[s].opts.forEach(o=>{if(o[0]===id)when.push(slotName(s))})});
+    return `<div class="person"><b>${esc(n)}</b> <span class="r">– ${esc(L(r))}</span><div class="s">${esc([...new Set(when)].join(", "))}</div></div>`;
   }).join("");
 }
 function markToday(){
@@ -505,7 +862,7 @@ function markToday(){
     if(a.dataset.d!==k)return;
     a.classList.add("today");a.setAttribute("aria-current","date");
     const h=document.querySelector(a.getAttribute("href")+" h2");
-    if(h&&!h.querySelector(".today-stamp")){const s=document.createElement("span");s.className="today-stamp";s.textContent="TODAY";h.prepend(s);}
+    if(h&&!h.querySelector(".today-stamp")){const s=document.createElement("span");s.className="today-stamp";s.textContent=u("today");h.prepend(s);}
   });
 }
 function initPack(){
@@ -533,6 +890,7 @@ function initSpy(){
   addEventListener("resize",update);
   update();
 }
+applyStatic();
 initPack();
 initSpy();
 renderAll();
