@@ -79,6 +79,9 @@ p.lede{margin:0 0 16px;color:var(--pencil);font-style:italic}
 .rhythm{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
 .rhythm li{display:grid;grid-template-columns:132px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--rule)}
 .rhythm b{font-family:var(--type);font-weight:400;color:var(--red)}
+.campcta{display:block;text-decoration:none;color:var(--ink);background:var(--sheet);border:1px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:12px 14px;margin:18px 0 6px;font-size:17px;line-height:1.35}
+.campcta b{display:block;font-family:var(--type);font-weight:400;font-size:20px;color:var(--red);margin-bottom:2px}
+.camplink{font-family:var(--type);font-size:15px}
 .note{font-family:var(--type);font-size:14px;color:var(--pencil);border-left:3px solid var(--blue);padding:6px 0 6px 12px;margin:16px 0}
 .inferred{font-family:var(--type);font-size:12.5px;color:var(--blue);border:1px dashed var(--blue);padding:0 5px;margin-left:6px;white-space:nowrap;vertical-align:2px}
 
@@ -248,6 +251,7 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
     <li data-t="rh4"><b>Any time</b><span>Cards and pens are laid out around the IJBS. Write or draw what moves you, in any language, and hang it on the line in the foyer. The Hannah Arendt exhibition is open to visit on your own.</span></li>
   </ul>
   <p class="note" data-t="how_note">At the memorial sites there is a security check: no backpacks, no large bags.</p>
+  <a class="campcta" href="camp/" data-t="camp_cta"><b>Camp explorer</b>Auschwitz I and Birkenau at real scale, in 3D, with the story of each place →</a>
 
   <h2 data-t="filt_h">Your filters<small>Tap the languages you follow comfortably</small></h2>
   <div class="langbox">
@@ -367,6 +371,7 @@ const STR={
  rh4:{de:"<b>Jederzeit</b><span>In der IJBS liegen überall Karten und Stifte aus. Schreib oder zeichne, was dich bewegt, in jeder Sprache, und häng es an die Leine im Foyer. Die Hannah-Arendt-Ausstellung kannst du auf eigene Faust besuchen.</span>",
   fr:"<b>À tout moment</b><span>Des cartes et des stylos sont disposés un peu partout à l’IJBS. Écrivez ou dessinez ce qui vous touche, dans la langue de votre choix, et accrochez-le à la corde dans le foyer. L’exposition sur Hannah Arendt se visite librement.</span>",
   lb:"<b>Zu all Moment</b><span>An der IJBS leien iwwerall Kaarten a Bicen. Schreif oder mol, wat dech beréiert, an all Sprooch, an hänk et un d’Schnouer am Foyer. D’Hannah-Arendt-Ausstellung kanns du op eegen Hand besichen.</span>"},
+ camp_cta:{de:"<b>Die Lager erkunden</b>Auschwitz I und Birkenau im echten Maßstab, in 3D, mit der Geschichte jedes Ortes →",fr:"<b>Explorer les camps</b>Auschwitz I et Birkenau à l’échelle réelle, en 3D, avec l’histoire de chaque lieu →",lb:"<b>D’Lageren entdecken</b>Auschwitz I a Birkenau an der richteger Gréisst, an 3D, mat der Geschicht vun all Plaz →"},
  how_note:{de:"An den Gedenkstätten gibt es eine Sicherheitskontrolle: keine Rucksäcke, keine großen Taschen.",
   fr:"Contrôle de sécurité sur les sites du mémorial : pas de sacs à dos, pas de grands sacs.",
   lb:"Op de Gedenkstätte gëtt et eng Sécherheetskontroll: keng Rucksäck, keng grouss Taschen."},
@@ -485,6 +490,7 @@ const UI={
  choose:{en:"Choose this",de:"Auswählen",fr:"Choisir",lb:"Auswielen"},
  nopts:{en:"{n} options",de:"{n} Angebote",fr:"{n} activités",lb:"{n} Optiounen"},
  today:{en:"TODAY",de:"HEUTE",fr:"AUJOURD’HUI",lb:"HAUT"},
+ explore:{en:"Map and 3D model of this site →",de:"Karte und 3D-Modell dieses Ortes →",fr:"Plan et modèle 3D de ce site →",lb:"Kaart an 3D-Modell vun dëser Plaz →"},
  past_show:{en:"Show past days ({n})",de:"Vergangene Tage anzeigen ({n})",fr:"Afficher les jours passés ({n})",lb:"Vergaangen Deeg weisen ({n})"},
  past_hide:{en:"Hide past days",de:"Vergangene Tage ausblenden",fr:"Masquer les jours passés",lb:"Vergaangen Deeg verstoppen"}
 };
@@ -674,7 +680,7 @@ const DAYS={
  sat:[
   MEAL("7:30",BKF),
   {t:"8:15",h:{en:"Bus to the memorial site",de:"Abfahrt zur Gedenkstätte",fr:"Départ pour le mémorial",lb:"Depart op d’Gedenkstätt"},p:SEC},
-  {t:"9:00",h:{en:"Auschwitz I – the main camp",de:"Auschwitz I – das Stammlager",fr:"Auschwitz I – le camp principal",lb:"Auschwitz I – de Stammlager"},site:true,
+  {t:"9:00",link:"a1",h:{en:"Auschwitz I – the main camp",de:"Auschwitz I – das Stammlager",fr:"Auschwitz I – le camp principal",lb:"Auschwitz I – de Stammlager"},site:true,
    p:{en:"Guided visit of the memorial site (Stammlager).",de:"Geführte Besichtigung der Gedenkstätte (Stammlager).",fr:"Visite guidée du site mémoriel (Stammlager).",lb:"Gefouert Visitt vun der Gedenkstätt (Stammlager)."}},
   {t:"11:00",h:{en:"Commemoration at the Wall of Death",de:"Gedenkfeier an der Todeswand",fr:"Commémoration au mur des fusillés",lb:"Gedenkfeier un der Doudesmauer"},site:true,
    p:{en:"Ceremony at the execution wall in the courtyard between Block 10 and Block 11 – Block 10 is where Jeanne Juda, Henri Juda’s mother, was held.",de:"Feier an der Hinrichtungsmauer im Hof zwischen Block 10 und Block 11 – in Block 10 war Jeanne Juda, die Mutter von Henri Juda, inhaftiert.",fr:"Cérémonie devant le mur d’exécution, dans la cour entre le bloc 10 et le bloc 11 – c’est au bloc 10 que Jeanne Juda, la mère d’Henri Juda, a été détenue.",lb:"Zeremonie un der Hiriichtungsmauer am Haff tëscht dem Block 10 an dem Block 11 – am Block 10 war d’Jeanne Juda, dem Henri Juda seng Mamm, agespaart."}},
@@ -689,7 +695,7 @@ const DAYS={
  sun:[
   MEAL("7:30",BKF),
   {t:"8:30",h:{en:"Bus to Birkenau",de:"Abfahrt zur Gedenkstätte Birkenau",fr:"Départ pour Birkenau",lb:"Depart op Birkenau"},p:SEC},
-  {t:"9:00",h:"Auschwitz II – Birkenau",site:true,p:{en:"Guided visit of the memorial site.",de:"Geführte Besichtigung der Gedenkstätte.",fr:"Visite guidée du site mémoriel.",lb:"Gefouert Visitt vun der Gedenkstätt."}},
+  {t:"9:00",link:"bk",h:"Auschwitz II – Birkenau",site:true,p:{en:"Guided visit of the memorial site.",de:"Geführte Besichtigung der Gedenkstätte.",fr:"Visite guidée du site mémoriel.",lb:"Gefouert Visitt vun der Gedenkstätt."}},
   {t:"12:00",h:{en:"Commemoration at the International Monument",de:"Gedenkfeier am Internationalen Mahnmal",fr:"Commémoration au Monument international",lb:"Gedenkfeier um Internationale Monument"},site:true,
    p:{en:"Ceremony at the memorial at the far end of the Birkenau ramp, between the ruins of crematoria II and III.",de:"Feier am Mahnmal am Ende der Rampe in Birkenau, zwischen den Ruinen der Krematorien II und III.",fr:"Cérémonie au mémorial, tout au bout de la rampe de Birkenau, entre les ruines des crématoires II et III.",lb:"Zeremonie um Monument um Enn vun der Rampe zu Birkenau, tëscht de Ruine vun de Krematorien II an III."}},
   BACK("14:00"),
@@ -869,7 +875,7 @@ function renderDays(){
       if(e.slot){const s=SLOTS[e.slot];
         return `<div class="ev" id="slot-${e.slot}"><div class="t">${s.time}</div><div class="b"><p class="slot-h">${esc(L(e.title))} <span>– ${esc(u("nopts").replace("{n}",s.opts.length))}</span></p><div class="opts">${s.opts.map((o,i)=>optHTML(e.slot,o,i)).join("")}</div></div></div>`}
       const wh=e.w&&R(L(e.w)),p=L(e.p);
-      return `<div class="ev fixed${e.site?" site":""}"><div class="t">${esc(L(e.t))}</div><div class="b"><h3>${esc(L(e.h))}${e.inf?'<span class="inferred">inferred</span>':""}</h3>${wh?`<div class="where">${esc(wh)}</div>`:""}${p?`<p>${esc(p)}</p>`:""}</div></div>`;
+      return `<div class="ev fixed${e.site?" site":""}"><div class="t">${esc(L(e.t))}</div><div class="b"><h3>${esc(L(e.h))}${e.inf?'<span class="inferred">inferred</span>':""}</h3>${wh?`<div class="where">${esc(wh)}</div>`:""}${p?`<p>${esc(p)}</p>`:""}${e.link?`<p><a class="camplink" href="camp/?site=${e.link}&amp;lang=${lang}">${esc(u("explore"))}</a></p>`:""}</div></div>`;
     }).join("");
   }
   document.querySelectorAll(".tog").forEach(b=>b.onclick=()=>{
@@ -923,7 +929,7 @@ function initPack(){
   const st=load("t2g-pack",{});
   document.querySelectorAll("#pack input").forEach(i=>{i.checked=!!st[i.dataset.k];i.onchange=()=>{st[i.dataset.k]=i.checked;save("t2g-pack",st);};});
 }
-function renderAll(){renderChips();renderPlan();renderDays();renderPeople();markToday();}
+function renderAll(){renderChips();renderPlan();renderDays();renderPeople();markToday();document.querySelectorAll("a.campcta").forEach(a=>a.href="camp/?lang="+lang);}
 function initSpy(){
   const nav=document.querySelector("nav.tabs"),links=[...nav.querySelectorAll("a")];
   const secs=links.map(a=>document.querySelector(a.getAttribute("href")));

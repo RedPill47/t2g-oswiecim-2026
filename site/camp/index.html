@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Camp explorer – Oświęcim 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+<style>
+:root{
+  --paper:#E2DBC8; --sheet:#EAE4D3; --ink:#26241F; --pencil:#6B6557;
+  --rule:#B5AB93; --red:#953122; --blue:#2D486A;
+  --type:"Special Elite","Courier New",Courier,monospace;
+  --serif:"Crimson Pro",Georgia,"Times New Roman",serif;
+  color-scheme:light;
+  box-sizing:border-box;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#1B1C1A; --sheet:#242522; --ink:#DAD4C3; --pencil:#9C9684;
+    --rule:#46463F; --red:#D47561; --blue:#93ADCC; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1B1C1A; --sheet:#242522; --ink:#DAD4C3; --pencil:#9C9684;
+  --rule:#46463F; --red:#D47561; --blue:#93ADCC; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.55;
+  background-image:radial-gradient(rgba(120,100,60,.06) 1px,transparent 1px);background-size:5px 5px;
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:var(--blue)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px dashed var(--red);outline-offset:3px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px;overflow-wrap:break-word}
+@media (max-width:480px){html[lang="de"] .wrap{hyphens:auto}}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
+.back{font-family:var(--type);font-size:15px;line-height:1.25;text-decoration:none;min-width:0;flex:1 1 auto}
+.uilang{flex:none}
+.uilang{display:flex;flex-wrap:nowrap;gap:6px}
+.uilang button{flex:none;font-family:var(--type);font-size:14px;background:transparent;border:1px solid var(--rule);color:var(--pencil);padding:4px 10px;border-radius:2px;cursor:pointer}
+.uilang button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+h1{font-family:var(--type);font-weight:400;font-size:clamp(30px,7vw,44px);line-height:1.05;margin:18px 0 8px}
+.lede{margin:0 0 8px}
+.respect{font-family:var(--type);font-size:14px;color:var(--pencil);border-left:3px solid var(--red);padding:4px 0 4px 12px;margin:12px 0 16px}
+.sites{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+.sites button{font-family:var(--type);font-size:15px;line-height:1.2;background:var(--sheet);border:1px solid var(--rule);padding:10px 8px;cursor:pointer;border-radius:2px}
+.sites button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.stage{position:sticky;top:0;z-index:5;height:46svh;min-height:260px;max-height:560px;background:#cfc7b0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;touch-action:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stage{background:#151614}}
+.stage canvas{display:block;width:100%;height:100%}
+.pins{position:absolute;inset:0;pointer-events:none}
+.pin{position:absolute;left:0;top:0;transform:translate(-50%,-100%);pointer-events:auto;display:flex;align-items:center;gap:6px;
+  font-family:var(--type);font-size:13px;line-height:1;background:var(--paper);color:var(--ink);border:1.5px solid var(--ink);border-radius:14px;padding:5px 8px;cursor:pointer;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.pin .tt{display:none;max-width:52vw;overflow:hidden;text-overflow:ellipsis}
+.pin.on{background:var(--red);border-color:var(--red);color:#fff;z-index:2}
+.pin.on .tt{display:inline}
+.pin.sector{background:transparent;border:0;box-shadow:none;color:var(--ink);opacity:.7;font-size:12px;pointer-events:none;transform:translate(-50%,-50%)}
+.ctrls{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.ctrls button{font-family:var(--type);font-size:12.5px;background:var(--paper);border:1px solid var(--ink);border-radius:2px;padding:5px 8px;min-height:32px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.ctrls button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ctrls .seg{display:flex}
+.ctrls .seg button+button{margin-left:-1px}
+.toast{position:absolute;left:8px;bottom:8px;max-width:calc(100% - 16px);font-family:var(--type);font-size:13px;background:var(--paper);border:1px solid var(--rule);padding:4px 8px;border-radius:2px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.legend{position:absolute;left:8px;top:8px;max-width:58%;font-family:var(--type);font-size:12px;line-height:1.35;background:var(--paper);border:1px dashed var(--ink);padding:5px 8px}
+.nogl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-family:var(--type);font-size:15px;color:var(--pencil)}
+
+.tour{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 6px}
+.tour button{font-family:var(--type);font-size:20px;line-height:1;width:48px;height:44px;background:var(--sheet);border:1px solid var(--ink);border-radius:2px;cursor:pointer}
+.tour button:disabled{opacity:.35;cursor:default}
+.tour .n{font-family:var(--type);font-size:15px;color:var(--pencil);text-align:center}
+.card{background:var(--sheet);border:1px solid var(--rule);padding:16px 16px 12px;margin:0 0 24px;box-shadow:2px 3px 0 rgba(0,0,0,.08)}
+.card h2{font-family:var(--type);font-weight:400;font-size:24px;line-height:1.15;margin:0 0 8px}
+.kind{display:inline-block;font-family:var(--type);font-size:12.5px;border:1.5px solid var(--pencil);color:var(--pencil);padding:0 6px;margin:0 0 10px;transform:rotate(-2deg)}
+.kind.recon,.kind.ruin{border-color:var(--red);color:var(--red)}
+.card h3{font-family:var(--type);font-weight:400;font-size:14px;color:var(--pencil);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 2px}
+.card p{margin:0 0 8px}
+.person{border-left:3px solid var(--blue);padding-left:12px;margin:8px 0}
+.person b{font-weight:600}
+.src{font-size:15px;color:var(--pencil);margin-top:10px}
+.src a{word-break:break-word}
+.start{font-family:var(--type);font-size:15px;background:var(--ink);color:var(--paper);border:0;padding:10px 14px;border-radius:2px;cursor:pointer;margin-top:6px}
+h2.sec{font-family:var(--type);font-weight:400;font-size:22px;margin:28px 0 8px}
+ol.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.list button{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--rule);padding:10px 0;cursor:pointer;font-family:var(--serif);font-size:17px;line-height:1.3}
+ol.list .num{font-family:var(--type);color:var(--red)}
+ol.list button[aria-current="true"]{background:var(--sheet)}
+.links{padding-left:20px}
+.credits{font-family:var(--type);font-size:13px;color:var(--pencil);margin:28px 0 40px;border-top:1px solid var(--rule);padding-top:10px}
+
+@media (min-width:900px){
+  .main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:start}
+  .stage{height:100svh;max-height:none;border:0;border-right:1px solid var(--rule)}
+  .side{max-width:none;padding:0 22px;height:100svh;overflow:auto;position:sticky;top:0}
+}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap top">
+  <a class="back" href="../" id="back" data-t="back">← Trip planning</a>
+  <div class="uilang" id="uilang" role="group" aria-label="Page language">
+    <button data-ui="lb" lang="lb" title="Lëtzebuergesch" aria-label="Lëtzebuergesch">LB</button><button data-ui="de" lang="de" title="Deutsch" aria-label="Deutsch">DE</button><button data-ui="fr" lang="fr" title="Français" aria-label="Français">FR</button><button data-ui="en" lang="en" title="English" aria-label="English">EN</button>
+  </div>
+</div>
+<div class="wrap">
+  <h1 data-t="h1">Camp explorer</h1>
+  <p class="lede" data-t="lede">Both memorial sites at real scale, drawn from OpenStreetMap. Tap a number on the map, or follow the places in the order of a typical guided visit.</p>
+  <p class="respect" data-t="respect">These are places where more than a million people were murdered. The 3D view is a way to understand the space, not a game. Anything that no longer exists is shown only on request and is always labelled.</p>
+  <div class="sites" id="sites">
+    <button data-site="a1" aria-pressed="false"></button><button data-site="bk" aria-pressed="false"></button>
+  </div>
+</div>
+<div class="main">
+  <div class="stage" id="stage">
+    <canvas id="c" aria-label="3D map"></canvas>
+    <div class="pins" id="pins"></div>
+    <div class="legend" id="legend" hidden></div>
+    <div class="ctrls">
+      <div class="seg"><button id="v-plan" aria-pressed="false" data-t="plan">Plan</button><button id="v-3d" aria-pressed="true">3D</button></div>
+      <button id="recon" aria-pressed="false" data-t="recon">1944 volumes</button>
+      <button id="locate" aria-pressed="false" data-t="locate">Where am I?</button>
+      <button id="whole" data-t="whole">Whole site</button>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+  <div class="side wrap">
+    <div class="tour">
+      <button id="prev" aria-label="Previous">‹</button>
+      <span class="n" id="stopn"></span>
+      <button id="next" aria-label="Next">›</button>
+    </div>
+    <article class="card" id="card" aria-live="polite"></article>
+    <h2 class="sec" data-t="all">All places</h2>
+    <ol class="list" id="list"></ol>
+    <h2 class="sec" data-t="further">Go further</h2>
+    <ul class="links" id="links"></ul>
+    <p class="credits" data-t="credits">Map data © OpenStreetMap contributors (ODbL). 3D: three.js (MIT). Texts: unofficial, checked against the Auschwitz Memorial’s history pages; sources are given for each place.</p>
+  </div>
+</div>
+<script type="module" src="camp.js"></script>
+</body>
+</html>
