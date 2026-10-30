@@ -59,6 +59,9 @@ button{font:inherit;color:inherit}
 .hero dl{font-family:var(--type);font-size:15.5px;margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px}
 .hero dt{color:var(--pencil)}
 .hero dd{margin:0}
+.hero .intro{font-size:17px;line-height:1.4;margin:0 0 18px;max-width:34em}
+body:not(.show-past) .past{display:none}
+.pastbar{margin:28px 0 0}
 .stamp-big{position:absolute;right:14px;top:18px;transform:rotate(8deg);font-family:var(--type);color:var(--red);
   border:3px double var(--red);padding:6px 10px;font-size:14px;line-height:1.15;text-align:center;opacity:.8;letter-spacing:1px}
 
@@ -216,10 +219,9 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
   <div class="stamp-big" data-t="h_stamp">PROVISIONAL<br>PROGRAMME</div>
   <p class="file" data-t="h_file">File no. 29 – study trip</p>
   <h1>Oświęcim<br>29.X – 3.XI.2026</h1>
+  <p class="intro" data-t="h_intro">A planning to follow the trip day by day. Change the language with the buttons at the top of the page.</p>
   <dl>
     <dt data-t="h_dates">Dates</dt><dd data-t="h_dates_v">Thu 29 Oct – Tue 3 Nov 2026</dd>
-    <dt data-t="h_bus">Bus</dt><dd data-t="h_bus_v">Voyages Léonard, overnight both ways</dd>
-    <dt data-t="h_base">Base</dt><dd data-t="h_base_v">IJBS, International Youth Meeting Centre, Oświęcim</dd>
     <dt data-t="h_org">Organiser</dt><dd>Témoins de la 2e Génération (T2G), <a href="mailto:info@temoins.lu">info@temoins.lu</a></dd>
   </dl>
 </header>
@@ -259,6 +261,7 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
   <p class="warn" id="warn" hidden></p>
 </section>
 
+<div class="pastbar" id="pastbar" hidden><button class="btn" id="pastbtn" aria-expanded="false"></button></div>
 <section id="thu" class="day"><h2 data-t="d_thu">Thursday 29 October<small>Departure</small></h2><div id="d-thu"></div>
   <h3 class="packh" data-t="packh">Before you leave</h3>
   <div class="pack" id="pack">
@@ -330,10 +333,7 @@ const STR={
  h_file:{de:"Akte Nr. 29 – Studienreise",fr:"Dossier n° 29 – voyage d’études",lb:"Dossier Nr. 29 – Studiereis"},
  h_dates:{de:"Datum",fr:"Dates",lb:"Datum"},
  h_dates_v:{de:"Do. 29. Okt. – Di. 3. Nov. 2026",fr:"jeu. 29 oct. – mar. 3 nov. 2026",lb:"Do. 29. Okt. – Dë. 3. Nov. 2026"},
- h_bus:{de:"Bus",fr:"Bus",lb:"Bus"},
- h_bus_v:{de:"Voyages Léonard, hin und zurück über Nacht",fr:"Voyages Léonard, de nuit à l’aller et au retour",lb:"Voyages Léonard, hin an zréck iwwer Nuecht"},
- h_base:{de:"Unterkunft",fr:"Hébergement",lb:"Ënnerkonft"},
- h_base_v:{de:"IJBS, Internationale Jugendbegegnungsstätte, Oświęcim",fr:"IJBS, Centre international de rencontres de jeunes, Oświęcim",lb:"IJBS, Internationale Jugendbegegnungsstätte, Oświęcim"},
+ h_intro:{de:"Ein Plan, um der Reise Tag für Tag zu folgen. Die Sprache änderst du mit den Knöpfen oben auf der Seite.",fr:"Un planning pour suivre le voyage jour après jour. Changez la langue avec les boutons en haut de la page.",lb:"E Planning, fir d’Rees Dag fir Dag ze verfollegen. D’Sprooch änners du mat de Knäpp uewen op der Säit."},
  h_org:{de:"Veranstalter",fr:"Organisateur",lb:"Organisateur"},
  n_how:{de:"Überblick",fr:"Aperçu",lb:"Iwwerbléck"},
  n_thu:{de:"Do",fr:"Jeu",lb:"Do"},
@@ -484,7 +484,9 @@ const UI={
  chosen:{en:"Chosen",de:"Gewählt",fr:"Choisi",lb:"Gewielt"},
  choose:{en:"Choose this",de:"Auswählen",fr:"Choisir",lb:"Auswielen"},
  nopts:{en:"{n} options",de:"{n} Angebote",fr:"{n} activités",lb:"{n} Optiounen"},
- today:{en:"TODAY",de:"HEUTE",fr:"AUJOURD’HUI",lb:"HAUT"}
+ today:{en:"TODAY",de:"HEUTE",fr:"AUJOURD’HUI",lb:"HAUT"},
+ past_show:{en:"Show past days ({n})",de:"Vergangene Tage anzeigen ({n})",fr:"Afficher les jours passés ({n})",lb:"Vergaangen Deeg weisen ({n})"},
+ past_hide:{en:"Hide past days",de:"Vergangene Tage ausblenden",fr:"Masquer les jours passés",lb:"Vergaangen Deeg verstoppen"}
 };
 
 const ROOMS={
@@ -877,14 +879,34 @@ function renderPeople(){
     return `<div class="person"><b>${esc(n)}</b> <span class="r">– ${esc(L(r))}</span><div class="s">${esc([...new Set(when)].join(", "))}</div></div>`;
   }).join("");
 }
+// Days before today are archived: their tab and section hide behind the "past days" button. Once the trip is over, nothing is hidden.
 function markToday(){
   const d=new Date(),k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-  document.querySelectorAll("nav.tabs a[data-d]").forEach(a=>{
-    if(a.dataset.d!==k)return;
-    a.classList.add("today");a.setAttribute("aria-current","date");
-    const h=document.querySelector(a.getAttribute("href")+" h2");
-    if(h&&!h.querySelector(".today-stamp")){const s=document.createElement("span");s.className="today-stamp";s.textContent=u("today");h.prepend(s);}
+  const tabs=[...document.querySelectorAll("nav.tabs a[data-d]")],over=k>tabs[tabs.length-1].dataset.d;
+  let n=0;
+  tabs.forEach(a=>{
+    const sec=document.querySelector(a.getAttribute("href")),h=sec.querySelector("h2"),past=!over&&a.dataset.d<k,now=a.dataset.d===k;
+    a.classList.toggle("past",past);sec.classList.toggle("past",past);if(past)n++;
+    a.classList.toggle("today",now);now?a.setAttribute("aria-current","date"):a.removeAttribute("aria-current");
+    let s=h.querySelector(".today-stamp");
+    if(now&&!s){s=document.createElement("span");s.className="today-stamp";h.prepend(s);}
+    if(!now&&s)s.remove();
+    if(s)s.textContent=u("today");
   });
+  const shown=document.body.classList.contains("show-past"),btn=document.getElementById("pastbtn");
+  document.getElementById("pastbar").hidden=!n;
+  btn.textContent=u(shown?"past_hide":"past_show").replace("{n}",n);btn.setAttribute("aria-expanded",shown);
+}
+function initPast(){
+  document.getElementById("pastbtn").onclick=()=>{document.body.classList.toggle("show-past");markToday();};
+  // a link to something inside a hidden day (e.g. from "Your dossier") shows the past days first
+  document.addEventListener("click",e=>{
+    const a=e.target.closest('a[href^="#"]'),t=a&&document.querySelector(a.getAttribute("href"));
+    if(t&&t.closest("section.past")&&!document.body.classList.contains("show-past")){document.body.classList.add("show-past");markToday();}
+  });
+  // the page may stay open past midnight
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden)markToday()});
+  setInterval(markToday,60000);
 }
 function initPack(){
   const st=load("t2g-pack",{});
@@ -898,7 +920,7 @@ function initSpy(){
   function update(){
     tick=false;
     const y=nav.getBoundingClientRect().bottom+24;
-    let i=0;secs.forEach((s,j)=>{if(s&&s.getBoundingClientRect().top<=y)i=j});
+    let i=0;secs.forEach((s,j)=>{if(s&&s.getClientRects().length&&s.getBoundingClientRect().top<=y)i=j});
     if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)i=secs.length-1;
     if(i===cur)return;cur=i;
     links.forEach((a,j)=>a.classList.toggle("active",j===i));
@@ -914,6 +936,7 @@ function initSpy(){
 applyStatic();
 fitUilang();
 initPack();
+initPast();
 initSpy();
 renderAll();
 </script>
