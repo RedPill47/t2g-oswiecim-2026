@@ -27,6 +27,11 @@ const UI = {
     fr: "Ce sont des lieux où plus d’un million de personnes ont été assassinées. La vue 3D sert à comprendre l’espace, ce n’est pas un jeu. Ce qui n’existe plus n’est montré qu’à la demande et toujours signalé.",
     lb: "Op dëse Plaze goufe méi wéi eng Millioun Mënschen ermord. D’3D-Usiicht soll hëllefen, d’Plaz ze verstoen; et ass kee Spill. Wat et net méi gëtt, gëtt nëmmen op Wonsch gewisen an ass ëmmer gekennzeechent."},
   plan: {en: "Plan", de: "Plan", fr: "Plan", lb: "Plang"},
+  mode: {en: "Switch between plan (2D) and 3D", de: "Zwischen Plan (2D) und 3D wechseln", fr: "Basculer entre plan (2D) et 3D", lb: "Tëscht Plang (2D) an 3D wiesselen"},
+  view2d: {en: "Plan view", de: "Planansicht", fr: "Vue en plan", lb: "Plangusiicht"},
+  view3d: {en: "3D view", de: "3D-Ansicht", fr: "Vue 3D", lb: "3D-Usiicht"},
+  on: {en: "on", de: "an", fr: "activés", lb: "un"}, off: {en: "off", de: "aus", fr: "désactivés", lb: "aus"},
+  more: {en: "Tap to read more", de: "Tippen für mehr", fr: "Toucher pour en lire plus", lb: "Tippe fir méi"},
   recon: {en: "1944 volumes", de: "Volumen 1944", fr: "Volumes de 1944", lb: "Volumen 1944"},
   locate: {en: "Where am I?", de: "Wo bin ich?", fr: "Où suis-je ?", lb: "Wou sinn ech?"},
   whole: {en: "Whole site", de: "Ganzes Gelände", fr: "Tout le site", lb: "Ganzt Gelänn"},
@@ -92,7 +97,7 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
 
 /* ---------- 3D ---------- */
-const stage = document.getElementById("stage"), canvas = document.getElementById("c"), pinsEl = document.getElementById("pins");
+const stage = document.getElementById("stage"), view = document.getElementById("view"), canvas = document.getElementById("c"), pinsEl = document.getElementById("pins");
 let renderer = null;
 try { renderer = new THREE.WebGLRenderer({canvas, antialias: true}); } catch (e) { renderer = null; }
 const C = dark
@@ -114,8 +119,8 @@ if (renderer) {
   controls.addEventListener("change", kick);
 } else noGL();
 function noGL() {
-  canvas.style.display = "none"; stage.querySelector(".ctrls").hidden = true; stage.querySelector(".era").hidden = true; pinsEl.innerHTML = "";
-  if (!document.getElementById("nogl")) stage.insertAdjacentHTML("beforeend", `<div class="nogl" id="nogl">${esc(u("nogl"))}</div>`);
+  canvas.style.display = "none"; stage.querySelector(".ctrls").hidden = true; stage.querySelector(".era").hidden = true; document.getElementById("cap").hidden = true; pinsEl.innerHTML = "";
+  if (!document.getElementById("nogl")) view.insertAdjacentHTML("beforeend", `<div class="nogl" id="nogl">${esc(u("nogl"))}</div>`);
 }
 
 const MAT = {};
@@ -258,7 +263,7 @@ function fly([x, z], dist, instant) {
 function setPlan(v) {
   plan = v; if (!controls) return;
   controls.minPolarAngle = 0; controls.maxPolarAngle = plan ? 0.001 : 1.3; controls.enableRotate = !plan;
-  document.getElementById("v-plan").setAttribute("aria-pressed", plan); document.getElementById("v-3d").setAttribute("aria-pressed", !plan);
+  document.getElementById("v-mode").textContent = plan ? "3D" : "2D";
   if (idx >= 0) focusPlace(true); else frame(cur.box);
 }
 function focusPlace() {
@@ -286,7 +291,7 @@ function frameStep(t) {
 const v3 = new THREE.Vector3();
 function placePins() {
   if (!cur || !cur.sectors) return;
-  const w = stage.clientWidth, h = stage.clientHeight;
+  const w = view.clientWidth, h = view.clientHeight;
   const put = (el, [x, z], y) => {
     v3.set(x, y, z).project(camera);
     const off = v3.z > 1 || v3.x < -1.2 || v3.x > 1.2 || v3.y < -1.2 || v3.y > 1.2;
@@ -299,7 +304,7 @@ function placePins() {
 }
 function resize() {
   if (!renderer) return;
-  const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); kick();
+  const w = view.clientWidth, h = view.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); kick();
 }
 
 function showSite(key, keepIdx) {
@@ -345,9 +350,8 @@ function loadPhoto(B, key) {
 }
 // slide from today's model (100) to the 1944 photograph (0); "1944 volumes" stay as they are, to compare
 function applyEra() {
-  const w = 1 - era / 100, note = document.getElementById("eranote");
-  note.hidden = w <= 0;
-  note.innerHTML = `${esc(nb(u("aerial").replace("{d}", L(AERIAL[site].date))))} <a href="${AERIAL[site].src}" target="_blank" rel="noopener">↗</a>`;
+  const w = 1 - era / 100;
+  updateCap();
   if (!cur || !cur.fade) return;
   if (w > 0) loadPhoto(cur, site);
   if (cur.photo) { cur.photo.visible = w > 0; cur.photo.material.opacity = Math.min(1, w * 1.6); }
@@ -362,6 +366,19 @@ function applyEra() {
   }
   kick();
 }
+
+function updateCap() {
+  const cap = document.getElementById("cap"), parts = [];
+  if (era < 100) parts.push(`${esc(nb(u("aerial").replace("{d}", L(AERIAL[site].date))))} <a href="${AERIAL[site].src}" target="_blank" rel="noopener">↗</a>`);
+  if (recon && site === "bk") parts.push(esc(nb(u("legend"))));
+  cap.hidden = !parts.length || !renderer;
+  cap.innerHTML = parts.join(" · ");
+  cap.title = u("more");
+}
+document.getElementById("cap").addEventListener("click", e => {
+  if (e.target.closest("a")) return;
+  const c = e.currentTarget; c.setAttribute("aria-expanded", c.getAttribute("aria-expanded") !== "true");
+});
 
 /* ---------- text ---------- */
 function renderText() {
@@ -391,7 +408,7 @@ function applyStatic() {
   document.querySelectorAll("#uilang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.ui === lang));
   document.getElementById("prev").setAttribute("aria-label", u("prev")); document.getElementById("next").setAttribute("aria-label", u("next"));
   document.getElementById("back").href = "../?lang=" + lang;
-  const leg = document.getElementById("legend"); leg.textContent = u("legend");
+  document.querySelectorAll("[data-a]").forEach(el => { el.setAttribute("aria-label", u(el.dataset.a)); el.title = u(el.dataset.a); });
   document.getElementById("era").setAttribute("aria-label", u("era"));
   applyEra();
   const ng = document.getElementById("nogl"); if (ng) ng.textContent = u("nogl");
@@ -449,18 +466,17 @@ document.querySelectorAll("#uilang button").forEach(b => b.onclick = () => setLa
 document.querySelectorAll("#sites button").forEach(b => b.onclick = () => { if (b.dataset.site !== site) { showSite(b.dataset.site); go(-1); } });
 document.getElementById("prev").onclick = () => go(idx - 1);
 document.getElementById("next").onclick = () => go(idx + 1);
-document.getElementById("v-plan").onclick = () => setPlan(true);
-document.getElementById("v-3d").onclick = () => setPlan(false);
+document.getElementById("v-mode").onclick = () => { setPlan(!plan); toast(u(plan ? "view2d" : "view3d"), 1500); };
 document.getElementById("whole").onclick = () => { idx = -1; go(-1); };
 document.getElementById("recon").onclick = e => {
   recon = !recon; e.currentTarget.setAttribute("aria-pressed", recon);
   if (cur && cur.reconG) cur.reconG.visible = recon && site === "bk";
-  document.getElementById("legend").hidden = !recon; kick();
+  toast(u("recon") + ": " + u(recon ? "on" : "off"), 1800); updateCap(); kick();
 };
 document.getElementById("locate").onclick = locate;
 document.getElementById("era").addEventListener("input", e => { era = +e.target.value; applyEra(); });
 addEventListener("resize", resize);
-if ("ResizeObserver" in window) new ResizeObserver(resize).observe(stage);
+if ("ResizeObserver" in window) new ResizeObserver(resize).observe(view);
 
 applyStatic();
 if (renderer) {

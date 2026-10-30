@@ -50,8 +50,9 @@ h1{font-family:var(--type);font-weight:400;font-size:clamp(30px,7vw,44px);line-h
 .sites button{font-family:var(--type);font-size:15px;line-height:1.2;background:var(--sheet);border:1px solid var(--rule);padding:10px 8px;cursor:pointer;border-radius:2px}
 .sites button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
-.stage{position:sticky;top:0;z-index:5;height:46svh;min-height:260px;max-height:560px;background:#cfc7b0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;touch-action:none}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stage{background:#151614}}
+.stage{position:sticky;top:0;z-index:5;height:50svh;min-height:300px;max-height:600px;display:flex;flex-direction:column;background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.view{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;touch-action:none;background:#cfc7b0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .view{background:#151614}}
 .stage canvas{display:block;width:100%;height:100%}
 .pins{position:absolute;inset:0;pointer-events:none}
 .pin{position:absolute;left:0;top:0;transform:translate(-50%,-100%);pointer-events:auto;display:flex;align-items:center;gap:6px;
@@ -60,20 +61,21 @@ h1{font-family:var(--type);font-weight:400;font-size:clamp(30px,7vw,44px);line-h
 .pin.on{background:var(--red);border-color:var(--red);color:#fff;z-index:2}
 .pin.on .tt{display:inline}
 .pin.sector{background:transparent;border:0;box-shadow:none;color:var(--ink);opacity:.7;font-size:12px;pointer-events:none;transform:translate(-50%,-50%)}
-.ctrls{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
-.ctrls button{font-family:var(--type);font-size:12.5px;background:var(--paper);border:1px solid var(--ink);border-radius:2px;padding:5px 8px;min-height:32px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.ctrls{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:8px}
+.ctrls button{width:38px;height:38px;display:flex;align-items:center;justify-content:center;padding:0;background:var(--paper);color:var(--ink);border:1px solid var(--ink);border-radius:50%;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.ctrls button.txt{font-family:var(--type);font-size:14px}
 .ctrls button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.ctrls .seg{display:flex}
-.ctrls .seg button+button{margin-left:-1px}
-.toast{position:absolute;left:8px;bottom:54px;max-width:calc(100% - 16px);font-family:var(--type);font-size:13px;background:var(--paper);border:1px solid var(--rule);padding:4px 8px;border-radius:2px;opacity:0;transition:opacity .2s;pointer-events:none}
+.ctrls button[hidden]{display:none}
+.ctrls svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round}
+.toast{position:absolute;left:8px;bottom:8px;max-width:calc(100% - 60px);font-family:var(--type);font-size:13px;background:var(--paper);border:1px solid var(--rule);padding:4px 8px;border-radius:2px;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
-.notes{position:absolute;left:8px;top:8px;max-width:58%;display:flex;flex-direction:column;gap:6px;pointer-events:none}
-.notes a{pointer-events:auto}
-.legend{font-family:var(--type);font-size:12px;line-height:1.35;background:var(--paper);border:1px dashed var(--ink);padding:5px 8px}
-.legend[hidden]{display:none}
-.era{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--ink);border-radius:2px;padding:4px 10px;font-family:var(--type);font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.2);white-space:nowrap}
+.era{flex:none;display:flex;align-items:center;gap:10px;padding:4px 12px;border-top:1px solid var(--rule);background:var(--sheet);font-family:var(--type);font-size:13px;white-space:nowrap}
 .era[hidden]{display:none}
-.era input{width:min(44vw,240px);accent-color:var(--red);margin:0;height:28px}
+.era input{flex:1 1 auto;min-width:0;accent-color:var(--red);margin:0;height:28px}
+.cap{flex:none;display:block;width:100%;text-align:left;border:0;border-top:1px solid var(--rule);background:var(--sheet);color:var(--pencil);font-family:var(--type);font-size:12px;line-height:1.4;padding:4px 12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cap[hidden]{display:none}
+.cap[aria-expanded="true"]{white-space:normal;max-height:30svh;overflow:auto}
+.cap a{color:var(--blue)}
 .nogl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-family:var(--type);font-size:15px;color:var(--pencil)}
 
 .tour{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 6px}
@@ -102,6 +104,7 @@ ol.list button[aria-current="true"]{background:var(--sheet)}
 @media (min-width:900px){
   .main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:start}
   .stage{height:100svh;max-height:none;border:0;border-right:1px solid var(--rule)}
+  .cap{white-space:normal}
   .side{max-width:none;padding:0 22px;height:100svh;overflow:auto;position:sticky;top:0}
 }
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
@@ -124,17 +127,19 @@ ol.list button[aria-current="true"]{background:var(--sheet)}
 </div>
 <div class="main">
   <div class="stage" id="stage">
-    <canvas id="c" aria-label="3D map"></canvas>
-    <div class="pins" id="pins"></div>
-    <div class="notes"><div class="legend" id="legend" hidden></div><div class="legend" id="eranote" hidden></div></div>
-    <div class="era"><span>1944</span><input type="range" id="era" min="0" max="100" step="1" value="100"><span data-t="ynow">Today</span></div>
-    <div class="ctrls">
-      <div class="seg"><button id="v-plan" aria-pressed="false" data-t="plan">Plan</button><button id="v-3d" aria-pressed="true">3D</button></div>
-      <button id="recon" aria-pressed="false" data-t="recon">1944 volumes</button>
-      <button id="locate" aria-pressed="false" data-t="locate">Where am I?</button>
-      <button id="whole" data-t="whole">Whole site</button>
+    <div class="view" id="view">
+      <canvas id="c" aria-label="3D map"></canvas>
+      <div class="pins" id="pins"></div>
+      <div class="ctrls">
+        <button id="v-mode" class="txt" data-a="mode">2D</button>
+        <button id="recon" aria-pressed="false" data-a="recon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></button>
+        <button id="locate" aria-pressed="false" data-a="locate"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
+        <button id="whole" data-a="whole"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+      </div>
+      <div class="toast" id="toast" role="status"></div>
     </div>
-    <div class="toast" id="toast" role="status"></div>
+    <div class="era"><span>1944</span><input type="range" id="era" min="0" max="100" step="1" value="100"><span data-t="ynow">Today</span></div>
+    <button class="cap" id="cap" hidden aria-expanded="false"></button>
   </div>
   <div class="side wrap">
     <div class="tour">
