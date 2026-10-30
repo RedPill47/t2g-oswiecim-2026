@@ -17,6 +17,7 @@ const AERIAL = {
 const UIL = ["lb", "de", "fr", "en"];
 const UI = {
   back: {en: "Back to the trip planning", de: "Zurück zum Reiseplan", fr: "Retour au planning du voyage", lb: "Zréck op de Reesplang"},
+  sitesl: {en: "Camp", de: "Lager", fr: "Camp", lb: "Lager"},
   grip: {en: "Drag to make the map bigger or smaller", de: "Ziehen, um die Karte zu vergrößern oder zu verkleinern", fr: "Faites glisser pour agrandir ou réduire le plan", lb: "Zéien, fir d’Kaart méi grouss oder méi kleng ze maachen"},
   h1: {en: "Camp explorer", de: "Die Lager erkunden", fr: "Explorer les camps", lb: "D’Lageren entdecken"},
   lede: {en: "Both memorial sites at real scale, drawn from OpenStreetMap. Tap a number on the map, or follow the places in the order of a typical guided visit.",
@@ -443,8 +444,7 @@ function renderText() {
 function applyStatic() {
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-t]").forEach(el => { el.textContent = nb(u(el.dataset.t)); });
-  document.querySelectorAll("#sites button").forEach(b => b.textContent = L(SITES[b.dataset.site].t));
-  document.querySelectorAll("#uilang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.ui === lang));
+  document.querySelectorAll("#sites button").forEach(b => b.setAttribute("aria-label", L(SITES[b.dataset.site].t)));
   document.getElementById("prev").setAttribute("aria-label", u("prev")); document.getElementById("next").setAttribute("aria-label", u("next"));
   document.getElementById("back").href = "../?lang=" + lang;
   document.querySelectorAll("[data-a]").forEach(el => { el.setAttribute("aria-label", u(el.dataset.a)); el.title = u(el.dataset.a); });
@@ -457,11 +457,6 @@ function applyStatic() {
     ["l_50", "https://www.50faces.lu/"], ["l_t2g", "https://temoins.lu/"]
   ].map(([k, h]) => `<li><a href="${h}" target="_blank" rel="noopener">${esc(u(k))}</a></li>`).join("");
   document.title = u("h1") + " – Oświęcim 2026";
-}
-function setLang(l) {
-  lang = l; try { localStorage.setItem("t2g-ui", JSON.stringify(l)); } catch (e) {}
-  try { const p = new URLSearchParams(location.search); p.set("lang", l); history.replaceState(null, "", "?" + p); } catch (e) {}
-  applyStatic(); renderText();
 }
 
 /* ---------- toast, picking, location ---------- */
@@ -502,7 +497,6 @@ function locate() {
 }
 
 /* ---------- wiring ---------- */
-document.querySelectorAll("#uilang button").forEach(b => b.onclick = () => setLang(b.dataset.ui));
 document.querySelectorAll("#sites button").forEach(b => b.onclick = () => { if (b.dataset.site !== site) { showSite(b.dataset.site); go(-1); } });
 document.getElementById("prev").onclick = () => go(idx - 1);
 document.getElementById("next").onclick = () => go(idx + 1);

@@ -38,16 +38,13 @@ button{font:inherit;color:inherit}
 .wrap{max-width:760px;margin:0 auto;padding:0 16px;overflow-wrap:break-word}
 @media (max-width:480px){html[lang="de"] .wrap{hyphens:auto}}
 
-.bar{flex:none;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 8px;border-bottom:1px solid var(--rule);background:var(--paper)}
-.row1{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.back{flex:none;font-family:var(--type);font-size:22px;line-height:1;text-decoration:none;padding:4px 6px 4px 0}
-h1{flex:1 1 auto;min-width:0;font-family:var(--type);font-weight:400;font-size:clamp(18px,5vw,24px);line-height:1.1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.uilang{flex:none;display:flex;flex-wrap:nowrap;gap:4px}
-.uilang button{flex:none;font-family:var(--type);font-size:13px;background:transparent;border:1px solid var(--rule);color:var(--pencil);padding:3px 7px;border-radius:2px;cursor:pointer}
-.uilang button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.sites{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.sites button{font-family:var(--type);font-size:14px;line-height:1.15;background:var(--sheet);border:1px solid var(--rule);padding:7px 6px;cursor:pointer;border-radius:2px}
-.sites button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.bar{flex:none;display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top,0px) + 6px) 12px 6px;border-bottom:1px solid var(--rule);background:var(--paper)}
+.back{flex:none;font-family:var(--type);font-size:22px;line-height:1;text-decoration:none;padding:2px 6px 2px 0}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sites{flex:1 1 auto;display:flex;max-width:360px;margin-left:auto;border:1px solid var(--ink);border-radius:2px}
+.sites button{flex:1 1 50%;font-family:var(--type);font-size:14px;line-height:1.1;background:var(--sheet);border:0;padding:9px 8px 8px;cursor:pointer;white-space:nowrap}
+.sites button+button{border-left:1px solid var(--ink)}
+.sites button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .lede{margin:0 0 8px}
 .respect{font-family:var(--type);font-size:14px;color:var(--pencil);border-left:3px solid var(--red);padding:4px 0 4px 12px;margin:10px 0 14px}
 
@@ -111,9 +108,6 @@ ol.list button[aria-current="true"]{background:var(--sheet)}
 .credits{font-family:var(--type);font-size:13px;color:var(--pencil);margin:28px 0 40px;border-top:1px solid var(--rule);padding-top:10px}
 
 @media (min-width:900px){
-  .bar{display:flex;align-items:center;gap:20px}
-  .row1{flex:1 1 auto;margin:0}
-  .sites{flex:0 0 440px}
   .main{flex-direction:row}
   .stage{flex:1 1 auto;transition:none}
   .panel{flex:0 0 min(42%,560px);border-top:0;border-left:1px solid var(--rule);box-shadow:-3px 0 10px rgba(0,0,0,.08)}
@@ -128,15 +122,10 @@ ol.list button[aria-current="true"]{background:var(--sheet)}
 <body>
 <div class="app">
 <header class="bar">
-  <div class="row1">
-    <a class="back" href="../" id="back" data-a="back">←</a>
-    <h1 data-t="h1">Camp explorer</h1>
-    <div class="uilang" id="uilang" role="group" aria-label="Page language">
-      <button data-ui="lb" lang="lb" title="Lëtzebuergesch" aria-label="Lëtzebuergesch">LB</button><button data-ui="de" lang="de" title="Deutsch" aria-label="Deutsch">DE</button><button data-ui="fr" lang="fr" title="Français" aria-label="Français">FR</button><button data-ui="en" lang="en" title="English" aria-label="English">EN</button>
-    </div>
-  </div>
-  <div class="sites" id="sites">
-    <button data-site="a1" aria-pressed="false"></button><button data-site="bk" aria-pressed="false"></button>
+  <a class="back" href="../" id="back" data-a="back">←</a>
+  <h1 class="vh" data-t="h1">Camp explorer</h1>
+  <div class="sites" id="sites" role="group" data-a="sitesl">
+    <button data-site="a1" aria-pressed="false">Auschwitz I</button><button data-site="bk" aria-pressed="false">Birkenau</button>
   </div>
 </header>
 <div class="main">
