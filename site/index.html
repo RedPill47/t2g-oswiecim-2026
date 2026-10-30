@@ -858,6 +858,11 @@ function optHTML(slot,o,i){
    <button class="btn pick" data-s="${slot}" data-i="${i}" aria-pressed="${chosen}">${esc(chosen?u("chosen"):u("choose"))}</button></div>
   </article>`;
 }
+// Re-rendering replaces the cards, so the browser can't keep its place: hold the tapped button where it was on screen.
+function keepInPlace(sel,fn){
+  const y=document.querySelector(sel).getBoundingClientRect().top;fn();
+  const b=document.querySelector(sel);scrollBy(0,b.getBoundingClientRect().top-y);return b;
+}
 function renderDays(){
   for(const d in DAYS){
     document.getElementById("d-"+d).innerHTML=DAYS[d].map(e=>{
@@ -867,10 +872,16 @@ function renderDays(){
       return `<div class="ev fixed${e.site?" site":""}"><div class="t">${esc(L(e.t))}</div><div class="b"><h3>${esc(L(e.h))}${e.inf?'<span class="inferred">inferred</span>':""}</h3>${wh?`<div class="where">${esc(wh)}</div>`:""}${p?`<p>${esc(p)}</p>`:""}</div></div>`;
     }).join("");
   }
-  document.querySelectorAll(".tog").forEach(b=>b.onclick=()=>{const k=b.dataset.k;open.has(k)?open.delete(k):open.add(k);renderDays();});
+  document.querySelectorAll(".tog").forEach(b=>b.onclick=()=>{
+    const k=b.dataset.k,nb=keepInPlace(`.tog[data-k="${k}"]`,()=>{open.has(k)?open.delete(k):open.add(k);renderDays();});
+    // after closing a long description, bring the top of the card back into view
+    const t=nb.closest(".opt").getBoundingClientRect().top,top=document.querySelector("nav.tabs").getBoundingClientRect().bottom+8;
+    if(t<top)scrollBy(0,t-top);
+    nb.focus({preventScroll:true});
+  });
   document.querySelectorAll(".pick").forEach(b=>b.onclick=()=>{
-    const s=b.dataset.s,i=+b.dataset.i;if(plan[s]===i)delete plan[s];else plan[s]=i;save("t2g-plan",plan);renderPlan();renderDays();
-    const el=document.getElementById("o-"+s+"-"+i);if(el)el.querySelector(".pick").focus({preventScroll:true});
+    const s=b.dataset.s,i=+b.dataset.i;
+    keepInPlace(`#o-${s}-${i} .pick`,()=>{if(plan[s]===i)delete plan[s];else plan[s]=i;save("t2g-plan",plan);renderPlan();renderDays();}).focus({preventScroll:true});
   });
 }
 function renderPeople(){
