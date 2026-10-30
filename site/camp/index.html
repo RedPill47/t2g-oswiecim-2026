@@ -28,29 +28,32 @@
   --rule:#46463F; --red:#D47561; --blue:#93ADCC; color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.55;
-  background-image:radial-gradient(rgba(120,100,60,.06) 1px,transparent 1px);background-size:5px 5px;
-  padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.55;overflow:hidden;overscroll-behavior:none;
+  background-image:radial-gradient(rgba(120,100,60,.06) 1px,transparent 1px);background-size:5px 5px}
+.app{height:100vh;height:100dvh;display:flex;flex-direction:column}
 a{color:var(--blue)}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px dashed var(--red);outline-offset:3px}
 .wrap{max-width:760px;margin:0 auto;padding:0 16px;overflow-wrap:break-word}
 @media (max-width:480px){html[lang="de"] .wrap{hyphens:auto}}
 
-.top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
-.back{font-family:var(--type);font-size:15px;line-height:1.25;text-decoration:none;min-width:0;flex:1 1 auto}
-.uilang{flex:none}
-.uilang{display:flex;flex-wrap:nowrap;gap:6px}
-.uilang button{flex:none;font-family:var(--type);font-size:14px;background:transparent;border:1px solid var(--rule);color:var(--pencil);padding:4px 10px;border-radius:2px;cursor:pointer}
+.bar{flex:none;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 8px;border-bottom:1px solid var(--rule);background:var(--paper)}
+.row1{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.back{flex:none;font-family:var(--type);font-size:22px;line-height:1;text-decoration:none;padding:4px 6px 4px 0}
+h1{flex:1 1 auto;min-width:0;font-family:var(--type);font-weight:400;font-size:clamp(18px,5vw,24px);line-height:1.1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uilang{flex:none;display:flex;flex-wrap:nowrap;gap:4px}
+.uilang button{flex:none;font-family:var(--type);font-size:13px;background:transparent;border:1px solid var(--rule);color:var(--pencil);padding:3px 7px;border-radius:2px;cursor:pointer}
 .uilang button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-h1{font-family:var(--type);font-weight:400;font-size:clamp(30px,7vw,44px);line-height:1.05;margin:18px 0 8px}
-.lede{margin:0 0 8px}
-.respect{font-family:var(--type);font-size:14px;color:var(--pencil);border-left:3px solid var(--red);padding:4px 0 4px 12px;margin:12px 0 16px}
-.sites{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
-.sites button{font-family:var(--type);font-size:15px;line-height:1.2;background:var(--sheet);border:1px solid var(--rule);padding:10px 8px;cursor:pointer;border-radius:2px}
+.sites{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sites button{font-family:var(--type);font-size:14px;line-height:1.15;background:var(--sheet);border:1px solid var(--rule);padding:7px 6px;cursor:pointer;border-radius:2px}
 .sites button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.lede{margin:0 0 8px}
+.respect{font-family:var(--type);font-size:14px;color:var(--pencil);border-left:3px solid var(--red);padding:4px 0 4px 12px;margin:10px 0 14px}
 
-.stage{position:sticky;top:0;z-index:5;height:50svh;min-height:300px;max-height:600px;display:flex;flex-direction:column;background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.main{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;--map:52%}
+.stage{flex:0 0 var(--map);min-height:0;display:flex;flex-direction:column;background:var(--paper);transition:flex-basis .28s cubic-bezier(.2,.8,.2,1)}
+.main.dragging .stage{transition:none}
 .view{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;touch-action:none;background:#cfc7b0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .view{background:#151614}}
 .stage canvas{display:block;width:100%;height:100%}
@@ -72,14 +75,20 @@ h1{font-family:var(--type);font-weight:400;font-size:clamp(30px,7vw,44px);line-h
 .era{flex:none;display:flex;align-items:center;gap:10px;padding:4px 12px;border-top:1px solid var(--rule);background:var(--sheet);font-family:var(--type);font-size:13px;white-space:nowrap}
 .era[hidden]{display:none}
 .era input{flex:1 1 auto;min-width:0;accent-color:var(--red);margin:0;height:28px}
-.cap{flex:none;display:block;width:100%;text-align:left;border:0;border-top:1px solid var(--rule);background:var(--sheet);color:var(--pencil);font-family:var(--type);font-size:12px;line-height:1.4;padding:4px 12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cap{flex:none;display:block;width:100%;text-align:left;border:0;user-select:none;border-top:1px solid var(--rule);background:var(--sheet);color:var(--pencil);font-family:var(--type);font-size:12px;line-height:1.4;padding:4px 12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cap[hidden]{display:none}
 .cap[aria-expanded="true"]{white-space:normal;max-height:30svh;overflow:auto}
 .cap a{color:var(--blue)}
 .nogl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-family:var(--type);font-size:15px;color:var(--pencil)}
 
-.tour{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 6px}
-.tour button{font-family:var(--type);font-size:20px;line-height:1;width:48px;height:44px;background:var(--sheet);border:1px solid var(--ink);border-radius:2px;cursor:pointer}
+.panel{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;background:var(--paper);border-top:1px solid var(--rule);box-shadow:0 -3px 10px rgba(0,0,0,.12);position:relative;z-index:2}
+.grip{flex:none;touch-action:none;cursor:grab;padding:4px 12px 6px;user-select:none;-webkit-user-select:none}
+.main.dragging .grip{cursor:grabbing}
+.knob{display:block;width:46px;height:5px;border-radius:3px;background:var(--rule);margin:2px auto 6px}
+.scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px 16px calc(28px + env(safe-area-inset-bottom,0px));overflow-wrap:break-word}
+@media (max-width:480px){html[lang="de"] .scroll{hyphens:auto}}
+.tour{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tour button{font-family:var(--type);font-size:20px;line-height:1;width:52px;height:40px;background:var(--sheet);border:1px solid var(--ink);border-radius:2px;cursor:pointer;touch-action:manipulation}
 .tour button:disabled{opacity:.35;cursor:default}
 .tour .n{font-family:var(--type);font-size:15px;color:var(--pencil);text-align:center}
 .card{background:var(--sheet);border:1px solid var(--rule);padding:16px 16px 12px;margin:0 0 24px;box-shadow:2px 3px 0 rgba(0,0,0,.08)}
@@ -102,29 +111,34 @@ ol.list button[aria-current="true"]{background:var(--sheet)}
 .credits{font-family:var(--type);font-size:13px;color:var(--pencil);margin:28px 0 40px;border-top:1px solid var(--rule);padding-top:10px}
 
 @media (min-width:900px){
-  .main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:start}
-  .stage{height:100svh;max-height:none;border:0;border-right:1px solid var(--rule)}
+  .bar{display:flex;align-items:center;gap:20px}
+  .row1{flex:1 1 auto;margin:0}
+  .sites{flex:0 0 440px}
+  .main{flex-direction:row}
+  .stage{flex:1 1 auto;transition:none}
+  .panel{flex:0 0 min(42%,560px);border-top:0;border-left:1px solid var(--rule);box-shadow:-3px 0 10px rgba(0,0,0,.08)}
+  .knob{display:none}
+  .grip{cursor:default;padding:10px 20px 8px}
+  .scroll{padding:4px 22px 28px}
   .cap{white-space:normal}
-  .side{max-width:none;padding:0 22px;height:100svh;overflow:auto;position:sticky;top:0}
 }
-@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+@media (prefers-reduced-motion:reduce){.toast,.stage{transition:none}}
 </style>
 </head>
 <body>
-<div class="wrap top">
-  <a class="back" href="../" id="back" data-t="back">← Trip planning</a>
-  <div class="uilang" id="uilang" role="group" aria-label="Page language">
-    <button data-ui="lb" lang="lb" title="Lëtzebuergesch" aria-label="Lëtzebuergesch">LB</button><button data-ui="de" lang="de" title="Deutsch" aria-label="Deutsch">DE</button><button data-ui="fr" lang="fr" title="Français" aria-label="Français">FR</button><button data-ui="en" lang="en" title="English" aria-label="English">EN</button>
+<div class="app">
+<header class="bar">
+  <div class="row1">
+    <a class="back" href="../" id="back" data-a="back">←</a>
+    <h1 data-t="h1">Camp explorer</h1>
+    <div class="uilang" id="uilang" role="group" aria-label="Page language">
+      <button data-ui="lb" lang="lb" title="Lëtzebuergesch" aria-label="Lëtzebuergesch">LB</button><button data-ui="de" lang="de" title="Deutsch" aria-label="Deutsch">DE</button><button data-ui="fr" lang="fr" title="Français" aria-label="Français">FR</button><button data-ui="en" lang="en" title="English" aria-label="English">EN</button>
+    </div>
   </div>
-</div>
-<div class="wrap">
-  <h1 data-t="h1">Camp explorer</h1>
-  <p class="lede" data-t="lede">Both memorial sites at real scale, drawn from OpenStreetMap. Tap a number on the map, or follow the places in the order of a typical guided visit.</p>
-  <p class="respect" data-t="respect">These are places where more than a million people were murdered. The 3D view is a way to understand the space, not a game. Anything that no longer exists is shown only on request and is always labelled.</p>
   <div class="sites" id="sites">
     <button data-site="a1" aria-pressed="false"></button><button data-site="bk" aria-pressed="false"></button>
   </div>
-</div>
+</header>
 <div class="main">
   <div class="stage" id="stage">
     <div class="view" id="view">
@@ -139,21 +153,27 @@ ol.list button[aria-current="true"]{background:var(--sheet)}
       <div class="toast" id="toast" role="status"></div>
     </div>
     <div class="era"><span>1944</span><input type="range" id="era" min="0" max="100" step="1" value="100"><span data-t="ynow">Today</span></div>
-    <button class="cap" id="cap" hidden aria-expanded="false"></button>
+    <div class="cap" id="cap" hidden role="button" tabindex="0" aria-expanded="false"></div>
   </div>
-  <div class="side wrap">
-    <div class="tour">
-      <button id="prev" aria-label="Previous">‹</button>
-      <span class="n" id="stopn"></span>
-      <button id="next" aria-label="Next">›</button>
+  <div class="panel" id="panel">
+    <div class="grip" id="grip">
+      <span class="knob" aria-hidden="true"></span>
+      <div class="tour">
+        <button id="prev" aria-label="Previous">‹</button>
+        <span class="n" id="stopn"></span>
+        <button id="next" aria-label="Next">›</button>
+      </div>
     </div>
+    <div class="scroll" id="scroll">
     <article class="card" id="card" aria-live="polite"></article>
     <h2 class="sec" data-t="all">All places</h2>
     <ol class="list" id="list"></ol>
     <h2 class="sec" data-t="further">Go further</h2>
     <ul class="links" id="links"></ul>
     <p class="credits" data-t="credits">Map data © OpenStreetMap contributors (ODbL). 3D: three.js (MIT). Texts: unofficial, checked against the Auschwitz Memorial’s history pages; sources are given for each place.</p>
+    </div>
   </div>
+</div>
 </div>
 <script type="module" src="camp.js"></script>
 </body>

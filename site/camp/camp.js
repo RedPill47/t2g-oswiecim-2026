@@ -16,7 +16,8 @@ const AERIAL = {
 /* ---------- language ---------- */
 const UIL = ["lb", "de", "fr", "en"];
 const UI = {
-  back: {en: "← Trip planning", de: "← Reiseplan", fr: "← Planning du voyage", lb: "← Reesplang"},
+  back: {en: "Back to the trip planning", de: "Zurück zum Reiseplan", fr: "Retour au planning du voyage", lb: "Zréck op de Reesplang"},
+  grip: {en: "Drag to make the map bigger or smaller", de: "Ziehen, um die Karte zu vergrößern oder zu verkleinern", fr: "Faites glisser pour agrandir ou réduire le plan", lb: "Zéien, fir d’Kaart méi grouss oder méi kleng ze maachen"},
   h1: {en: "Camp explorer", de: "Die Lager erkunden", fr: "Explorer les camps", lb: "D’Lageren entdecken"},
   lede: {en: "Both memorial sites at real scale, drawn from OpenStreetMap. Tap a number on the map, or follow the places in the order of a typical guided visit.",
     de: "Beide Gedenkstätten im echten Maßstab, gezeichnet nach OpenStreetMap. Tippe auf eine Nummer auf der Karte oder folge den Orten in der Reihenfolge einer typischen Führung.",
@@ -248,7 +249,7 @@ function build(key) {
 let cur = null, pinEls = [], secEls = [], me = null;
 function frame(box, instant) {
   const cx = (box.x0 + box.x1) / 2, cz = (box.z0 + box.z1) / 2, span = Math.max(box.x1 - box.x0, (box.z1 - box.z0) * Math.max(1, camera.aspect));
-  const d = span / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))) * (plan ? 1.08 : 1.3);
+  const d = span / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))) * (plan ? 1.02 : 1.08);
   fly([cx, cz], d, instant);
 }
 let anim = null;
@@ -258,7 +259,8 @@ function fly([x, z], dist, instant) {
   const to = new THREE.Vector3(x, 0, z);
   const pos = new THREE.Vector3(Math.sin(polar) * Math.sin(az), Math.cos(polar), Math.sin(polar) * Math.cos(az)).multiplyScalar(dist).add(to);
   if (instant || reduced) { controls.target.copy(to); camera.position.copy(pos); controls.update(); kick(); return; }
-  anim = {t0: performance.now(), d: 900, ft: controls.target.clone(), fp: camera.position.clone(), tt: to, tp: pos}; kick();
+  const far = controls.target.distanceTo(to) + Math.abs(camera.position.distanceTo(controls.target) - dist);
+  anim = {t0: performance.now(), d: Math.min(1400, 550 + far * 0.6), ft: controls.target.clone(), fp: camera.position.clone(), tt: to, tp: pos}; kick();
 }
 function setPlan(v) {
   plan = v; if (!controls) return;
@@ -320,7 +322,7 @@ function showSite(key, keepIdx) {
     secEls = cur.sectors.map(s => { const e = document.createElement("div"); e.className = "pin sector"; e.textContent = s.t; pinsEl.append(e); return e; });
     pinEls = cur.places.map((p, i) => {
       const b = document.createElement("button"); b.className = "pin"; b.innerHTML = `<span class="no">${i + 1}</span><span class="tt"></span>`;
-      b.onclick = () => go(i); pinsEl.append(b); return b;
+      b.onclick = () => { go(i); if (mapFrac > 0.7) setMap(0.52); }; pinsEl.append(b); return b;
     });
     if (me) { scene.add(me); me.visible = false; }
     resize();
@@ -332,6 +334,7 @@ function showSite(key, keepIdx) {
 function go(i) {
   idx = Math.max(-1, Math.min(PLACES[site].length - 1, i));
   focusPlace(); renderText();
+  scrollEl.scrollTo({top: 0, behavior: reduced ? "auto" : "smooth"});
   try { const p = new URLSearchParams(location.search); p.set("site", site); idx >= 0 ? p.set("p", PLACES[site][idx].id) : p.delete("p"); history.replaceState(null, "", "?" + p); } catch (e) {}
 }
 
@@ -375,9 +378,44 @@ function updateCap() {
   cap.innerHTML = parts.join(" · ");
   cap.title = u("more");
 }
-document.getElementById("cap").addEventListener("click", e => {
-  if (e.target.closest("a")) return;
-  const c = e.currentTarget; c.setAttribute("aria-expanded", c.getAttribute("aria-expanded") !== "true");
+function toggleCap(c) { c.setAttribute("aria-expanded", c.getAttribute("aria-expanded") !== "true"); }
+document.getElementById("cap").addEventListener("click", e => { if (!e.target.closest("a")) toggleCap(e.currentTarget); });
+document.getElementById("cap").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleCap(e.currentTarget); } });
+
+/* ---------- map / panel split (phones): drag the handle, it snaps; a tap swaps big map and big text ---------- */
+const mainEl = document.querySelector(".main"), grip = document.getElementById("grip"), scrollEl = document.getElementById("scroll");
+const SNAP = [0.3, 0.52, 0.8], wide = matchMedia("(min-width: 900px)");
+let mapFrac = 0.52;
+function setMap(f) { mapFrac = Math.max(0.18, Math.min(0.86, f)); mainEl.style.setProperty("--map", (mapFrac * 100).toFixed(1) + "%"); }
+let drag = null;
+grip.addEventListener("pointerdown", e => {
+  if (wide.matches || e.target.closest("button")) return;
+  drag = {y: e.clientY, f: mapFrac, h: mainEl.clientHeight, t: performance.now(), moved: false, id: e.pointerId, vy: 0, ly: e.clientY, lt: performance.now()};
+  grip.setPointerCapture(e.pointerId);
+});
+grip.addEventListener("pointermove", e => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const dy = e.clientY - drag.y;
+  if (!drag.moved && Math.abs(dy) < 6) return;
+  if (!drag.moved) { drag.moved = true; mainEl.classList.add("dragging"); }
+  const now = performance.now(); drag.vy = (e.clientY - drag.ly) / Math.max(1, now - drag.lt); drag.ly = e.clientY; drag.lt = now;
+  setMap(drag.f + dy / drag.h);
+});
+function endDrag(e) {
+  if (!drag || e.pointerId !== drag.id) return;
+  const d = drag; drag = null; mainEl.classList.remove("dragging");
+  if (!d.moved) { if (e.type === "pointerup" && !e.target.closest("button")) setMap(mapFrac > 0.6 ? SNAP[0] : SNAP[2]); return; }
+  // a flick goes to the next snap point in its direction, otherwise the nearest one
+  let target = SNAP.reduce((a, b) => Math.abs(b - mapFrac) < Math.abs(a - mapFrac) ? b : a);
+  if (Math.abs(d.vy) > 0.5) target = d.vy > 0 ? (SNAP.find(v => v > mapFrac + 0.02) ?? SNAP.at(-1)) : ([...SNAP].reverse().find(v => v < mapFrac - 0.02) ?? SNAP[0]);
+  setMap(target);
+}
+grip.addEventListener("pointerup", endDrag);
+grip.addEventListener("pointercancel", endDrag);
+document.addEventListener("keydown", e => {
+  if (e.target.closest("input, textarea, select, [contenteditable]") || e.altKey || e.ctrlKey || e.metaKey) return;
+  if (e.key === "ArrowRight") { if (idx < PLACES[site].length - 1) { e.preventDefault(); go(idx + 1); } }
+  else if (e.key === "ArrowLeft") { if (idx >= 0) { e.preventDefault(); go(idx - 1); } }
 });
 
 /* ---------- text ---------- */
@@ -386,7 +424,8 @@ function renderText() {
   document.getElementById("stopn").textContent = P ? u("stop").replace("{i}", idx + 1).replace("{n}", n) : u("overview");
   document.getElementById("prev").disabled = idx < 0; document.getElementById("next").disabled = idx >= n - 1;
   if (!P) {
-    card.innerHTML = `<h2>${esc(L(SITES[site].t))}</h2><p>${esc(nb(L(SITES[site].intro)))}</p><button class="start" id="startbtn">${esc(u("start"))}</button>`;
+    card.innerHTML = `<p class="lede">${esc(nb(u("lede")))}</p><p class="respect">${esc(nb(u("respect")))}</p>
+      <h2>${esc(L(SITES[site].t))}</h2><p>${esc(nb(L(SITES[site].intro)))}</p><button class="start" id="startbtn">${esc(u("start"))}</button>`;
     document.getElementById("startbtn").onclick = () => go(0);
   } else {
     const ppl = P.people || [];
@@ -397,7 +436,7 @@ function renderText() {
       ${P.src && P.src.length ? `<p class="src">${esc(u("sources"))}: ${P.src.map(k => `<a href="${SRC[k][1]}" target="_blank" rel="noopener">${esc(SRC[k][0])}</a>`).join(" · ")}</p>` : ""}`;
   }
   document.getElementById("list").innerHTML = list.map((p, i) => `<li><button data-i="${i}"${i === idx ? ' aria-current="true"' : ""}><span class="num">${i + 1}</span><span>${esc(nb(L(p.t)))}</span></button></li>`).join("");
-  document.querySelectorAll("#list button").forEach(b => b.onclick = () => { go(+b.dataset.i); stage.scrollIntoView({block: "nearest"}); });
+  document.querySelectorAll("#list button").forEach(b => b.onclick = () => { go(+b.dataset.i); if (mapFrac < 0.4) setMap(0.52); });
   pinEls.forEach((e, i) => { e.classList.toggle("on", i === idx); e.querySelector(".tt").textContent = i === idx ? nb(L(list[i].t)) : ""; e.setAttribute("aria-label", (i + 1) + ". " + L(list[i].t)); });
   kick();
 }
@@ -409,6 +448,7 @@ function applyStatic() {
   document.getElementById("prev").setAttribute("aria-label", u("prev")); document.getElementById("next").setAttribute("aria-label", u("next"));
   document.getElementById("back").href = "../?lang=" + lang;
   document.querySelectorAll("[data-a]").forEach(el => { el.setAttribute("aria-label", u(el.dataset.a)); el.title = u(el.dataset.a); });
+  document.querySelector(".knob").title = u("grip");
   document.getElementById("era").setAttribute("aria-label", u("era"));
   applyEra();
   const ng = document.getElementById("nogl"); if (ng) ng.textContent = u("nogl");
