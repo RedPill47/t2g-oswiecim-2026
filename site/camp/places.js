@@ -18,7 +18,10 @@ const SRC = {
   roma: ["Auschwitz Memorial – Sinti and Roma in Auschwitz", M + "categories-of-prisoners/sinti-and-roma-in-auschwitz/"],
   jews: ["Auschwitz Memorial – Jews in Auschwitz", M + "categories-of-prisoners/jews-in-auschwitz/"],
   anne: ["Anne Frank House – Who was Anne Frank?", "https://www.annefrank.org/en/anne-frank/who-was-anne-frank/"],
-  f50: ["50faces.lu – Jewish lives from Luxembourg", "https://www.50faces.lu/"]
+  f50: ["50faces.lu – Jewish lives from Luxembourg", "https://www.50faces.lu/"],
+  t2g: ["Témoins de la 2e Génération – information brochure 2026", "https://www.temoins.lu/"],
+  t2gvid: ["Témoins de la 2e Génération – 2nd-generation witnesses (films)", "https://temoins.lu/temoins-de-la-2eme-generation/"],
+  mds: ["Mémorial digital de la Shoah au Luxembourg", "https://www.memorialshoah.lu/"]
 };
 
 export const SITES = {
@@ -34,10 +37,10 @@ export const SITES = {
   bk: {
     t: {en: "Auschwitz II – Birkenau", de: "Auschwitz II – Birkenau", fr: "Auschwitz II – Birkenau", lb: "Auschwitz II – Birkenau"},
     intro: {
-      en: "Built from October 1941, 3 km from the main camp, and many times larger. Most of the at least 1.1 million people murdered at Auschwitz died here, about 1 million of them Jews. The SS blew up the gas chambers and burned many barracks before leaving in January 1945. You visit it on Sunday morning.",
-      de: "Ab Oktober 1941 gebaut, 3 km vom Stammlager entfernt und um ein Vielfaches größer. Die meisten der mindestens 1,1 Millionen in Auschwitz ermordeten Menschen starben hier, etwa 1 Million von ihnen Juden. Vor ihrem Abzug im Januar 1945 sprengte die SS die Gaskammern und brannte viele Baracken nieder. Du besuchst es am Sonntagvormittag.",
-      fr: "Construit à partir d’octobre 1941, à 3 km du camp principal, et bien plus vaste. La plupart des au moins 1,1 million de personnes assassinées à Auschwitz sont mortes ici, dont environ 1 million de Juifs. Avant de partir en janvier 1945, les SS ont dynamité les chambres à gaz et incendié de nombreux baraquements. Vous le visitez dimanche matin.",
-      lb: "Ab Oktober 1941 gebaut, 3 km vum Stammlager ewech a vill méi grouss. Déi meescht vun de mindestens 1,1 Millioune Mënschen, déi zu Auschwitz ermord goufen, sinn hei gestuerwen, ronn 1 Millioun dovu Judden. Ier se am Januar 1945 fort sinn, huet d’SS d’Gaskummere gesprengt a vill Baracken ofgebrannt. Du besichs et e Sonndeg de Moien."
+      en: "Built from October 1941, 3 km from the main camp, and many times larger. Most of the at least 1.1 million people murdered at Auschwitz died here, about 1 million of them Jews. Among the others were about 70,000 Poles, 21,000 Sinti and Roma and 15,000 Soviet prisoners of war. The SS blew up the gas chambers and burned many barracks before leaving in January 1945. You visit it on Sunday morning.",
+      de: "Ab Oktober 1941 gebaut, 3 km vom Stammlager entfernt und um ein Vielfaches größer. Die meisten der mindestens 1,1 Millionen in Auschwitz ermordeten Menschen starben hier, etwa 1 Million von ihnen Juden. Unter den anderen waren etwa 70.000 Polen, 21.000 Sinti und Roma und 15.000 sowjetische Kriegsgefangene. Vor ihrem Abzug im Januar 1945 sprengte die SS die Gaskammern und brannte viele Baracken nieder. Du besuchst es am Sonntagvormittag.",
+      fr: "Construit à partir d’octobre 1941, à 3 km du camp principal, et bien plus vaste. La plupart des au moins 1,1 million de personnes assassinées à Auschwitz sont mortes ici, dont environ 1 million de Juifs. Parmi les autres victimes, environ 70 000 Polonais, 21 000 Sinti et Roms et 15 000 prisonniers de guerre soviétiques. Avant de partir en janvier 1945, les SS ont dynamité les chambres à gaz et incendié de nombreux baraquements. Vous le visitez dimanche matin.",
+      lb: "Ab Oktober 1941 gebaut, 3 km vum Stammlager ewech a vill méi grouss. Déi meescht vun de mindestens 1,1 Millioune Mënschen, déi zu Auschwitz ermord goufen, sinn hei gestuerwen, ronn 1 Millioun dovu Judden. Ënnert deenen aneren ware ronn 70.000 Polen, 21.000 Sinti a Roma a 15.000 sowjetesch Krichsgefaangener. Ier se am Januar 1945 fort sinn, huet d’SS d’Gaskummere gesprengt a vill Baracken ofgebrannt. Du besichs et e Sonndeg de Moien."
     }
   }
 };
@@ -134,11 +137,11 @@ export const PLACES = {
       lb: "De Block 10 ass fir Visiteuren zou. Du gesäis en vum Haff vun der Doudesmauer niewendrun."},
      people: [{n: "Jeanne Juda",
       t: {
-       en: "The mother of Henri Juda, whom you can meet in the workshop “My family’s story”, was held in this block. She survived Auschwitz.",
-       de: "Die Mutter von Henri Juda, den du im Workshop „Geschichte meiner Familie“ treffen kannst, war in diesem Block gefangen. Sie überlebte Auschwitz.",
-       fr: "La mère d’Henri Juda, que vous pouvez rencontrer à l’atelier « L’histoire de ma famille », a été détenue dans ce bloc. Elle a survécu à Auschwitz.",
-       lb: "D’Mamm vum Henri Juda, deen s du am Atelier „D’Geschicht vu menger Famill“ treffe kanns, war an dësem Block agespaart. Si huet Auschwitz iwwerlieft."}}],
-     src: ["med"]},
+       en: "Johanna “Jeanne” Salomon, born in 1912, moved from the Saarland to Luxembourg in 1935; in 1940 the family fled to Brussels. In April 1943 she was deported from Mechelen to Auschwitz and held in this block. She also survived three days in a standing cell in Block 11 and several parts of Birkenau. In October 1943 she gave birth to a son in the camp; he was murdered. She survived the death march to Ravensbrück and came back to Luxembourg. Her son Henri Juda tells her story in the workshop “My family’s story”.",
+       de: "Johanna „Jeanne“ Salomon, 1912 geboren, kam 1935 aus dem Saarland nach Luxemburg; 1940 floh die Familie nach Brüssel. Im April 1943 wurde sie von Mechelen nach Auschwitz deportiert und in diesem Block gefangen gehalten. Sie überlebte außerdem drei Tage in einer Stehzelle in Block 11 und mehrere Teile von Birkenau. Im Oktober 1943 brachte sie im Lager einen Sohn zur Welt; er wurde ermordet. Sie überlebte den Todesmarsch nach Ravensbrück und kehrte nach Luxemburg zurück. Ihr Sohn Henri Juda erzählt ihre Geschichte im Workshop „Geschichte meiner Familie“.",
+       fr: "Johanna « Jeanne » Salomon, née en 1912, s’est installée au Luxembourg en 1935, venant de la Sarre ; en 1940, la famille a fui à Bruxelles. En avril 1943, elle a été déportée de Malines à Auschwitz et détenue dans ce bloc. Elle a aussi survécu à trois jours dans une « cellule debout » du bloc 11 et à plusieurs parties de Birkenau. En octobre 1943, elle a mis au monde un fils dans le camp ; il a été assassiné. Elle a survécu à la marche de la mort vers Ravensbrück et est rentrée au Luxembourg. Son fils Henri Juda raconte son histoire à l’atelier « L’histoire de ma famille ».",
+       lb: "D’Johanna „Jeanne“ Salomon, 1912 gebuer, ass 1935 aus dem Saarland op Lëtzebuerg komm; 1940 ass d’Famill op Bréissel geflücht. Am Abrëll 1943 gouf si vu Mechelen op Auschwitz deportéiert an an dësem Block agespaart. Si huet och dräi Deeg an enger Stehzell am Block 11 an e puer Deeler vu Birkenau iwwerlieft. Am Oktober 1943 huet si am Lager e Bouf op d’Welt bruecht; hie gouf ermord. Si huet den Doudesmarsch op Ravensbréck iwwerlieft an ass zréck op Lëtzebuerg komm. Hire Jong Henri Juda erzielt hir Geschicht am Atelier „D’Geschicht vu menger Famill“."}}],
+     src: ["med", "t2g"]},
 
     {id: "b11", at: "Blok 11 Wewnętrzne więzienie \"Blok śmierci\"", kind: "orig",
      t: {en: "Block 11: the “death block”", de: "Block 11: der „Todesblock“", fr: "Bloc 11 : le « bloc de la mort »", lb: "Block 11: den „Doudesblock“"},
@@ -157,8 +160,14 @@ export const PLACES = {
        en: "A Polish Franciscan friar. In 1941, after an escape, the SS chose ten prisoners to die of starvation in this basement. Kolbe volunteered to take the place of one of them, Franciszek Gajowniczek, a father of two. Kolbe was killed here in August 1941; Gajowniczek survived the camp.",
        de: "Ein polnischer Franziskanermönch. 1941 wählte die SS nach einer Flucht zehn Häftlinge aus, die in diesem Keller verhungern sollten. Kolbe meldete sich freiwillig an Stelle eines von ihnen, Franciszek Gajowniczek, Vater von zwei Kindern. Kolbe wurde hier im August 1941 ermordet; Gajowniczek überlebte das Lager.",
        fr: "Un franciscain polonais. En 1941, après une évasion, les SS choisirent dix prisonniers condamnés à mourir de faim dans ce sous-sol. Kolbe se porta volontaire pour prendre la place de l’un d’eux, Franciszek Gajowniczek, père de deux enfants. Kolbe fut tué ici en août 1941 ; Gajowniczek a survécu au camp.",
-       lb: "E polnesche Franziskanermonni. 1941 huet d’SS no enger Flucht zéng Prisonéier erausgesicht, déi an dësem Keller verhongere sollten. De Kolbe huet sech fräiwëlleg gemellt, fir d’Plaz vun engem vun hinnen ze huelen, dem Franciszek Gajowniczek, Papp vun zwee Kanner. De Kolbe gouf hei am August 1941 ëmbruecht; de Gajowniczek huet d’Lager iwwerlieft."}}],
-     src: ["b11"]},
+       lb: "E polnesche Franziskanermonni. 1941 huet d’SS no enger Flucht zéng Prisonéier erausgesicht, déi an dësem Keller verhongere sollten. De Kolbe huet sech fräiwëlleg gemellt, fir d’Plaz vun engem vun hinnen ze huelen, dem Franciszek Gajowniczek, Papp vun zwee Kanner. De Kolbe gouf hei am August 1941 ëmbruecht; de Gajowniczek huet d’Lager iwwerlieft."}},
+      {n: "Jeanne Juda",
+       t: {
+        en: "Jeanne Juda from Luxembourg, held in Block 10 next door, spent three days in one of the standing cells in this basement, and survived.",
+        de: "Jeanne Juda aus Luxemburg, gefangen im Block 10 nebenan, verbrachte drei Tage in einer der Stehzellen in diesem Keller und überlebte.",
+        fr: "Jeanne Juda, du Luxembourg, détenue au bloc 10 juste à côté, a passé trois jours dans l’une des « cellules debout » de ce sous-sol, et a survécu.",
+        lb: "D’Jeanne Juda vu Lëtzebuerg, déi am Block 10 niewendrun agespaart war, huet dräi Deeg an enger vun de Stehzellen an dësem Keller verbruecht, an huet iwwerlieft."}}],
+     src: ["b11", "t2g"]},
 
     {id: "wall", at: "Ściana Śmierci", kind: "recon",
      t: {en: "The Wall of Death", de: "Die Todeswand", fr: "Le mur des fusillés", lb: "D’Doudesmauer"},
@@ -221,10 +230,10 @@ export const PLACES = {
     {id: "ramp", at: "Wagon kolejowy", kind: "orig",
      t: {en: "The ramp and the selection", de: "Die Rampe und die Selektion", fr: "La rampe et la sélection", lb: "D’Rampe an d’Selektioun"},
      then: {
-      en: "Here the trains were unloaded and SS doctors carried out the “selection”: a glance, a gesture, left or right. Those judged fit for work, usually a minority, were registered as prisoners. The others, children, their mothers, the elderly and the sick, were sent straight to the gas chambers. Before May 1944 the trains stopped at the “Judenrampe”, between the two camps.",
-      de: "Hier wurden die Züge entladen und SS-Ärzte führten die „Selektion“ durch: ein Blick, eine Handbewegung, links oder rechts. Wer als arbeitsfähig galt, meist eine Minderheit, wurde als Häftling registriert. Die anderen, Kinder, ihre Mütter, Alte und Kranke, wurden sofort in die Gaskammern geschickt. Vor Mai 1944 hielten die Züge an der „Judenrampe“ zwischen den beiden Lagern.",
-      fr: "Ici, les trains étaient déchargés et des médecins SS procédaient à la « sélection » : un regard, un geste, à gauche ou à droite. Ceux qu’on jugeait aptes au travail, en général une minorité, étaient enregistrés comme prisonniers. Les autres, les enfants, leurs mères, les personnes âgées et les malades, étaient envoyés directement aux chambres à gaz. Avant mai 1944, les trains s’arrêtaient à la « Judenrampe », entre les deux camps.",
-      lb: "Hei goufen d’Zich ausgelueden an SS-Dokteren hunn d’„Selektioun“ gemaach: e Bléck, eng Handbeweegung, lénks oder riets. Wien als aarbechtsfäeg gegollt huet, meeschtens eng Minoritéit, gouf als Prisonéier registréiert. Déi aner, Kanner, hir Mammen, al a krank Leit, goufen direkt an d’Gaskummere geschéckt. Virum Mee 1944 hunn d’Zich op der „Judenrampe“ tëscht deenen zwee Lageren ugehalen."},
+      en: "Here the trains were unloaded and SS doctors carried out the “selection”: a glance, a gesture, left or right. Those judged fit for work, usually a minority, were registered as prisoners. The others, children, their mothers, the elderly and the sick, were sent straight to the gas chambers. Before May 1944 the trains stopped at the “Judenrampe”, between the two camps. The transport of 12 July 1942 from Luxembourg, with 24 people, arrived there; none of them survived.",
+      de: "Hier wurden die Züge entladen und SS-Ärzte führten die „Selektion“ durch: ein Blick, eine Handbewegung, links oder rechts. Wer als arbeitsfähig galt, meist eine Minderheit, wurde als Häftling registriert. Die anderen, Kinder, ihre Mütter, Alte und Kranke, wurden sofort in die Gaskammern geschickt. Vor Mai 1944 hielten die Züge an der „Judenrampe“ zwischen den beiden Lagern. Dort kam auch der Transport vom 12. Juli 1942 aus Luxemburg mit 24 Menschen an; keiner von ihnen überlebte.",
+      fr: "Ici, les trains étaient déchargés et des médecins SS procédaient à la « sélection » : un regard, un geste, à gauche ou à droite. Ceux qu’on jugeait aptes au travail, en général une minorité, étaient enregistrés comme prisonniers. Les autres, les enfants, leurs mères, les personnes âgées et les malades, étaient envoyés directement aux chambres à gaz. Avant mai 1944, les trains s’arrêtaient à la « Judenrampe », entre les deux camps. C’est là qu’est arrivé le convoi du 12 juillet 1942 parti du Luxembourg, avec 24 personnes ; aucune n’a survécu.",
+      lb: "Hei goufen d’Zich ausgelueden an SS-Dokteren hunn d’„Selektioun“ gemaach: e Bléck, eng Handbeweegung, lénks oder riets. Wien als aarbechtsfäeg gegollt huet, meeschtens eng Minoritéit, gouf als Prisonéier registréiert. Déi aner, Kanner, hir Mammen, al a krank Leit, goufen direkt an d’Gaskummere geschéckt. Virum Mee 1944 hunn d’Zich op der „Judenrampe“ tëscht deenen zwee Lageren ugehalen. Do ass och den Transport vum 12. Juli 1942 vu Lëtzebuerg mat 24 Mënschen ukomm; keen dovun huet iwwerlieft."},
      today: {
       en: "The tracks are original. The single freight wagon standing on them is a memorial to the trains that brought people here.",
       de: "Die Gleise sind original. Der einzelne Güterwaggon darauf erinnert an die Züge, die die Menschen hierher brachten.",
@@ -235,8 +244,14 @@ export const PLACES = {
        en: "In May 1944 two SS men photographed the arrival of a transport of Jews from Hungary on this ramp. Lili Jacob, a young woman from that transport, survived. After liberation, in another camp, she found the album and recognised herself, her rabbi and her little brothers in it. The “Auschwitz Album” is the only photographic record of an arrival; she gave it to Yad Vashem in 1980.",
        de: "Im Mai 1944 fotografierten zwei SS-Männer auf dieser Rampe die Ankunft eines Transports von Juden aus Ungarn. Lili Jacob, eine junge Frau aus diesem Transport, überlebte. Nach der Befreiung fand sie in einem anderen Lager das Album und erkannte darin sich selbst, ihren Rabbiner und ihre kleinen Brüder. Das „Auschwitz-Album“ ist die einzige fotografische Dokumentation einer Ankunft; sie übergab es 1980 Yad Vashem.",
        fr: "En mai 1944, deux SS ont photographié sur cette rampe l’arrivée d’un convoi de Juifs de Hongrie. Lili Jacob, une jeune femme de ce convoi, a survécu. Après la libération, dans un autre camp, elle a trouvé l’album et s’y est reconnue, avec son rabbin et ses petits frères. L’« Album d’Auschwitz » est le seul témoignage photographique d’une arrivée ; elle l’a donné à Yad Vashem en 1980.",
-       lb: "Am Mee 1944 hunn zwee SS-Männer op dëser Rampe d’Arrivée vun engem Transport vu Judden aus Ungarn fotograféiert. D’Lili Jacob, eng jonk Fra aus deem Transport, huet iwwerlieft. No der Befreiung huet si an engem anere Lager den Album fonnt an dran sech selwer, hire Rabbiner an hir kleng Bridder erkannt. Den „Auschwitz-Album“ ass déi eenzeg fotografesch Dokumentatioun vun enger Arrivée; si huet en 1980 dem Yad Vashem ginn."}}],
-     src: ["shoah"]},
+       lb: "Am Mee 1944 hunn zwee SS-Männer op dëser Rampe d’Arrivée vun engem Transport vu Judden aus Ungarn fotograféiert. D’Lili Jacob, eng jonk Fra aus deem Transport, huet iwwerlieft. No der Befreiung huet si an engem anere Lager den Album fonnt an dran sech selwer, hire Rabbiner an hir kleng Bridder erkannt. Den „Auschwitz-Album“ ass déi eenzeg fotografesch Dokumentatioun vun enger Arrivée; si huet hien 1980 dem Yad Vashem ginn."}},
+      {n: "René and Alfred Oppenheimer",
+       t: {
+        en: "Alfred Oppenheimer ran a leather goods shop in Luxembourg City. In June 1943 he, his wife and their son René were deported to the Theresienstadt ghetto, where his wife died. In October 1944 father and son arrived here in a train of about 1,250 people; more than 1,000 were sent straight to the gas chambers. René, 14, was among them. Alfred was one of about 220 selected for work and the only one of his family to survive. A Luxembourg foundation against antisemitism and racism bears René’s name.",
+        de: "Alfred Oppenheimer führte ein Lederwarengeschäft in Luxemburg-Stadt. Im Juni 1943 wurden er, seine Frau und ihr Sohn René ins Getto Theresienstadt deportiert, wo seine Frau starb. Im Oktober 1944 kamen Vater und Sohn hier mit einem Zug von etwa 1.250 Menschen an; mehr als 1.000 wurden sofort in die Gaskammern geschickt. René, 14 Jahre alt, war unter ihnen. Alfred war einer der etwa 220, die zur Arbeit selektiert wurden, und überlebte als Einziger seiner Familie. Eine Luxemburger Stiftung gegen Antisemitismus und Rassismus trägt Renés Namen.",
+        fr: "Alfred Oppenheimer tenait un magasin de maroquinerie à Luxembourg-ville. En juin 1943, lui, sa femme et leur fils René furent déportés au ghetto de Theresienstadt, où sa femme mourut. En octobre 1944, le père et le fils arrivèrent ici dans un train d’environ 1 250 personnes ; plus de 1 000 furent envoyées directement aux chambres à gaz. René, 14 ans, était parmi elles. Alfred fut l’un des quelque 220 sélectionnés pour le travail et le seul de sa famille à survivre. Une fondation luxembourgeoise contre l’antisémitisme et le racisme porte le nom de René.",
+        lb: "Den Alfred Oppenheimer hat e Lieder­wuerebuttek zu Lëtzebuerg-Stad. Am Juni 1943 goufen hien, seng Fra an hire Jong René an de Getto Theresienstadt deportéiert, wou seng Fra gestuerwen ass. Am Oktober 1944 sinn de Papp an de Jong hei mat engem Zuch vu ronn 1.250 Mënschen ukomm; méi wéi 1.000 goufen direkt an d’Gaskummere geschéckt. De René, 14 Joer al, war dorënner. Den Alfred war ee vun de ronn 220, déi fir d’Aarbecht selektéiert goufen, an hien huet als Eenzege vu senger Famill iwwerlieft. Eng Lëtzebuerger Stëftung géint Antisemitismus a Rassismus dréit dem René säin Numm."}}],
+     src: ["shoah", "t2g", "mds"]},
 
     {id: "bIIb", at: "Odcinek BIIb rodzinny dla Żydów z Teresina", kind: "area",
      t: {en: "BIIb: the family camp for Jews from Theresienstadt", de: "BIIb: das Familienlager für Juden aus Theresienstadt", fr: "BIIb : le camp des familles juives de Theresienstadt", lb: "BIIb: d’Familljelager fir Judden aus Theresienstadt"},
@@ -298,7 +313,13 @@ export const PLACES = {
       de: "1967 eingeweiht. Tafeln davor tragen denselben Text in den Sprachen der Opfer; eine Tafel auf Luxemburgisch kam im Januar 2015 hinzu. Der Text verlangt, dass dieser Ort für immer „ein Aufschrei der Verzweiflung und eine Mahnung an die Menschheit“ sei. Hier findet am Sonntag die Gedenkfeier von T2G statt.",
       fr: "Inauguré en 1967. Devant lui, des plaques portent le même texte dans les langues des victimes ; une plaque en luxembourgeois a été ajoutée en janvier 2015. Le texte demande que ce lieu soit à jamais « un cri de désespoir et un avertissement à l’humanité ». C’est ici qu’a lieu la commémoration de T2G dimanche.",
       lb: "1967 ageweit. Tafele virdrun droen deeselwechten Text an de Sprooche vun den Affer; eng Tafel op Lëtzebuergesch koum am Januar 2015 derbäi. Den Text freet, datt dës Plaz fir ëmmer „e Schrei vun der Verzweiflung an eng Warnung fir d’Mënschheet“ soll sinn. Hei ass e Sonndeg d’Gedenkfeier vun T2G."},
-     src: ["a2"]},
+     people: [{n: "Henri Juda",
+      t: {
+       en: "In a T2G film made at Birkenau, Henri Juda, whose mother Jeanne survived this camp, says in Luxembourgish: “Hei op dëser Plaz war d’Endstatioun vun der Shoah. Mee wou huet se ugefaangen? An de Käpp vun de Leit.” – “Here, on this spot, was the last stop of the Shoah. But where did it begin? In people’s heads.”",
+       de: "In einem T2G-Film, gedreht in Birkenau, sagt Henri Juda, dessen Mutter Jeanne dieses Lager überlebte, auf Luxemburgisch: „Hei op dëser Plaz war d’Endstatioun vun der Shoah. Mee wou huet se ugefaangen? An de Käpp vun de Leit.“ – „Hier an diesem Ort war die Endstation der Shoah. Aber wo hat sie angefangen? In den Köpfen der Menschen.“",
+       fr: "Dans un film de T2G tourné à Birkenau, Henri Juda, dont la mère Jeanne a survécu à ce camp, dit en luxembourgeois : « Hei op dëser Plaz war d’Endstatioun vun der Shoah. Mee wou huet se ugefaangen? An de Käpp vun de Leit. » – « Ici, à cet endroit, était le terminus de la Shoah. Mais où a-t-elle commencé ? Dans la tête des gens. »",
+       lb: "An engem T2G-Film, zu Birkenau gedréint, seet den Henri Juda, deem seng Mamm Jeanne dëst Lager iwwerlieft huet: „Hei op dëser Plaz war d’Endstatioun vun der Shoah. Mee wou huet se ugefaangen? An de Käpp vun de Leit.“"}}],
+     src: ["a2", "t2gvid"]},
 
     {id: "crem4", at: "Komora gazowa/Krematorium IV", kind: "ruin",
      t: {en: "Crematorium IV and the Sonderkommando revolt", de: "Krematorium IV und der Aufstand des Sonderkommandos", fr: "Le crématoire IV et la révolte du Sonderkommando", lb: "Krematorium IV an den Opstand vum Sonderkommando"},
@@ -400,8 +421,14 @@ export const PLACES = {
         en: "Anne Frank arrived from the Netherlands with her family in September 1944 and was held in the women’s camp with her sister Margot and her mother Edith. At the end of October the sisters were moved to Bergen-Belsen, where both died in early 1945. Edith died here in Birkenau in January 1945.",
         de: "Anne Frank kam im September 1944 mit ihrer Familie aus den Niederlanden an und war mit ihrer Schwester Margot und ihrer Mutter Edith im Frauenlager. Ende Oktober wurden die Schwestern nach Bergen-Belsen gebracht, wo beide Anfang 1945 starben. Edith starb im Januar 1945 hier in Birkenau.",
         fr: "Anne Frank est arrivée des Pays-Bas avec sa famille en septembre 1944 et a été détenue dans le camp des femmes avec sa sœur Margot et sa mère Edith. Fin octobre, les deux sœurs furent transférées à Bergen-Belsen, où elles sont mortes au début de 1945. Edith est morte ici, à Birkenau, en janvier 1945.",
-        lb: "D’Anne Frank ass am September 1944 mat hirer Famill aus Holland ukomm a war mat hirer Schwëster Margot an hirer Mamm Edith am Fraelager. Enn Oktober goufen déi zwou Schwësteren op Bergen-Belsen bruecht, wou béid Ufank 1945 gestuerwe sinn. D’Edith ass am Januar 1945 hei zu Birkenau gestuerwen."}}],
-     src: ["a2", "anne"]}
+        lb: "D’Anne Frank ass am September 1944 mat hirer Famill aus Holland ukomm a war mat hirer Schwëster Margot an hirer Mamm Edith am Fraelager. Enn Oktober goufen déi zwou Schwësteren op Bergen-Belsen bruecht, wou béid Ufank 1945 gestuerwe sinn. D’Edith ass am Januar 1945 hei zu Birkenau gestuerwen."}},
+      {n: "Orli Reichert-Wald",
+       t: {
+        en: "A German political prisoner who became the prisoner in charge of the women’s hospital in Birkenau. Survivors called her “the angel of Auschwitz”: she hid the sick from selections whenever she could. Jeanne Juda from Luxembourg (see Block 10 in Auschwitz I) owed her her life.",
+        de: "Eine deutsche politische Gefangene, die Lagerälteste des Häftlingskrankenbaus der Frauen in Birkenau wurde. Überlebende nannten sie den „Engel von Auschwitz“: Wann immer sie konnte, versteckte sie Kranke vor den Selektionen. Jeanne Juda aus Luxemburg (siehe Block 10 in Auschwitz I) verdankte ihr ihr Leben.",
+        fr: "Une prisonnière politique allemande devenue doyenne de l’infirmerie des femmes à Birkenau. Des survivantes l’appelaient « l’ange d’Auschwitz » : chaque fois qu’elle le pouvait, elle cachait les malades lors des sélections. Jeanne Juda, du Luxembourg (voir le bloc 10 à Auschwitz I), lui devait la vie.",
+        lb: "Eng däitsch politesch Prisonéierin, déi Lagerälteste vum Häftlingskrankebau vun de Fraen zu Birkenau gouf. Iwwerliewend hunn hir „den Engel vun Auschwitz“ gesot: Wa se nëmme konnt, huet se Krank virun de Selektioune verstoppt. D’Jeanne Juda vu Lëtzebuerg (kuck Block 10 zu Auschwitz I) huet hir hiert Liewen ze verdanken."}}],
+     src: ["a2", "anne", "t2g"]}
   ]
 };
 

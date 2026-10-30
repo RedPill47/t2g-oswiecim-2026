@@ -1,5 +1,5 @@
 // Offline copy of the camp explorer: always try the network first, fall back to the last copy.
-const CACHE = "camp-v2";
+const CACHE = "camp-v3";
 const CORE = ["./", "index.html", "camp.js", "places.js", "plans.json",
   "vendor/three.module.min.js", "vendor/three.core.min.js", "vendor/MapControls.js", "vendor/OrbitControls.js", "vendor/BufferGeometryUtils.js",
   "aerial/a1-1944-04-04.jpg", "aerial/a1-1944-04-04-mask.png", "aerial/bk-1944-09-13.jpg", "aerial/bk-1944-09-13-mask.png"];
