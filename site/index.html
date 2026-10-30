@@ -140,6 +140,9 @@ p.lede{margin:0 0 16px;color:var(--pencil);font-style:italic}
 .more .also{font-family:var(--type);font-size:14px;color:var(--pencil)}
 .chosen-stamp{display:none;position:absolute;right:10px;top:-11px;background:var(--sheet);font-family:var(--type);font-size:13px;color:var(--red);border:2px solid var(--red);padding:0 6px;transform:rotate(4deg)}
 .opt.chosen .chosen-stamp{display:block}
+.opt.off{background:transparent;border-style:dashed}
+.opt.off h4,.opt.off .room{color:var(--pencil);border-color:var(--pencil);text-decoration:line-through}
+.off-stamp{display:inline-block;margin:0 0 8px;background:var(--sheet);font-family:var(--type);font-size:13px;color:var(--red);border:2px solid var(--red);padding:0 6px;transform:rotate(-2deg)}
 
 /* people + glossary */
 .people{border-top:1px solid var(--rule)}
@@ -481,6 +484,7 @@ const UI={
  notchosen:{en:"not chosen yet",de:"noch nicht gewählt",fr:"pas encore choisi",lb:"nach net gewielt"},
  dup:{en:"You’ve picked the same session twice: {x}. Same content both times.",de:"Du hast denselben Programmpunkt zweimal gewählt: {x}. Beide Male derselbe Inhalt.",fr:"Vous avez choisi deux fois la même activité : {x}. Le contenu est identique.",lb:"Du hues zweemol dee selwechte Programmpunkt gewielt: {x}. Béid Kéiere deeselwechten Inhalt."},
  stamp:{en:"CHOSEN",de:"GEWÄHLT",fr:"CHOISI",lb:"GEWIELT"},
+ off_opp:{en:"CANCELLED – only in the Oppenheimer room",de:"ENTFÄLLT – nur im Raum Oppenheimer",fr:"ANNULÉ – uniquement en salle Oppenheimer",lb:"FÄLT AUS – nëmmen am Sall Oppenheimer"},
  any:{en:"any",de:"offen",fr:"libre",lb:"oppen"},
  also:{en:"Also on:",de:"Auch:",fr:"Également :",lb:"Och:"},
  once:{en:"Only this once.",de:"Nur dieses eine Mal.",fr:"Une seule fois.",lb:"Nëmmen dës Kéier."},
@@ -510,13 +514,12 @@ const withRole=(n,r)=>({en:n+", "+r.en,de:n+", "+r.de,fr:n+", "+r.fr,lb:n+", "+r
 const W={
  wat:{t:{en:"What does it mean to go to Auschwitz in 2026?",de:"Was heißt es, 2026 nach Auschwitz zu fahren?",fr:"Que signifie aller à Auschwitz en 2026 ?",lb:"Wat heescht et, 2026 op Auschwitz ze fueren?"},
   o:"Wat heescht et, 2026 op Auschwitz ze fueren?",
-  who:{en:"Kim Schortgen or Simone Kayser",de:"Kim Schortgen oder Simone Kayser",fr:"Kim Schortgen ou Simone Kayser",lb:"Kim Schortgen oder Simone Kayser"},
+  who:{en:"Kim Schortgen and Simone Kayser",de:"Kim Schortgen und Simone Kayser",fr:"Kim Schortgen et Simone Kayser",lb:"Kim Schortgen a Simone Kayser"},
   kind:{en:"Preparation, 1 hour",de:"Vorbereitung, 1 Stunde",fr:"Préparation, 1 heure",lb:"Virbereedung, 1 Stonn"},lang:["L"],part:["D"],
   d:{en:["A one-hour session before the visits. A short introduction to the museum and memorial, then space for questions: why am I coming, what do I expect, what do I already know, what awaits me on Saturday morning and on Sunday?"],
    de:["Eine einstündige Einheit vor den Besichtigungen. Eine kurze Einführung in Museum und Gedenkstätte, dann Raum für Fragen: Warum komme ich mit, was erwarte ich, was weiß ich schon, was erwartet mich am Samstagmorgen und am Sonntag?"],
    fr:["Une séance d’une heure avant les visites. Une brève introduction au musée et au mémorial, puis place aux questions : pourquoi je viens, à quoi je m’attends, qu’est-ce que je sais déjà, qu’est-ce qui m’attend samedi matin et dimanche ?"],
-   lb:["Eng Stonn virun de Visitten. Eng kuerz Aféierung an de Musée an d’Gedenkstätt, duerno Plaz fir Froen: Firwat kommen ech mat, wat erwaarden ech, wat weess ech schonn, wat erwaart mech samschdes moies a sonndes?"]},
-  tip:{en:"Two identical groups run in parallel – pick either room.",de:"Zwei identische Gruppen laufen parallel – wähl einen der beiden Räume.",fr:"Deux groupes identiques en parallèle – choisissez l’une ou l’autre salle.",lb:"Zwou identesch Gruppe lafe parallel – wiel ee vun deenen zwee Säll."}},
+   lb:["Eng Stonn virun de Visitten. Eng kuerz Aféierung an de Musée an d’Gedenkstätt, duerno Plaz fir Froen: Firwat kommen ech mat, wat erwaarden ech, wat weess ech schonn, wat erwaart mech samschdes moies a sonndes?"]},},
  juda:{t:{en:"My family’s story",de:"Geschichte meiner Familie",fr:"L’histoire de ma famille",lb:"D’Geschicht vu menger Famill"},
   o:"Geschichte meiner Familie",
   who:withRole("Henri Juda",WIT2),
@@ -646,7 +649,7 @@ const W={
   tip:{en:"15-minute bus ride to Harmęże. Tour in German, maximum 25 people – sign up early.",de:"15 Minuten Busfahrt nach Harmęże. Führung auf Deutsch, maximal 25 Personen – früh anmelden.",fr:"15 minutes de bus jusqu’à Harmęże. Visite en allemand, 25 personnes maximum – inscrivez-vous tôt.",lb:"15 Minutte mam Bus bis op Harmęże. Féierung op Däitsch, maximal 25 Persounen – mell dech fréi un."}}
 };
 const SLOTS={
- fri:{label:"Fri 20:15",time:"20:15",opts:[["wat","House of Silence",WITH("Kim Schortgen")],["wat","Oppenheimer",WITH("Simone Kayser")],["juda","Szymanski",MOD("Marc Schoentgen")],["faces","Library",""]]},
+ fri:{label:"Fri 20:15",time:"20:15",opts:[["wat","House of Silence","",{off:"off_opp",to:1}],["wat","Oppenheimer"],["juda","Szymanski",MOD("Marc Schoentgen")],["faces","Library",""]]},
  sat1:{label:"Sat 15:00",time:"15:00",opts:[["jfj","House of Silence"],["hayum","Szymanski"],["woltz","Oppenheimer"],["goerens","Przybylski"],["hagenauer","Library"],["town","Meet at Forum"],["jewish","Meet at Forum"]]},
  sat2:{label:"Sat 16:30",time:"16:30",opts:[["wasbleibt","House of Silence"],["woltz","Oppenheimer"],["juda","Szymanski",MOD("Yannick Frantz")],["joseph","Przybylski"],["bourg","Library"],["freimann","Café"],["richter","Forum / pavilion"]]},
  sun1:{label:"Sun 15:00",time:"15:00",opts:[["jfj","House of Silence"],["hayum","Oppenheimer"],["joseph","Przybylski"],["hagenauer","Library"],["freimann","Café"],["town","Meet at Forum"],["frames","Meet at Forum"]]},
@@ -750,6 +753,8 @@ const PEOPLE=[
 function load(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 let plan=load("t2g-plan",{}), langs=load("t2g-langs",[]);
+// A cancelled option keeps its place in SLOTS; anyone who had picked it moves to its replacement.
+for(const k in plan){const o=SLOTS[k]&&SLOTS[k].opts[plan[k]];if(o&&o[3]&&o[3].off)plan[k]=o[3].to}
 const open=new Set();
 
 function pickLang(){
@@ -786,6 +791,7 @@ function alsoWhen(id,slot){
   return [...new Set(out)];
 }
 function optKey(slot,i){return slot+":"+i}
+function liveOpts(k){return SLOTS[k].opts.filter(o=>!(o[3]&&o[3].off))}
 
 const EN={},EN_TITLE=document.title;
 document.querySelectorAll("[data-t]").forEach(el=>{EN[el.dataset.t]=el.innerHTML});
@@ -825,9 +831,9 @@ function renderChips(){
   if(!langs.length){s.innerHTML=`<p class="match">${esc(u("nofilter"))}</p>`;return}
   const rank={yes:0,part:1,no:2};
   s.innerHTML='<div class="meter">'+Object.keys(SLOTS).map(k=>{
-    const cells=SLOTS[k].opts.map(o=>{const w=W[o[0]],st=status(w);return {c:st.c,t:L(w.t)}})
+    const cells=liveOpts(k).map(o=>{const w=W[o[0]],st=status(w);return {c:st.c,t:L(w.t)}})
       .sort((a,b)=>rank[a.c]-rank[b.c]).map(x=>`<i class="c ${x.c}" title="${esc(x.t)}"></i>`).join("");
-    const n=SLOTS[k].opts.filter(o=>status(W[o[0]]).ok).length,tot=SLOTS[k].opts.length;
+    const n=liveOpts(k).filter(o=>status(W[o[0]]).ok).length,tot=liveOpts(k).length;
     return `<a class="mrow${n?"":" zero"}" href="#slot-${k}"><span class="ml">${esc(slotName(k))}</span><span class="mc">${cells}</span><span class="mn">${n?n+"/"+tot:esc(u("none"))}</span></a>`;
   }).join("")+`</div><p class="legend"><span><i class="c yes"></i>${esc(u("lg_yes"))}</span><span><i class="c part"></i>${esc(u("lg_part"))}</span><span><i class="c no"></i>${esc(u("lg_no"))}</span></p><p class="match">${esc(u("jump"))}</p>`;
 }
@@ -846,6 +852,8 @@ function renderPlan(){
   else wn.hidden=true;
 }
 function optHTML(slot,o,i){
+  if(o[3]&&o[3].off) return `<article class="opt off" id="o-${slot}-${i}"><span class="off-stamp">${esc(u(o[3].off))}</span>
+   <h4>${esc(L(W[o[0]].t))}</h4><div class="tags"><span class="room">${esc(R(o[1]))}</span></div></article>`;
   const w=W[o[0]],st=status(w),key=optKey(slot,i),chosen=plan[slot]===i,isOpen=open.has(key);
   const title=L(w.t),extra=L(o[2]),tip=L(w.tip);
   const lg=w.flex?`<span class="lg">${esc(u("any"))}</span>`:w.unk?``:w.lang.map(l=>`<span class="lg">${l}</span>`).join("")+w.part.map(l=>`<span class="lg part">(${l})</span>`).join("");
@@ -873,7 +881,7 @@ function renderDays(){
   for(const d in DAYS){
     document.getElementById("d-"+d).innerHTML=DAYS[d].map(e=>{
       if(e.slot){const s=SLOTS[e.slot];
-        return `<div class="ev" id="slot-${e.slot}"><div class="t">${s.time}</div><div class="b"><p class="slot-h">${esc(L(e.title))} <span>– ${esc(u("nopts").replace("{n}",s.opts.length))}</span></p><div class="opts">${s.opts.map((o,i)=>optHTML(e.slot,o,i)).join("")}</div></div></div>`}
+        return `<div class="ev" id="slot-${e.slot}"><div class="t">${s.time}</div><div class="b"><p class="slot-h">${esc(L(e.title))} <span>– ${esc(u("nopts").replace("{n}",liveOpts(e.slot).length))}</span></p><div class="opts">${s.opts.map((o,i)=>optHTML(e.slot,o,i)).join("")}</div></div></div>`}
       const wh=e.w&&R(L(e.w)),p=L(e.p);
       return `<div class="ev fixed${e.site?" site":""}"><div class="t">${esc(L(e.t))}</div><div class="b"><h3>${esc(L(e.h))}${e.inf?'<span class="inferred">inferred</span>':""}</h3>${wh?`<div class="where">${esc(wh)}</div>`:""}${p?`<p>${esc(p)}</p>`:""}${e.link?`<p><a class="camplink" href="camp/?site=${e.link}&amp;lang=${lang}">${esc(u("explore"))}</a></p>`:""}</div></div>`;
     }).join("");
