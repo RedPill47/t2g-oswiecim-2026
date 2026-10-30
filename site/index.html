@@ -245,7 +245,7 @@ nav.tabs a.today::after{content:"";display:inline-block;width:7px;height:7px;bor
     <li data-t="rh3"><b>Evenings</b><span>Saturday 20:00: study groups. Chaperones, private participants, teachers, educators and university students have a meeting in the Library at 19:30 on Friday, Saturday and Sunday.</span></li>
     <li data-t="rh4"><b>Any time</b><span>Cards and pens are laid out around the IJBS. Write or draw what moves you, in any language, and hang it on the line in the foyer. The Hannah Arendt exhibition is open to visit on your own.</span></li>
   </ul>
-  <p class="note" data-t="how_note">Still not in the documents: meal times and the exact start of the morning visits. Ask your group leader.</p>
+  <p class="note" data-t="how_note">At the memorial sites there is a security check: no backpacks, no large bags.</p>
 
   <h2 data-t="filt_h">Your filters<small>Tap the languages you follow comfortably</small></h2>
   <div class="langbox">
@@ -367,9 +367,9 @@ const STR={
  rh4:{de:"<b>Jederzeit</b><span>In der IJBS liegen überall Karten und Stifte aus. Schreib oder zeichne, was dich bewegt, in jeder Sprache, und häng es an die Leine im Foyer. Die Hannah-Arendt-Ausstellung kannst du auf eigene Faust besuchen.</span>",
   fr:"<b>À tout moment</b><span>Des cartes et des stylos sont disposés un peu partout à l’IJBS. Écrivez ou dessinez ce qui vous touche, dans la langue de votre choix, et accrochez-le à la corde dans le foyer. L’exposition sur Hannah Arendt se visite librement.</span>",
   lb:"<b>Zu all Moment</b><span>An der IJBS leien iwwerall Kaarten a Bicen. Schreif oder mol, wat dech beréiert, an all Sprooch, an hänk et un d’Schnouer am Foyer. D’Hannah-Arendt-Ausstellung kanns du op eegen Hand besichen.</span>"},
- how_note:{de:"Steht noch nicht in den Unterlagen: Essenszeiten und der genaue Beginn der Besichtigungen am Vormittag. Frag deine Gruppenleitung.",
-  fr:"Pas encore dans les documents : les heures des repas et l’heure exacte du début des visites du matin. Demandez à votre responsable de groupe.",
-  lb:"Nach net an den Dokumenter: d’Iesszäiten an de genauen Ufank vun de Visitte moies. Fro deng Gruppeleedung."},
+ how_note:{de:"An den Gedenkstätten gibt es eine Sicherheitskontrolle: keine Rucksäcke, keine großen Taschen.",
+  fr:"Contrôle de sécurité sur les sites du mémorial : pas de sacs à dos, pas de grands sacs.",
+  lb:"Op de Gedenkstätte gëtt et eng Sécherheetskontroll: keng Rucksäck, keng grouss Taschen."},
  filt_h:{de:"Deine Filter<small>Tippe die Sprachen an, denen du gut folgen kannst</small>",
   fr:"Vos filtres<small>Touchez les langues que vous suivez sans difficulté</small>",
   lb:"Deng Filteren<small>Tipp d’Sproochen un, déi s du gutt verstees</small>"},
@@ -639,13 +639,18 @@ const W={
 };
 const SLOTS={
  fri:{label:"Fri 20:15",time:"20:15",opts:[["wat","House of Silence",WITH("Kim Schortgen")],["wat","Oppenheimer",WITH("Simone Kayser")],["juda","Szymanski",MOD("Marc Schoentgen")],["faces","Library",""]]},
- sat1:{label:"Sat 15:00",time:"15:00",opts:[["jfj","House of Silence"],["hayum","Oppenheimer"],["woltz","Szymanski"],["goerens","Przybylski"],["hagenauer","Library"],["town","Meet at Forum"],["jewish","Meet at Forum"]]},
+ sat1:{label:"Sat 15:00",time:"15:00",opts:[["jfj","House of Silence"],["woltz","Oppenheimer"],["hayum","Szymanski"],["goerens","Przybylski"],["hagenauer","Library"],["town","Meet at Forum"],["jewish","Meet at Forum"]]},
  sat2:{label:"Sat 16:30",time:"16:30",opts:[["wasbleibt","House of Silence"],["woltz","Oppenheimer"],["juda","Szymanski",MOD("Yannick Frantz")],["joseph","Przybylski"],["bourg","Library"],["freimann","Café"],["richter","Forum / pavilion"]]},
  sun1:{label:"Sun 15:00",time:"15:00",opts:[["jfj","House of Silence"],["hayum","Oppenheimer"],["joseph","Przybylski"],["hagenauer","Library"],["freimann","Café"],["town","Meet at Forum"],["frames","Meet at Forum"]]},
  sun2:{label:"Sun 16:30",time:"16:30",opts:[["wasbleibt","House of Silence"],["woltz","Oppenheimer"],["juda","Szymanski",MOD("Liz Freimann")],["befr","Przybylski"],["bourg","Library"],["jewish","Meet at Forum"]]}
 };
 const MEET={t:"19:30",h:{en:"Evening meeting: chaperones, private participants, teachers, educators, university students",de:"Abendtreffen: Begleitpersonen, Privatteilnehmende, Lehrkräfte, Erziehende, Studierende",fr:"Réunion du soir : accompagnateurs, participants privés, enseignants, éducateurs, étudiants",lb:"Owesreunioun: Begleetpersounen, Privatpersounen, Enseignanten, Educateuren, Studenten"},w:"Library"};
-const AM={en:"a.m.",de:"vorm.",fr:"matin",lb:"moies"},PM={en:"p.m.",de:"nachm.",fr:"après-midi",lb:"nomëttes"},THEN={en:"then",de:"danach",fr:"ensuite",lb:"duerno"};
+const PM={en:"p.m.",de:"nachm.",fr:"après-midi",lb:"nomëttes"};
+const MEAL=(t,h)=>({t,h,w:"IJBS"});
+const BKF={en:"Breakfast",de:"Frühstück",fr:"Petit-déjeuner",lb:"Frühstéck"},LUNCH={en:"Lunch",de:"Mittagessen",fr:"Déjeuner",lb:"Mëttegiessen"};
+const DINNER={t:"18:45",h:{en:"Dinner",de:"Abendessen",fr:"Dîner",lb:"Owesiessen"}};
+const SEC={en:"Security check on arrival: no backpacks, no large bags.",de:"Sicherheitskontrolle bei der Ankunft: keine Rucksäcke, keine großen Taschen.",fr:"Contrôle de sécurité à l’arrivée : pas de sacs à dos, pas de grands sacs.",lb:"Sécherheetskontroll bei der Arrivée: keng Rucksäck, keng grouss Taschen."};
+const BACK=t=>({t,h:{en:"Bus back to the IJBS",de:"Rückfahrt zur IJBS",fr:"Retour en bus à l’IJBS",lb:"Mam Bus zréck op d’IJBS"}});
 const DAYS={
  thu:[
   {t:{en:"before",de:"vorher",fr:"avant",lb:"virdrun"},h:{en:"ID check",de:"Ausweiskontrolle",fr:"Contrôle d’identité",lb:"Ausweiskontroll"},
@@ -660,31 +665,43 @@ const DAYS={
   {t:PM,h:{en:"Arrival in Oświęcim",de:"Ankunft in Oświęcim",fr:"Arrivée à Oświęcim",lb:"Ukonft zu Oświęcim"},w:"IJBS"},
   {t:"17:30",h:{en:"Welcome",de:"Begrüßung",fr:"Accueil",lb:"Begréissung"},w:"Forum / Reception",
    p:{en:"Introduction to the IJBS, the project and the programme.",de:"Vorstellung der IJBS, des Projekts und des Programms.",fr:"Présentation de l’IJBS, du projet et du programme.",lb:"Virstellung vun der IJBS, vum Projet a vum Programm."}},
+  DINNER,
   MEET,
   {slot:"fri",title:{en:"Choose one session",de:"Wähl einen Programmpunkt",fr:"Choisissez une activité",lb:"Wiel ee Programmpunkt"}}
  ],
  sat:[
-  {t:AM,h:{en:"Auschwitz I – the main camp",de:"Auschwitz I – das Stammlager",fr:"Auschwitz I – le camp principal",lb:"Auschwitz I – de Stammlager"},site:true,
+  MEAL("7:30",BKF),
+  {t:"8:15",h:{en:"Bus to the memorial site",de:"Abfahrt zur Gedenkstätte",fr:"Départ pour le mémorial",lb:"Depart op d’Gedenkstätt"},p:SEC},
+  {t:"9:00",h:{en:"Auschwitz I – the main camp",de:"Auschwitz I – das Stammlager",fr:"Auschwitz I – le camp principal",lb:"Auschwitz I – de Stammlager"},site:true,
    p:{en:"Guided visit of the memorial site (Stammlager).",de:"Geführte Besichtigung der Gedenkstätte (Stammlager).",fr:"Visite guidée du site mémoriel (Stammlager).",lb:"Gefouert Visitt vun der Gedenkstätt (Stammlager)."}},
-  {t:THEN,h:{en:"Commemoration at the Wall of Death",de:"Gedenkfeier an der Todeswand",fr:"Commémoration au mur des fusillés",lb:"Gedenkfeier un der Doudesmauer"},site:true,
+  {t:"11:00",h:{en:"Commemoration at the Wall of Death",de:"Gedenkfeier an der Todeswand",fr:"Commémoration au mur des fusillés",lb:"Gedenkfeier un der Doudesmauer"},site:true,
    p:{en:"Ceremony at the execution wall in the courtyard between Block 10 and Block 11 – Block 10 is where Jeanne Juda, Henri Juda’s mother, was held.",de:"Feier an der Hinrichtungsmauer im Hof zwischen Block 10 und Block 11 – in Block 10 war Jeanne Juda, die Mutter von Henri Juda, inhaftiert.",fr:"Cérémonie devant le mur d’exécution, dans la cour entre le bloc 10 et le bloc 11 – c’est au bloc 10 que Jeanne Juda, la mère d’Henri Juda, a été détenue.",lb:"Zeremonie un der Hiriichtungsmauer am Haff tëscht dem Block 10 an dem Block 11 – am Block 10 war d’Jeanne Juda, dem Henri Juda seng Mamm, agespaart."}},
+  BACK("13:00"),
+  MEAL("13:15",LUNCH),
   {slot:"sat1",title:{en:"First afternoon slot – choose one",de:"Erstes Zeitfenster am Nachmittag – wähl eins",fr:"Premier créneau de l’après-midi – choisissez-en un",lb:"Éischt Zäitfënster nomëttes – wiel eent"}},
   {slot:"sat2",title:{en:"Second afternoon slot – choose one",de:"Zweites Zeitfenster am Nachmittag – wähl eins",fr:"Second créneau de l’après-midi – choisissez-en un",lb:"Zweet Zäitfënster nomëttes – wiel eent"}},
+  DINNER,
   MEET,
   {t:"20:00",h:{en:"Study groups",de:"Studiengruppen",fr:"Groupes d’étude",lb:"Studiegruppen"},w:{en:"All other rooms",de:"Alle anderen Räume",fr:"Toutes les autres salles",lb:"All déi aner Säll"}}
  ],
  sun:[
-  {t:AM,h:"Auschwitz II – Birkenau",site:true,p:{en:"Guided visit of the memorial site.",de:"Geführte Besichtigung der Gedenkstätte.",fr:"Visite guidée du site mémoriel.",lb:"Gefouert Visitt vun der Gedenkstätt."}},
-  {t:THEN,h:{en:"Commemoration at the International Monument",de:"Gedenkfeier am Internationalen Mahnmal",fr:"Commémoration au Monument international",lb:"Gedenkfeier um Internationale Monument"},site:true,
+  MEAL("7:30",BKF),
+  {t:"8:30",h:{en:"Bus to Birkenau",de:"Abfahrt zur Gedenkstätte Birkenau",fr:"Départ pour Birkenau",lb:"Depart op Birkenau"},p:SEC},
+  {t:"9:00",h:"Auschwitz II – Birkenau",site:true,p:{en:"Guided visit of the memorial site.",de:"Geführte Besichtigung der Gedenkstätte.",fr:"Visite guidée du site mémoriel.",lb:"Gefouert Visitt vun der Gedenkstätt."}},
+  {t:"12:00",h:{en:"Commemoration at the International Monument",de:"Gedenkfeier am Internationalen Mahnmal",fr:"Commémoration au Monument international",lb:"Gedenkfeier um Internationale Monument"},site:true,
    p:{en:"Ceremony at the memorial at the far end of the Birkenau ramp, between the ruins of crematoria II and III.",de:"Feier am Mahnmal am Ende der Rampe in Birkenau, zwischen den Ruinen der Krematorien II und III.",fr:"Cérémonie au mémorial, tout au bout de la rampe de Birkenau, entre les ruines des crématoires II et III.",lb:"Zeremonie um Monument um Enn vun der Rampe zu Birkenau, tëscht de Ruine vun de Krematorien II an III."}},
+  BACK("14:00"),
+  MEAL("14:15",LUNCH),
   {slot:"sun1",title:{en:"First afternoon slot – choose one",de:"Erstes Zeitfenster am Nachmittag – wähl eins",fr:"Premier créneau de l’après-midi – choisissez-en un",lb:"Éischt Zäitfënster nomëttes – wiel eent"}},
   {slot:"sun2",title:{en:"Second afternoon slot – choose one",de:"Zweites Zeitfenster am Nachmittag – wähl eins",fr:"Second créneau de l’après-midi – choisissez-en un",lb:"Zweet Zäitfënster nomëttes – wiel eent"}},
+  DINNER,
   MEET,
   {t:"20:30",h:{en:"Closing, all together",de:"Gemeinsamer Abschluss",fr:"Clôture, tous ensemble",lb:"Ofschloss, all zesummen"},w:"Forum / Reception",
    p:{en:"Gemeinsamer Abschluss – the joint end of the programme in Oświęcim.",de:"Der gemeinsame Abschluss des Programms in Oświęcim.",fr:"« Gemeinsamer Abschluss » – la clôture commune du programme à Oświęcim.",lb:"De gemeinsamen Ofschloss vum Programm zu Oświęcim."}}
  ],
  mon:[
-  {t:AM,h:{en:"Leave Oświęcim",de:"Abfahrt aus Oświęcim",fr:"Départ d’Oświęcim",lb:"Ofrees vun Oświęcim"},p:{en:"Kraków is about 60 km away.",de:"Krakau liegt etwa 60 km entfernt.",fr:"Cracovie est à environ 60 km.",lb:"Krakau läit ongeféier 60 km ewech."}},
+  MEAL("7:00",BKF),
+  {t:"8:30",h:{en:"Check out and leave for Kraków",de:"Check-out und Abfahrt nach Krakau",fr:"Libération des chambres et départ pour Cracovie",lb:"Check-out an Depart op Krakau"},p:{en:"Kraków is about 60 km away; arrival around 10:30.",de:"Krakau liegt etwa 60 km entfernt; Ankunft gegen 10:30.",fr:"Cracovie est à environ 60 km ; arrivée vers 10:30.",lb:"Krakau läit ongeféier 60 km ewech; Arrivée géint 10:30."}},
   {t:{en:"day",de:"Tag",fr:"journée",lb:"Dag"},h:{en:"Visit of Kraków",de:"Besuch in Krakau",fr:"Visite de Cracovie",lb:"Besuch zu Krakau"},w:{en:"Old Jewish quarter, old town and more",de:"Altes jüdisches Viertel, Altstadt und mehr",fr:"Ancien quartier juif, vieille ville et plus encore",lb:"Ale jiddesche Quartier, al Stad a méi"},
    p:{en:"Kazimierz, the Jewish quarter founded in 1335, is today the best-preserved in Poland; its ghetto was liquidated in 1943. The historic centre has been a UNESCO World Heritage site since 1978.",
     de:"Kazimierz, das 1335 gegründete jüdische Viertel, ist heute das besterhaltene in Polen; das Ghetto wurde 1943 liquidiert. Die historische Altstadt gehört seit 1978 zum UNESCO-Welterbe.",
