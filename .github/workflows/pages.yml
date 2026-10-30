@@ -1,8 +1,9 @@
 name: Deploy to GitHub Pages
 
+# main is published at the root; the camp-explorer branch, if it exists, at /preview/
 on:
   push:
-    branches: [main]
+    branches: [main, camp-explorer]
   workflow_dispatch:
 
 permissions:
@@ -22,9 +23,28 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: main
+          path: main
+      - uses: actions/checkout@v7
+        id: preview
+        continue-on-error: true
+        with:
+          ref: camp-explorer
+          path: preview
+      - name: Assemble site
+        run: |
+          cp -r main/site _site
+          if [ "${{ steps.preview.outcome }}" = success ] && [ -d preview/site ]; then
+            cp -r preview/site _site/preview
+            # keep the preview out of search engines and label it on screen
+            find _site/preview -name '*.html' -exec sed -i \
+              -e 's|<head>|<head><meta name="robots" content="noindex">|' \
+              -e 's|<body>|<body><div style="position:fixed;z-index:99;bottom:8px;left:8px;background:#b3261e;color:#fff;font:12px/1.6 monospace;padding:0 8px;pointer-events:none">PREVIEW</div>|' {} +
+          fi
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: site
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v5
