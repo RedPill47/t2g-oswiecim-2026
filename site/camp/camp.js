@@ -3,6 +3,16 @@ import {MapControls} from "./vendor/MapControls.js";
 import {mergeGeometries} from "./vendor/BufferGeometryUtils.js";
 import {SITES, PLACES, SRC} from "./places.js";
 
+// 1944 aerial photographs, warped onto the plan by tools/aerial_fit.py; ext = [x0, z0, x1, z1] in plan metres
+const AERIAL = {
+  a1: {img: "aerial/a1-1944-04-04.jpg", mask: "aerial/a1-1944-04-04-mask.png", ext: [-245.2, -204.8, 220.0, 277.0],
+    date: {en: "4 April 1944", de: "4. April 1944", fr: "4 avril 1944", lb: "4. Abrëll 1944"},
+    src: "https://commons.wikimedia.org/wiki/File:AerialAuschwitz1944.jpg"},
+  bk: {img: "aerial/bk-1944-09-13.jpg", mask: "aerial/bk-1944-09-13-mask.png", ext: [-816.4, -678.3, 956.3, 1116.4],
+    date: {en: "13 September 1944", de: "13. September 1944", fr: "13 septembre 1944", lb: "13. September 1944"},
+    src: "https://commons.wikimedia.org/wiki/File:Birkenau_Extermination_Camp_-_Oswiecim,_Poland_-_NARA_-_305905.jpg"}
+};
+
 /* ---------- language ---------- */
 const UIL = ["lb", "de", "fr", "en"];
 const UI = {
@@ -22,10 +32,10 @@ const UI = {
   whole: {en: "Whole site", de: "Ganzes Gelände", fr: "Tout le site", lb: "Ganzt Gelänn"},
   all: {en: "All places", de: "Alle Orte", fr: "Tous les lieux", lb: "All d’Plazen"},
   further: {en: "Go further", de: "Weiterführend", fr: "Pour aller plus loin", lb: "Fir méi ze wëssen"},
-  credits: {en: "Map data © OpenStreetMap contributors (ODbL). 3D: three.js (MIT). Texts: unofficial, checked against the Auschwitz Memorial’s history pages; sources are given for each place.",
-    de: "Kartendaten © OpenStreetMap-Mitwirkende (ODbL). 3D: three.js (MIT). Texte: inoffiziell, abgeglichen mit den Geschichtsseiten der Gedenkstätte Auschwitz; die Quellen stehen bei jedem Ort.",
-    fr: "Données cartographiques © contributeurs OpenStreetMap (ODbL). 3D : three.js (MIT). Textes : non officiels, vérifiés à partir des pages d’histoire du Mémorial d’Auschwitz ; les sources sont indiquées pour chaque lieu.",
-    lb: "Kaartendaten © OpenStreetMap-Mataarbechter (ODbL). 3D: three.js (MIT). Texter: net offiziell, mat de Geschichtssäite vun der Gedenkstätt Auschwitz ofgeglach; d’Quelle stinn bei all Plaz."},
+  credits: {en: "Map data © OpenStreetMap contributors (ODbL). 1944 aerial photographs: Allied reconnaissance, US National Archives, public domain; matched to today’s map to within a few metres. 3D: three.js (MIT). Texts: unofficial, checked against the Auschwitz Memorial’s history pages; sources are given for each place.",
+    de: "Kartendaten © OpenStreetMap-Mitwirkende (ODbL). Luftbilder von 1944: alliierte Luftaufklärung, US-Nationalarchiv, gemeinfrei; auf wenige Meter genau an die heutige Karte angepasst. 3D: three.js (MIT). Texte: inoffiziell, abgeglichen mit den Geschichtsseiten der Gedenkstätte Auschwitz; die Quellen stehen bei jedem Ort.",
+    fr: "Données cartographiques © contributeurs OpenStreetMap (ODbL). Photos aériennes de 1944 : reconnaissance alliée, Archives nationales américaines, domaine public ; calées sur le plan actuel à quelques mètres près. 3D : three.js (MIT). Textes : non officiels, vérifiés à partir des pages d’histoire du Mémorial d’Auschwitz ; les sources sont indiquées pour chaque lieu.",
+    lb: "Kaartendaten © OpenStreetMap-Mataarbechter (ODbL). Loftbiller vun 1944: alliéiert Loftopklärung, US-Nationalarchiv, Domaine public; op e puer Meter genee un déi haiteg Kaart ugepasst. 3D: three.js (MIT). Texter: net offiziell, mat de Geschichtssäite vun der Gedenkstätt Auschwitz ofgeglach; d’Quelle stinn bei all Plaz."},
   overview: {en: "Overview", de: "Überblick", fr: "Vue d’ensemble", lb: "Iwwerbléck"},
   stop: {en: "Place {i} of {n}", de: "Ort {i} von {n}", fr: "Lieu {i} sur {n}", lb: "Plaz {i} vu {n}"},
   start: {en: "Start with place 1 →", de: "Mit Ort 1 beginnen →", fr: "Commencer par le lieu 1 →", lb: "Mat der Plaz 1 ufänken →"},
@@ -49,6 +59,10 @@ const UI = {
   nogeo: {en: "Your position isn’t available (permission refused or no signal).", de: "Deine Position ist nicht verfügbar (keine Erlaubnis oder kein Signal).", fr: "Votre position n’est pas disponible (autorisation refusée ou pas de signal).", lb: "Deng Positioun ass net disponibel (keng Erlaabnis oder kee Signal)."},
   nogl: {en: "3D isn’t available on this device. All the texts below work without it.", de: "3D ist auf diesem Gerät nicht verfügbar. Alle Texte unten funktionieren auch ohne.", fr: "La 3D n’est pas disponible sur cet appareil. Tous les textes ci-dessous fonctionnent sans elle.", lb: "3D ass op dësem Apparat net disponibel. All d’Texter hei ënnendrënner funktionéieren och ouni."},
   block: {en: "Block", de: "Block", fr: "Bloc", lb: "Block"},
+  ynow: {en: "Today", de: "Heute", fr: "Aujourd’hui", lb: "Haut"},
+  era: {en: "Compare with the 1944 aerial photograph", de: "Mit dem Luftbild von 1944 vergleichen", fr: "Comparer avec la photo aérienne de 1944", lb: "Mam Loftbild vun 1944 vergläichen"},
+  aerial: {en: "Aerial photo, {d}. Labels added by the CIA in 1978. Public domain.", de: "Luftbild vom {d}. Beschriftung: CIA, 1978. Gemeinfrei.", fr: "Photo aérienne du {d}. Légendes ajoutées par la CIA en 1978. Domaine public.", lb: "Loftbild vum {d}. Beschrëftung: CIA, 1978. Domaine public."},
+
   prev: {en: "Previous place", de: "Vorheriger Ort", fr: "Lieu précédent", lb: "Virdrun Plaz"},
   next: {en: "Next place", de: "Nächster Ort", fr: "Lieu suivant", lb: "Nächst Plaz"},
   l_hist: {en: "Auschwitz Memorial: history of the camp", de: "Gedenkstätte Auschwitz: Geschichte des Lagers", fr: "Mémorial d’Auschwitz : histoire du camp", lb: "Gedenkstätt Auschwitz: Geschicht vum Lager"},
@@ -73,7 +87,7 @@ const qs = new URLSearchParams(location.search);
 let site = ["a1", "bk"].includes(qs.get("site")) ? qs.get("site") : "a1";
 let idx = -1;                       // -1 = overview, otherwise index in PLACES[site]
 { const p = qs.get("p"); const i = PLACES[site].findIndex(x => x.id === p); if (i >= 0) idx = i; }
-let plan = false, recon = false;
+let plan = false, recon = false, era = 100;   // era: 0 = 1944 photo, 100 = today
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const dark = matchMedia("(prefers-color-scheme: dark)").matches;
 
@@ -100,7 +114,7 @@ if (renderer) {
   controls.addEventListener("change", kick);
 } else noGL();
 function noGL() {
-  canvas.style.display = "none"; stage.querySelector(".ctrls").hidden = true; pinsEl.innerHTML = "";
+  canvas.style.display = "none"; stage.querySelector(".ctrls").hidden = true; stage.querySelector(".era").hidden = true; pinsEl.innerHTML = "";
   if (!document.getElementById("nogl")) stage.insertAdjacentHTML("beforeend", `<div class="nogl" id="nogl">${esc(u("nogl"))}</div>`);
 }
 
@@ -221,7 +235,8 @@ function build(key) {
   const named = S.named, anchor = name => { const n = named.find(r => r[0] === name || r[1] === name); return n ? [n[2], n[3]] : null; };
   const places = PLACES[key].map(p => ({...p, xz: anchor(p.at) || [0, 0]}));
   const sectors = (Ly.sector || []).map(s => { const m = /B ?I{1,3}[a-f]?/.exec(named.find(r => r[1] === s.n)?.[0] || s.n || ""); return m ? {t: m[0].replace(" ", ""), xz: centroid(s.p)} : null; }).filter(Boolean);
-  return {group: g, pick, reconG, box, places, sectors, S};
+  const fade = g.children.filter(o => o !== ground && o !== reconG);
+  return {group: g, pick, reconG, box, places, sectors, S, fade, photo: null, loading: false};
 }
 
 /* ---------- view ---------- */
@@ -305,6 +320,7 @@ function showSite(key, keepIdx) {
     if (me) { scene.add(me); me.visible = false; }
     resize();
     idx >= 0 ? focusPlace() : frame(cur.box, true);
+    applyEra();
   } else cur = {places: PLACES[key]};
   renderText();
 }
@@ -312,6 +328,39 @@ function go(i) {
   idx = Math.max(-1, Math.min(PLACES[site].length - 1, i));
   focusPlace(); renderText();
   try { const p = new URLSearchParams(location.search); p.set("site", site); idx >= 0 ? p.set("p", PLACES[site][idx].id) : p.delete("p"); history.replaceState(null, "", "?" + p); } catch (e) {}
+}
+
+/* ---------- 1944 photo ---------- */
+function loadPhoto(B, key) {
+  if (B.photo || B.loading || !renderer) return;
+  B.loading = true;
+  const A = AERIAL[key], tl = new THREE.TextureLoader();
+  Promise.all([tl.loadAsync(A.img), tl.loadAsync(A.mask)]).then(([t, m]) => {
+    t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+    const [x0, z0, x1, z1] = A.ext, g = new THREE.PlaneGeometry(x1 - x0, z1 - z0); g.rotateX(-Math.PI / 2);
+    B.photo = new THREE.Mesh(g, new THREE.MeshBasicMaterial({map: t, alphaMap: m, transparent: true, opacity: 0, depthWrite: false}));
+    B.photo.position.set((x0 + x1) / 2, 0.3, (z0 + z1) / 2); B.photo.renderOrder = 1;
+    B.group.add(B.photo); applyEra();
+  }).catch(() => { B.loading = false; });
+}
+// slide from today's model (100) to the 1944 photograph (0); "1944 volumes" stay as they are, to compare
+function applyEra() {
+  const w = 1 - era / 100, note = document.getElementById("eranote");
+  note.hidden = w <= 0;
+  note.innerHTML = `${esc(nb(u("aerial").replace("{d}", L(AERIAL[site].date))))} <a href="${AERIAL[site].src}" target="_blank" rel="noopener">↗</a>`;
+  if (!cur || !cur.fade) return;
+  if (w > 0) loadPhoto(cur, site);
+  if (cur.photo) { cur.photo.visible = w > 0; cur.photo.material.opacity = Math.min(1, w * 1.6); }
+  for (const o of cur.fade) {
+    o.visible = w < 0.98;
+    for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
+      if (m.userData.op === undefined) { m.userData.op = m.opacity; m.userData.tr = m.transparent; }
+      const tr = w > 0 || m.userData.tr;
+      if (m.transparent !== tr) { m.transparent = tr; m.needsUpdate = true; }
+      m.opacity = m.userData.op * (1 - w);
+    }
+  }
+  kick();
 }
 
 /* ---------- text ---------- */
@@ -343,6 +392,8 @@ function applyStatic() {
   document.getElementById("prev").setAttribute("aria-label", u("prev")); document.getElementById("next").setAttribute("aria-label", u("next"));
   document.getElementById("back").href = "../?lang=" + lang;
   const leg = document.getElementById("legend"); leg.textContent = u("legend");
+  document.getElementById("era").setAttribute("aria-label", u("era"));
+  applyEra();
   const ng = document.getElementById("nogl"); if (ng) ng.textContent = u("nogl");
   document.getElementById("links").innerHTML = [
     ["l_hist", "https://www.auschwitz.org/en/history/"], ["l_visit", "https://www.auschwitz.org/en/visiting/"],
@@ -407,6 +458,7 @@ document.getElementById("recon").onclick = e => {
   document.getElementById("legend").hidden = !recon; kick();
 };
 document.getElementById("locate").onclick = locate;
+document.getElementById("era").addEventListener("input", e => { era = +e.target.value; applyEra(); });
 addEventListener("resize", resize);
 if ("ResizeObserver" in window) new ResizeObserver(resize).observe(stage);
 

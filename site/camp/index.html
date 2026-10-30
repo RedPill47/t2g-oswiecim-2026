@@ -65,9 +65,15 @@ h1{font-family:var(--type);font-weight:400;font-size:clamp(30px,7vw,44px);line-h
 .ctrls button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .ctrls .seg{display:flex}
 .ctrls .seg button+button{margin-left:-1px}
-.toast{position:absolute;left:8px;bottom:8px;max-width:calc(100% - 16px);font-family:var(--type);font-size:13px;background:var(--paper);border:1px solid var(--rule);padding:4px 8px;border-radius:2px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast{position:absolute;left:8px;bottom:54px;max-width:calc(100% - 16px);font-family:var(--type);font-size:13px;background:var(--paper);border:1px solid var(--rule);padding:4px 8px;border-radius:2px;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
-.legend{position:absolute;left:8px;top:8px;max-width:58%;font-family:var(--type);font-size:12px;line-height:1.35;background:var(--paper);border:1px dashed var(--ink);padding:5px 8px}
+.notes{position:absolute;left:8px;top:8px;max-width:58%;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.notes a{pointer-events:auto}
+.legend{font-family:var(--type);font-size:12px;line-height:1.35;background:var(--paper);border:1px dashed var(--ink);padding:5px 8px}
+.legend[hidden]{display:none}
+.era{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--ink);border-radius:2px;padding:4px 10px;font-family:var(--type);font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.2);white-space:nowrap}
+.era[hidden]{display:none}
+.era input{width:min(44vw,240px);accent-color:var(--red);margin:0;height:28px}
 .nogl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-family:var(--type);font-size:15px;color:var(--pencil)}
 
 .tour{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 6px}
@@ -120,7 +126,8 @@ ol.list button[aria-current="true"]{background:var(--sheet)}
   <div class="stage" id="stage">
     <canvas id="c" aria-label="3D map"></canvas>
     <div class="pins" id="pins"></div>
-    <div class="legend" id="legend" hidden></div>
+    <div class="notes"><div class="legend" id="legend" hidden></div><div class="legend" id="eranote" hidden></div></div>
+    <div class="era"><span>1944</span><input type="range" id="era" min="0" max="100" step="1" value="100"><span data-t="ynow">Today</span></div>
     <div class="ctrls">
       <div class="seg"><button id="v-plan" aria-pressed="false" data-t="plan">Plan</button><button id="v-3d" aria-pressed="true">3D</button></div>
       <button id="recon" aria-pressed="false" data-t="recon">1944 volumes</button>
